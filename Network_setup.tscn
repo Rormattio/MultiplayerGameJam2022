@@ -20,7 +20,7 @@ margin_left = -81.1201
 margin_top = -76.0
 margin_right = 88.8799
 margin_bottom = 21.0
-text = "Creater Server"
+text = "Create Server"
 
 [node name="Join_server" type="Button" parent="Multiplayer_configure"]
 anchor_left = 0.511
