@@ -30,6 +30,7 @@ func _on_Create_server_pressed():
 	instance_player(get_tree().get_network_unique_id())
 	
 func _on_Join_server_pressed():
+	print("_on_Join_server_pressed")
 	print(server_ip_address.text)
 	if server_ip_address.text != "":
 		multiplayer_config_ui.hide()
