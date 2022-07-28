@@ -31,11 +31,15 @@ func _on_Create_server_pressed():
 	
 func _on_Join_server_pressed():
 	print("_on_Join_server_pressed")
-	print(server_ip_address.text)
+	var ip_address
 	if server_ip_address.text != "":
-		multiplayer_config_ui.hide()
-		Network.ip_address = server_ip_address.text
-		Network.join_server()
+		ip_address = server_ip_address.text
+	else:
+		ip_address = "127.0.0.1"
+	print(ip_address)
+	multiplayer_config_ui.hide()
+	Network.ip_address = ip_address
+	Network.join_server()
 	
 func _connected_to_server() -> void:
 	yield(get_tree().create_timer(0.1), "timeout")
