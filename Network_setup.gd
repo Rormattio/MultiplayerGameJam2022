@@ -1,6 +1,7 @@
 extends Control
 
 var player = load("res://Player1.tscn")
+var n_players = 1
 
 #var current_spawn_location_instance_number = 1
 #var current_player_for_spawn_location_number = null
@@ -49,7 +50,11 @@ func _player_connected(id) -> void:
 	# remote func network_peer_connected : this is called whenever another peer connects
 	print("Player " + str(id) + " has connected")
 	
-	instance_players(id, 1) # TODO : if id is the server, and they have 2 local players, they need to tell us to instance 2 players instead !
+	rpc_id(id, "welcome_new_client", n_players)
+	
+remote func welcome_new_client(their_n_players) -> void:
+	var their_id = get_tree().get_rpc_sender_id()
+	instance_players(their_id, their_n_players)
 
 func _player_disconnected(id) -> void:
 	# remote func network_peer_disconnected : this is called whenever another peer disconnects
@@ -65,7 +70,8 @@ func _on_Create_server_pressed():
 	multiplayer_config_ui.hide()
 	Network.create_server()
 	
-	var n_players = 1
+	if n_players_items.is_selected(0):
+		n_players = 1
 	if n_players_items.is_selected(1):
 		n_players = 2
 	instance_players(get_tree().get_network_unique_id(), n_players)
@@ -80,7 +86,12 @@ func _on_Join_server_pressed():
 	print(ip_address)
 	multiplayer_config_ui.hide()
 #	username_text_edit.hide()
-		
+
+	if n_players_items.is_selected(0):
+		n_players = 1
+	if n_players_items.is_selected(1):
+		n_players = 2
+
 	Network.ip_address = ip_address
 	Network.join_server()
 #	Global.instance_node(load("res://Server_browser.tscn"), self)
@@ -89,7 +100,7 @@ func _connected_to_server() -> void:
 	# vanilla func : this is called whenever we, a client, connect to the server
 	print("Successfully connected to the server")
 	yield(get_tree().create_timer(0.1), "timeout") # what was this useful for ?
-	instance_players(get_tree().get_network_unique_id(), 1)
+	instance_players(get_tree().get_network_unique_id(), n_players)
 
 func instance_players(id, n_players) -> void:
 	for player_idx in range(n_players):
