@@ -15,6 +15,9 @@ func _ready() -> void:
 
 	device_ip_address.text = Network.ip_address
 
+	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
+	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
+
 func _player_connected(id) -> void:
 	print("Player " + str(id) + " has connected")
 
@@ -56,3 +59,9 @@ func create_player(scene, id):
 
 func start():
 	print("start game")
+
+func _on_WaiterCommand_Sent(command):
+	print("waiter command ", command)
+
+func _on_CheffeDish_Sent(dish):
+	print("cheffe dish ", dish)
