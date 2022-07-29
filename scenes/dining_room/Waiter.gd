@@ -1,8 +1,11 @@
 extends KinematicBody2D
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$SendCommand.connect("pressed", self, "_on_ButtonPressed")
 
 func _process(delta: float) -> void:
 	pass
+
+func _on_ButtonPressed():
+	var command = $CommandInput.text
+	Global.waiter_send_command(command)

@@ -22,3 +22,16 @@ pause_mode = 1
 frames = SubResource( 2 )
 animation = "walk"
 speed_scale = 2.0
+
+[node name="SendDish" type="Button" parent="."]
+margin_left = 344.0
+margin_top = 336.0
+margin_right = 480.0
+margin_bottom = 392.0
+text = "Send dish"
+
+[node name="DishInput" type="LineEdit" parent="."]
+margin_left = 384.0
+margin_top = 280.0
+margin_right = 442.0
+margin_bottom = 304.0
