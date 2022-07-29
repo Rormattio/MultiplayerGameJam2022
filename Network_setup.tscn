@@ -45,8 +45,8 @@ margin_top = 201.0
 margin_right = -59.0
 margin_bottom = 232.0
 custom_fonts/font = ExtResource( 3 )
-text = "Enter IP address"
 align = 1
+placeholder_text = "Enter IP Address"
 
 [node name="Device_ip_address" type="Label" parent="Multiplayer_configure"]
 anchor_top = 1.0
@@ -59,21 +59,6 @@ margin_bottom = -399.0
 custom_fonts/font = ExtResource( 3 )
 align = 1
 valign = 1
-
-[node name="N_players_items" type="ItemList" parent="Multiplayer_configure"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -44.0
-margin_top = 150.0
-margin_right = 44.0
-margin_bottom = 209.0
-custom_fonts/font = ExtResource( 3 )
-items = [ "1 player", null, false, "2 players", null, false ]
-max_text_lines = 2
-auto_height = true
-__meta__ = {
-"_editor_description_": ""
-}
 
 [connection signal="pressed" from="Multiplayer_configure/Create_server" to="." method="_on_Create_server_pressed"]
 [connection signal="pressed" from="Multiplayer_configure/Join_server" to="." method="_on_Join_server_pressed"]
