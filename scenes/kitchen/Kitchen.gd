@@ -103,12 +103,12 @@ func _on_close_command(name):
 	command.queue_free() # find and delete by name
 
 func _on_ButtonPressed():
-	var dish = ""
-	for ingredient_name in dish_ingredients:
-		if len(dish) > 0:
-			dish += " "
-		dish += ingredient_name
-	Global.cheffe_send_dish(dish)
+	# var dish = ""
+	# for ingredient_name in dish_ingredients:
+	# 	if len(dish) > 0:
+	# 		dish += " "
+	# 	dish += ingredient_name
+	Global.cheffe_send_dish(dish_ingredients)
 
 func _on_ingredient_dish_set(toggled, ingredient_name):
 	if toggled:
