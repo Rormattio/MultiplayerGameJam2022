@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/dining_room/Dining_room.gd" type="Script" id=1]
 [ext_resource path="res://scenes/dining_room/Table.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/dining_room/Patron.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
+[ext_resource path="res://scenes/dining_room/Tray.gd" type="Script" id=5]
 
 [node name="DiningRoom" type="Node"]
 script = ExtResource( 1 )
@@ -56,3 +57,16 @@ margin_right = 472.0
 margin_bottom = 560.0
 custom_fonts/font = ExtResource( 4 )
 text = "Send order"
+
+[node name="Tray" type="Node2D" parent="."]
+position = Vector2( 32, 16 )
+script = ExtResource( 5 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 72.0
+margin_top = 128.0
+margin_right = 165.0
+margin_bottom = 148.0
+text = "Receive dish"
+
+[connection signal="pressed" from="Button" to="Tray" method="_on_Button_pressed"]
