@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/dining_room/Dining_room.gd" type="Script" id=1]
 [ext_resource path="res://scenes/dining_room/Table.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/dining_room/Patron.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
 
 [node name="DiningRoom" type="Node"]
 script = ExtResource( 1 )
@@ -22,3 +23,21 @@ scale = Vector2( 5, 5 )
 [node name="Table" parent="." instance=ExtResource( 2 )]
 position = Vector2( 960, 416 )
 scale = Vector2( 5, 5 )
+
+[node name="WordList" type="ItemList" parent="."]
+margin_left = 224.0
+margin_top = 208.0
+margin_right = 680.0
+margin_bottom = 424.0
+custom_fonts/font = ExtResource( 4 )
+select_mode = 1
+max_columns = 4
+same_column_width = true
+
+[node name="SendOrder" type="Button" parent="."]
+margin_left = 376.0
+margin_top = 464.0
+margin_right = 496.0
+margin_bottom = 512.0
+custom_fonts/font = ExtResource( 4 )
+text = "Send order"
