@@ -21,6 +21,9 @@ func _ready():
 	var words = [
 		"scrumptuous",
 		"violet",
+		"red",
+		"yellow",
+		"white",
 		"sauce",
 		"blue",
 		"oblong",
@@ -28,7 +31,13 @@ func _ready():
 		"skewer",
 		"fancy",
 		"dynamic",
-		"greenery"
+		"greenery",
+		"worried",
+		"almighty",
+		"smirky",
+		"grumpy",
+		"happy",
+		"puree",
 	]
 
 	words.shuffle()
