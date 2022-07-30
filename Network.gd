@@ -9,11 +9,14 @@ var client = null
 var ip_address = ""
 
 func _ready() -> void:
-	var local_adresses = IP.get_local_addresses()
-	for ip in local_adresses:
+	var local_addresses = IP.get_local_addresses()
+	print("local_addresses = ", local_addresses)
+	for ip in local_addresses:
 		if (ip.find(":") == -1) and not (ip.begins_with("192.168.") and ip.ends_with(".1")): # let's not print ipv6 ips, nor virtual wifi ip
 			ip_address = ip
+			break
 
+	assert(ip_address != "")
 	print("ip_address = ", ip_address)
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
