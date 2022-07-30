@@ -22,32 +22,9 @@ func _ready():
 
 	$Trash.connect("gui_input", self, "_on_Trash_gui_input")
 
-	var words = [
-		"scrumptuous",
-		"violet",
-		"red",
-		"yellow",
-		"white",
-		"sauce",
-		"blue",
-		"oblong",
-		"fruit",
-		"skewer",
-		"fancy",
-		"dynamic",
-		"greenery",
-		"worried",
-		"almighty",
-		"smirky",
-		"grumpy",
-		"happy",
-		"puree",
-	]
+	$WordList.max_columns = 3
 
-	words.shuffle()
-
-	for w in words:
-		$WordList.add_item(w)
+	build_word_list()
 
 	$Patron.connect("patron_clicked", self, "_on_Patron_clicked")
 	$Patron2.connect("patron_clicked", self, "_on_Patron_clicked")
@@ -55,6 +32,69 @@ func _ready():
 
 func _process(_delta):
 	pass
+
+func build_word_list():
+	var colors = [
+		["violet", "purple", "pink",],
+		["vermilion", "scarlet", "red",],
+		["blue", "green", "bluish",],
+		["yellow", "amber", "cream",],
+		["colourful",],
+		["brillig",],
+		["aprelot",],
+	]
+
+	var forms = [
+		["round", "spherical"],
+		["curvaceous", "shapely",],
+		["elongated", "oblong",],
+		["positive", "happy", "friendly",],
+		["negative", "unfriendly", "antagonistic", "adverse",],
+		["expressive", "visceral",],
+		["squishy", "soft",],
+		["scrumptuous",],
+		["cromulent",],
+	]
+
+	var things = [
+		"kebab",
+		"fruit",
+		"poppycock",
+		"malarkey",
+		"galimatias",
+		"fadoodle",
+		"gobbledygook",
+		"thingy",
+	]
+
+	var chosen_color_words = []
+	var chosen_form_words = []
+	var chosen_thing_words = []
+
+	for w in colors:
+		chosen_color_words.append(Global.rand_array(w))
+
+	for w in forms:
+		chosen_form_words.append(Global.rand_array(w))
+
+	chosen_thing_words = things
+
+	for i in range(max(chosen_color_words.size(), max(chosen_form_words.size(), chosen_thing_words.size()))):
+		if i < chosen_color_words.size():
+			$WordList.add_item(chosen_color_words[i])
+		else:
+			$WordList.add_item("")
+
+		if i < chosen_form_words.size():
+			$WordList.add_item(chosen_form_words[i])
+		else:
+			$WordList.add_item("")
+
+		if i < chosen_thing_words.size():
+			$WordList.add_item(chosen_thing_words[i])
+		else:
+			$WordList.add_item("")
+
 
 func _on_CheffeDish_Sent(dish):
 	print("cheffe sends dish ", dish)
