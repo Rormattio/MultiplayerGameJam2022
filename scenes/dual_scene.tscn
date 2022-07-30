@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="DualScene" type="Node2D"]
+
+[node name="LeftPane" type="Node2D" parent="."]
+scale = Vector2( 0.5, 1 )
+
+[node name="RightPane" type="Node2D" parent="."]
+position = Vector2( 640, 0 )
+scale = Vector2( 0.5, 1 )

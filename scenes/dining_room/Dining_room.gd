@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
 

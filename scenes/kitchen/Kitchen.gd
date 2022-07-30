@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
 var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn")
