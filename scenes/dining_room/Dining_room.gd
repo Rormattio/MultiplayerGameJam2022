@@ -84,7 +84,7 @@ func _on_ClearOrder_pressed():
 	$SendOrder.disabled = true
 
 func _on_Patron_clicked(patron):
-	if tray.selected_dish != null:
+	if tray.selected_dish != null and patron.state == patron.State.WAITING_TO_ORDER:
 		var dish = tray.selected_dish
 		tray.remove_dish(dish)
 		patron.serve_dish(dish)
