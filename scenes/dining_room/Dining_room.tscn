@@ -30,7 +30,6 @@ margin_top = 192.0
 margin_right = 640.0
 margin_bottom = 416.0
 custom_fonts/font = ExtResource( 4 )
-select_mode = 1
 max_columns = 4
 same_column_width = true
 
@@ -41,6 +40,14 @@ margin_right = 576.0
 margin_bottom = 469.0
 custom_fonts/font = ExtResource( 4 )
 text = "order"
+
+[node name="ClearOrder" type="Button" parent="."]
+margin_left = 592.0
+margin_top = 448.0
+margin_right = 615.0
+margin_bottom = 475.0
+custom_fonts/font = ExtResource( 4 )
+text = "X"
 
 [node name="SendOrder" type="Button" parent="."]
 margin_left = 352.0
