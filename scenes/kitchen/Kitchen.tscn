@@ -2,5 +2,5 @@
 
 [ext_resource path="res://scenes/kitchen/Kitchen.gd" type="Script" id=1]
 
-[node name="Level" type="Node"]
+[node name="Kitchen" type="Node"]
 script = ExtResource( 1 )
