@@ -16,18 +16,9 @@ var in_current_state_since = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var food_files = [
-		"res://assets/food/black_forest_hole.png",
-		"res://assets/food/blue_banana.png",
-		"res://assets/food/blue_banana.png",
-		"res://assets/food/ghosts.png",
-		"res://assets/food/springs.png",
-		"res://assets/food/grumpy_puree.png",
-		"res://assets/food/happy_puree.png",
-		"res://assets/food/mighty_puree.png",
-		"res://assets/food/smirky_puree.png",
-		"res://assets/food/worried_puree.png",
-	]
+	var food_files = []
+	for ingredient_name in Global.ingredient_names:
+		food_files.append("res://assets/food/" + ingredient_name + ".png")
 
 	for f in food_files:
 		food_assets.append(load(f))
