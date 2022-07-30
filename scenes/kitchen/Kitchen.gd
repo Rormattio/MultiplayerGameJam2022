@@ -5,10 +5,13 @@ var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn"
 var command_scene = preload("res://scenes/kitchen/Command.tscn")
 
 onready var send_dish = $SendDish
+onready var change_dish = $ChangeDish
 
-onready var bowl_back = $Dish/BowlBack # z index 0
-onready var bowl_container = $Dish/BowlContainer # z index 1
-onready var bowl_front = $Dish/BowlFront # z index 2
+onready var dish_back = $Dish/DishBack # z index 0
+onready var dish_container = $Dish/DishContainer # z index 1
+onready var dish_front = $Dish/DishFront # z index 2
+
+onready var current_dish = "plate"
 
 onready var commands_container = $CommandsContainer
 
@@ -64,11 +67,12 @@ func _ready():
 			y += dy
 	
 	# DISH
-	for asset in [bowl_back, bowl_front]:
+	dish_front.hide()
+	for asset in [dish_back, dish_front]:
 		asset.scale.x = 3
 		asset.scale.y = 3
-	bowl_container.scale.x = 2
-	bowl_container.scale.y = 2
+	dish_container.scale.x = 2
+	dish_container.scale.y = 2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -118,7 +122,7 @@ func _on_ingredient_dish_set(toggled, ingredient_name):
 		var sprite = Sprite.new()
 		sprite.set_texture(image)
 		sprite.name = ingredient_name # give it a name s that we can easily find it and delete it later
-		bowl_container.add_child(sprite)
+		dish_container.add_child(sprite)
 		sprite.position.x = dish_ingredient_offsets[idx][0]
 		sprite.position.y = dish_ingredient_offsets[idx][1]
 		dish_ingredients[idx] = ingredient_name
@@ -129,7 +133,7 @@ func _on_ingredient_dish_set(toggled, ingredient_name):
 					var ingredient_stock = ingredient_stocks[ingredient_name]
 					ingredient_stock.get_node("CheckBox").disabled = true
 	else:
-		bowl_container.get_node(ingredient_name).queue_free() # find and delete by name
+		dish_container.get_node(ingredient_name).queue_free() # find and delete by name
 		var idx = dish_ingredients.find(ingredient_name)
 		assert(idx > -1)
 		dish_ingredients[idx] = null
@@ -140,3 +144,15 @@ func _on_ingredient_dish_set(toggled, ingredient_name):
 				ingredient_stock.get_node("CheckBox").disabled = false
 		
 
+func _on_ChangeDish_pressed():
+	if (current_dish == "plate"):
+		dish_back.texture = load("res://assets/food/bowl_back.png")
+		dish_front.show()
+		current_dish = "bowl"
+		change_dish.icon = load("res://assets/food/plate.png")
+	else:
+		dish_back.texture = load("res://assets/food/plate.png")
+		dish_front.hide()
+		current_dish = "plate"
+		change_dish.icon = load("res://assets/food/bowl.png")
+	pass # Replace with function body.

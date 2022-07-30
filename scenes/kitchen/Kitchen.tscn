@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/kitchen/Kitchen.gd" type="Script" id=1]
-[ext_resource path="res://assets/food/bowl_back.png" type="Texture" id=2]
+[ext_resource path="res://assets/food/bowl.png" type="Texture" id=2]
 [ext_resource path="res://assets/food/bowl_front.png" type="Texture" id=3]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/food/plate.png" type="Texture" id=5]
 
 [node name="Kitchen" type="Node"]
 script = ExtResource( 1 )
@@ -25,12 +26,24 @@ text = "Send dish"
 [node name="Dish" type="Node2D" parent="."]
 position = Vector2( 640, 360 )
 
-[node name="BowlBack" type="Sprite" parent="Dish"]
-texture = ExtResource( 2 )
+[node name="DishBack" type="Sprite" parent="Dish"]
+texture = ExtResource( 5 )
 
-[node name="BowlContainer" type="Sprite" parent="Dish"]
+[node name="DishContainer" type="Sprite" parent="Dish"]
 z_index = 1
 
-[node name="BowlFront" type="Sprite" parent="Dish"]
+[node name="DishFront" type="Sprite" parent="Dish"]
 z_index = 2
 texture = ExtResource( 3 )
+
+[node name="ChangeDish" type="Button" parent="."]
+margin_left = 300.0
+margin_top = 400.0
+margin_right = 376.0
+margin_bottom = 470.0
+icon = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="ChangeDish" to="." method="_on_ChangeDish_pressed"]
