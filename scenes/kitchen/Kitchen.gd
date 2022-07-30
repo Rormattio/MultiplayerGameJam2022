@@ -12,17 +12,22 @@ var cheffe
 
 var ingredient_sprites = {}
 var ingredient_stocks = {}
-var dish_ingredients = []
 var dish_ingredient_offsets = [
 	[0,20],
 	[-30,-10],
 	[30,-10],
 ]
+var dish_ingredients
+var dish_ingredients_n = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	send_dish.connect("pressed", self, "_on_ButtonPressed")
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
+	
+	dish_ingredients = []
+	for idx in range(len(dish_ingredient_offsets)):
+		dish_ingredients.append(null)
 	
 	# CHEFFE
 	cheffe = cheffe_scene.instance()
@@ -79,7 +84,8 @@ func _on_ButtonPressed():
 
 func _on_ingredient_dish_set(toggled, ingredient_name):
 	if toggled:
-		var idx = len(dish_ingredients)
+		var idx = dish_ingredients.find(null)
+		assert(idx > -1)
 		var image = ingredient_sprites[ingredient_name]
 		var sprite = Sprite.new()
 		sprite.set_texture(image)
@@ -87,16 +93,20 @@ func _on_ingredient_dish_set(toggled, ingredient_name):
 		bowl_container.add_child(sprite)
 		sprite.position.x = dish_ingredient_offsets[idx][0]
 		sprite.position.y = dish_ingredient_offsets[idx][1]
-		dish_ingredients.append(ingredient_name)
-		if len(dish_ingredients) == len(dish_ingredient_offsets):
+		dish_ingredients[idx] = ingredient_name
+		dish_ingredients_n += 1
+		if dish_ingredients_n == len(dish_ingredient_offsets):
 			for ingredient_name in ingredient_stocks:
 				if not (ingredient_name in dish_ingredients):
 					var ingredient_stock = ingredient_stocks[ingredient_name]
 					ingredient_stock.get_node("CheckBox").disabled = true
 	else:
 		bowl_container.get_node(ingredient_name).queue_free() # find and delete by name
-		dish_ingredients.erase(ingredient_name)
-		if len(dish_ingredients) == len(dish_ingredient_offsets) - 1:
+		var idx = dish_ingredients.find(ingredient_name)
+		assert(idx > -1)
+		dish_ingredients[idx] = null
+		dish_ingredients_n -= 1
+		if dish_ingredients_n == len(dish_ingredient_offsets) - 1:
 			for ingredient_name in ingredient_stocks:
 				var ingredient_stock = ingredient_stocks[ingredient_name]
 				ingredient_stock.get_node("CheckBox").disabled = false
