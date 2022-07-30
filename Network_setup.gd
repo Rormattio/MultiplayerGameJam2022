@@ -1,7 +1,7 @@
 extends Control
 
-var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
-var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
+var kitchen_scene = preload("res://scenes/kitchen/Kitchen.tscn")
+var dining_room_scene = preload("res://scenes/dining_room/Dining_room.tscn")
 
 onready var multiplayer_config_ui = $Multiplayer_configure
 onready var server_ip_address = $Multiplayer_configure/Server_ip_address
@@ -14,9 +14,6 @@ func _ready() -> void:
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 
 	device_ip_address.text = Network.ip_address
-
-	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
-	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
 
 func _player_connected(id) -> void:
 	print("Player " + str(id) + " has connected")
@@ -31,7 +28,7 @@ func _on_Create_server_pressed():
 	multiplayer_config_ui.hide()
 	Network.create_server()
 
-	create_player(waiter_scene, get_tree().get_network_unique_id())
+	instanciate_object(dining_room_scene, get_tree().get_network_unique_id())
 
 func _on_Join_server_pressed():
 	print("_on_Join_server_pressed")
@@ -47,11 +44,11 @@ func _on_Join_server_pressed():
 	Network.join_server()
 
 func _connected_to_server() -> void:
-	create_player(cheffe_scene, get_tree().get_network_unique_id())
+	instanciate_object(kitchen_scene, get_tree().get_network_unique_id())
 
 	start()
 
-func create_player(scene, id):
+func instanciate_object(scene, id):
 	var p = scene.instance()
 	p.name = str(id)
 	p.set_network_master(id)
@@ -59,9 +56,3 @@ func create_player(scene, id):
 
 func start():
 	print("start game")
-
-func _on_WaiterCommand_Sent(command):
-	print("waiter command ", command)
-
-func _on_CheffeDish_Sent(dish):
-	print("cheffe dish ", dish)
