@@ -10,11 +10,14 @@ onready var server_ip_address = $Multiplayer_configure/Server_ip_address
 onready var device_local_ip_address = $Multiplayer_configure/Device_local_ip_address
 onready var external_ip_address_label = $Multiplayer_configure/external_ip_address_label
 onready var device_external_ip_address = $Multiplayer_configure/Device_external_ip_address
+onready var connection_status = $connection_status
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
+
+	connection_status.hide()
 
 	Upnp.connect("upnp_completed", self, "_upnp_completed")
 	external_ip_address_label.hide()
@@ -33,10 +36,24 @@ func _player_connected(id) -> void:
 	print("Player " + str(id) + " has connected")
 
 	if is_network_master():
+		connection_status.text = "Connected to chef"
+	else:
+		connection_status.text = "Connected to waiter"
+	connection_status.add_color_override("font_color", "#00ff00")
+	connection_status.show()
+
+	if is_network_master():
 		start()
 
 func _player_disconnected(id) -> void:
 	print("Player " + str(id) + " has disconnected")
+
+	if is_network_master():
+		connection_status.text = "Disconnected from chef"
+	else:
+		connection_status.text = "Disconnected from waiter"
+	connection_status.add_color_override("font_color", "#ff0000")
+	connection_status.show()
 
 func _on_Create_server_pressed():
 	multiplayer_config_ui.hide()
@@ -63,13 +80,13 @@ func _on_Create_server_and_client_pressed():
 
 	var dual_scene_handle = dual_scene.instance()
 	get_node("/root/Main").add_child(dual_scene_handle)
-	
+
 	var left_pane_handle = get_node("/root/Main/DualScene/LeftPane")
 	var right_pane_handle = get_node("/root/Main/DualScene/RightPane")
 
 	var _dining_room_scene_handle = instanciate_object(dining_room_scene, get_tree().get_network_unique_id(), left_pane_handle)
 	var _kitchen_scene_handle = instanciate_object(kitchen_scene, get_tree().get_network_unique_id(), right_pane_handle)
-		
+
 func _connected_to_server() -> void:
 	instanciate_object_at_root(kitchen_scene, get_tree().get_network_unique_id())
 

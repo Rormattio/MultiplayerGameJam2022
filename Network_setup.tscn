@@ -127,6 +127,14 @@ custom_styles/normal = SubResource( 3 )
 text = "192.12.12.12"
 editable = false
 
+[node name="connection_status" type="Label" parent="Network_setup"]
+margin_left = 8.0
+margin_top = 688.0
+margin_right = 149.0
+margin_bottom = 709.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player connected"
+
 [connection signal="pressed" from="Network_setup/Multiplayer_configure/Create_server" to="Network_setup" method="_on_Create_server_pressed"]
 [connection signal="pressed" from="Network_setup/Multiplayer_configure/create_server_and_client" to="Network_setup" method="_on_Create_server_and_client_pressed"]
 [connection signal="pressed" from="Network_setup/Multiplayer_configure/Join_server" to="Network_setup" method="_on_Join_server_pressed"]
