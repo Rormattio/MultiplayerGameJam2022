@@ -22,6 +22,11 @@ func _ready():
 		"res://assets/food/blue_banana.png",
 		"res://assets/food/ghosts.png",
 		"res://assets/food/springs.png",
+		"res://assets/food/grumpy_puree.png",
+		"res://assets/food/happy_puree.png",
+		"res://assets/food/mighty_puree.png",
+		"res://assets/food/smirky_puree.png",
+		"res://assets/food/worried_puree.png",
 	]
 
 	for f in food_files:
