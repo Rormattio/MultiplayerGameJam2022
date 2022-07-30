@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 var kitchen_scene = preload("res://scenes/kitchen/Kitchen.tscn")
 var dining_room_scene = preload("res://scenes/dining_room/Dining_room.tscn")
@@ -52,7 +52,7 @@ func instanciate_object(scene, id):
 	var p = scene.instance()
 	p.name = str(id)
 	p.set_network_master(id)
-	add_child(p)
+	get_node("/root/Main").add_child(p)
 
 func start():
 	print("start game")
