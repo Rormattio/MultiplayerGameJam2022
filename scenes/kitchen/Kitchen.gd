@@ -71,8 +71,8 @@ func _ready():
 	for asset in [dish_back, dish_front]:
 		asset.scale.x = 3
 		asset.scale.y = 3
-	dish_container.scale.x = 2
-	dish_container.scale.y = 2
+	dish_container.scale.x = 3
+	dish_container.scale.y = 3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -122,8 +122,8 @@ func _on_ingredient_dish_set(toggled, ingredient_name):
 		sprite.set_texture(image)
 		sprite.name = ingredient_name # give it a name s that we can easily find it and delete it later
 		dish_container.add_child(sprite)
-		sprite.position.x = dish_ingredient_offsets[idx][0]
-		sprite.position.y = dish_ingredient_offsets[idx][1]
+		#sprite.position.x = dish_ingredient_offsets[idx][0]
+		#sprite.position.y = dish_ingredient_offsets[idx][1]
 		dish_ingredients[idx] = ingredient_name
 		dish_ingredients_n += 1
 		if dish_ingredients_n == len(dish_ingredient_offsets):
