@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/dining_room/Patron.gd" type="Script" id=1]
+[ext_resource path="res://assets/dummy/client.png" type="Texture" id=2]
+[ext_resource path="res://assets/food/black_forest_hole.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 5.0
+height = 16.0
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.803922, 0.803922, 0.768627, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 30
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 2
+
+[node name="Patron" type="KinematicBody2D"]
+input_pickable = true
+script = ExtResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+pause_mode = 1
+frames = SubResource( 2 )
+animation = "walk"
+speed_scale = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -1 )
+shape = SubResource( 3 )
+
+[node name="DishWish" type="Node2D" parent="."]
+
+[node name="Background" type="Panel" parent="DishWish"]
+margin_top = -48.0
+margin_right = 32.0
+margin_bottom = -16.0
+custom_styles/panel = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="DishWish"]
+position = Vector2( 16, -32 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[connection signal="input_event" from="." to="." method="_on_Patron_input_event"]
