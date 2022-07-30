@@ -5,16 +5,17 @@ signal patron_clicked(Patron)
 var food_assets = []
 
 enum State {
-#	ENTERING,
+	ENTERING,
 	WAITING_TO_ORDER,
 	WAITING_TO_EAT,
 	EATING,
+	SHOW_DISH_SCORE,
 #	LEAVING,
 }
 
 var state
 var wanted_dish
-var in_current_state_since = 0
+var dish_score
 
 var sway_t
 
@@ -27,12 +28,17 @@ func _ready():
 	for f in food_files:
 		food_assets.append(load(f))
 
+	wanted_dish = null
 	hide_wanted_dish()
-	set_state(State.WAITING_TO_ORDER)
+	hide_dish_score()
+	set_state(State.ENTERING)
+
+	dish_score = 0
 
 	connect("input_event", self, "_on_Patron_input_event")
 
 	$EatTimer.connect("timeout", self, "_on_EatTimer_timeout")
+	$EnteringTimer.connect("timeout", self, "_on_EnteringTimer_timeout")
 
 	sway_t = 0
 
@@ -44,6 +50,14 @@ func _physics_process(_delta):
 func _on_Patron_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		emit_signal("patron_clicked", self)
+
+func _on_Patron_clicked():
+	match state:
+		State.WAITING_TO_ORDER:
+			toggle_wanted_dish()
+		State.SHOW_DISH_SCORE:
+			hide_dish_score()
+			set_state(State.ENTERING)
 
 func serve_dish(dish):
 	# Move dish in front of patron
@@ -57,6 +71,9 @@ func serve_dish(dish):
 
 func set_state(a_state):
 	match a_state:
+		State.ENTERING:
+			$EnteringTimer.start()
+
 		State.WAITING_TO_ORDER:
 			wanted_dish = generate_dish()
 			show_wanted_dish()
@@ -65,13 +82,33 @@ func set_state(a_state):
 			hide_wanted_dish()
 			$EatTimer.start()
 
+		State.SHOW_DISH_SCORE:
+			show_dish_score()
+
 	state = a_state
+
+func compute_dish_score(wanted_dish, dish):
+	# TODO
+	return 5
+
+func show_dish_score():
+	$DishScore/Label.text = str(dish_score)
+	$DishScore.show()
+
+func hide_dish_score():
+	$DishScore.hide()
+
+func _on_EnteringTimer_timeout():
+	set_state(State.WAITING_TO_ORDER)
 
 func _on_EatTimer_timeout():
 	var dish = $DishPosition.get_child(0)
-	dish.queue_free()
+
+	dish_score = compute_dish_score(wanted_dish, dish)
+
 	rotation = 0
-	set_state(State.WAITING_TO_ORDER)
+	dish.queue_free()
+	set_state(State.SHOW_DISH_SCORE)
 
 func toggle_wanted_dish():
 	if $DishWish.visible:

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/dining_room/Patron.gd" type="Script" id=1]
 [ext_resource path="res://assets/dummy/client.png" type="Texture" id=2]
 [ext_resource path="res://assets/food/black_forest_hole.png" type="Texture" id=3]
+[ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -22,6 +23,13 @@ corner_radius_top_left = 20
 corner_radius_top_right = 30
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.780392, 0.784314, 0.415686, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 10
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 5
 
 [node name="Patron" type="KinematicBody2D"]
 input_pickable = true
@@ -52,8 +60,32 @@ position = Vector2( 16, -32 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 
+[node name="DishScore" type="Node2D" parent="."]
+position = Vector2( 0, -8 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Background" type="Panel" parent="DishScore"]
+margin_top = -46.0
+margin_right = 30.0
+margin_bottom = -16.0
+custom_styles/panel = SubResource( 5 )
+
+[node name="Label" type="Label" parent="DishScore"]
+margin_left = 6.0
+margin_top = -42.0
+margin_right = 21.0
+margin_bottom = -21.0
+custom_fonts/font = ExtResource( 4 )
+text = "10"
+align = 1
+valign = 1
+
 [node name="DishPosition" type="Node2D" parent="."]
 position = Vector2( 0, 8 )
 
 [node name="EatTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="EnteringTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
