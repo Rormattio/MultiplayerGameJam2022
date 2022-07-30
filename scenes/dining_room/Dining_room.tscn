@@ -62,11 +62,12 @@ text = "Send order"
 position = Vector2( 32, 16 )
 script = ExtResource( 5 )
 
-[node name="Button" type="Button" parent="."]
+[node name="DebugButton" type="Button" parent="."]
+visible = false
 margin_left = 72.0
 margin_top = 128.0
 margin_right = 165.0
 margin_bottom = 148.0
 text = "Receive dish"
 
-[connection signal="pressed" from="Button" to="Tray" method="_on_Button_pressed"]
+[connection signal="pressed" from="DebugButton" to="Tray" method="_on_Button_pressed"]
