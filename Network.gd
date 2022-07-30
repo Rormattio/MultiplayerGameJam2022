@@ -1,6 +1,6 @@
 extends Node
 
-const DEFAULT_PORT = 28960
+const DEFAULT_PORT = 22017
 const MAX_CLIENTS = 2
 
 var server = null
