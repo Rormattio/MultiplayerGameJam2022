@@ -2,6 +2,7 @@ extends Node
 
 var kitchen_scene = preload("res://scenes/kitchen/Kitchen.tscn")
 var dining_room_scene = preload("res://scenes/dining_room/Dining_room.tscn")
+var dual_scene = preload("res://scenes/dual_scene.tscn")
 
 onready var multiplayer_config_ui = $Multiplayer_configure
 onready var server_ip_address = $Multiplayer_configure/Server_ip_address
@@ -41,7 +42,7 @@ func _on_Create_server_pressed():
 	multiplayer_config_ui.hide()
 	Network.create_server()
 
-	instanciate_object(dining_room_scene, get_tree().get_network_unique_id())
+	instanciate_object_at_root(dining_room_scene, get_tree().get_network_unique_id())
 
 func _on_Join_server_pressed():
 	print("_on_Join_server_pressed")
@@ -56,16 +57,34 @@ func _on_Join_server_pressed():
 	Network.ip_address = ip_address
 	Network.join_server()
 
+func _on_Create_server_and_client_pressed():
+	multiplayer_config_ui.hide()
+	Network.create_server()
+
+	var dual_scene_handle = dual_scene.instance()
+	get_node("/root/Main").add_child(dual_scene_handle)
+	
+	var left_pane_handle = get_node("/root/Main/DualScene/LeftPane")
+	var right_pane_handle = get_node("/root/Main/DualScene/RightPane")
+
+	var _dining_room_scene_handle = instanciate_object(dining_room_scene, get_tree().get_network_unique_id(), left_pane_handle)
+	var _kitchen_scene_handle = instanciate_object(kitchen_scene, get_tree().get_network_unique_id(), right_pane_handle)
+		
 func _connected_to_server() -> void:
-	instanciate_object(kitchen_scene, get_tree().get_network_unique_id())
+	instanciate_object_at_root(kitchen_scene, get_tree().get_network_unique_id())
 
 	start()
 
-func instanciate_object(scene, id):
+func instanciate_object_at_root(scene, id):
+	var root = get_node("/root/Main")
+	return instanciate_object(scene, id, root)
+
+func instanciate_object(scene, id, root):
 	var p = scene.instance()
 	p.name = str(id)
 	p.set_network_master(id)
-	get_node("/root/Main").add_child(p)
+	root.add_child(p)
+	return p
 
 func start():
 	print("start game")
