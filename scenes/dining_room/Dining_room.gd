@@ -45,7 +45,7 @@ func _ready():
 	for w in words:
 		$WordList.add_item(w)
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 func _on_CheffeDish_Sent(dish):

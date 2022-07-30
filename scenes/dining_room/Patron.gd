@@ -36,7 +36,9 @@ func _ready():
 	hide_wanted_dish()
 	wanted_dish = generate_dish()
 
-func _process(delta):
+	connect("input_event", self, "_on_Patron_input_event")
+
+func _process(_delta):
 	pass
 
 func _on_Patron_input_event(_viewport, event, _shape_idx):
