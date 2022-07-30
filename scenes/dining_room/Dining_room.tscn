@@ -27,7 +27,7 @@ scale = Vector2( 5, 5 )
 [node name="WordList" type="ItemList" parent="."]
 margin_left = 192.0
 margin_top = 192.0
-margin_right = 640.0
+margin_right = 704.0
 margin_bottom = 416.0
 custom_fonts/font = ExtResource( 4 )
 max_columns = 4
