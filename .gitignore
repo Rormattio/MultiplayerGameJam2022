@@ -1,6 +1,5 @@
 .import/
 .mono/
-assets/*.import
 **/*.bak
 
 # user

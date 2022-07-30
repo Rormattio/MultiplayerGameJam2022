@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/chase.ogg-2ece4c9b22cfd6d7bfdd9cfd916ecbad.oggstr"
+
+[deps]
+
+source_file="res://assets/chase.ogg"
+dest_files=[ "res://.import/chase.ogg-2ece4c9b22cfd6d7bfdd9cfd916ecbad.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
