@@ -2,13 +2,20 @@ extends Node
 
 var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
 var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn")
+var command_scene = preload("res://scenes/kitchen/Command.tscn")
 
 onready var send_dish = $SendDish
-onready var bowl_back = $BowlBack # z index 0
-onready var bowl_front = $BowlFront # z index 2
-onready var bowl_container = $BowlContainer # z index 1
+
+onready var bowl_back = $Dish/BowlBack # z index 0
+onready var bowl_container = $Dish/BowlContainer # z index 1
+onready var bowl_front = $Dish/BowlFront # z index 2
+
+onready var commands_container = $CommandsContainer
 
 var cheffe
+
+var active_commands = []
+var command_counter = 0
 
 var ingredient_sprites = {}
 var ingredient_stocks = {}
@@ -34,7 +41,7 @@ func _ready():
 	add_child(cheffe)
 	
 	# STOCK
-	var start_x = 50
+	var start_x = 900
 	var x = start_x
 	var y = 50
 	var dx = 64
@@ -52,18 +59,14 @@ func _ready():
 		ingredient_sprites[ingredient_name] = ingredient_sprite
 		ingredient_stock.get_node("Sprite").set_texture(ingredient_sprite)
 		x += dx
-		if x > w:
+		if x > w + start_x:
 			x = start_x
 			y += dy
 	
 	# DISH
 	for asset in [bowl_back, bowl_front]:
-		asset.position.x = 600
-		asset.position.y = 400
 		asset.scale.x = 3
 		asset.scale.y = 3
-	bowl_container.position.x = 600
-	bowl_container.position.y = 400
 	bowl_container.scale.x = 2
 	bowl_container.scale.y = 2
 
@@ -73,6 +76,31 @@ func _ready():
 
 func _on_WaiterCommand_Sent(dish):
 	print("waiter command ", dish)
+	var words = dish.split(" ")
+	var command = command_scene.instance()
+	commands_container.add_child(command)
+	command.connect("close_command", self, "_on_close_command")
+	command.name = str(command_counter)
+	var word_items = command.get_node("Words")
+	for word in words:
+		word_items.add_item(word)
+	command.position.x = (word_items.rect_size.x + 10)*len(active_commands)
+	active_commands.append(command)
+	command_counter += 1
+
+func _on_close_command(name):
+	print("delete command " + name)
+	var command = commands_container.get_node(name)
+	var command_idx = active_commands.find(command)
+	assert(command_idx > -1)
+	var prev_command = command
+	var curr_command
+	for idx in range(command_idx+1, len(active_commands)):
+		curr_command = active_commands[idx]
+		curr_command.position.x -= prev_command.get_node("Words").rect_size.x + 10
+		prev_command = curr_command
+	active_commands.remove(command_idx)
+	command.queue_free() # find and delete by name
 
 func _on_ButtonPressed():
 	var dish = ""
@@ -110,6 +138,5 @@ func _on_ingredient_dish_set(toggled, ingredient_name):
 			for ingredient_name in ingredient_stocks:
 				var ingredient_stock = ingredient_stocks[ingredient_name]
 				ingredient_stock.get_node("CheckBox").disabled = false
-		
 		
 
