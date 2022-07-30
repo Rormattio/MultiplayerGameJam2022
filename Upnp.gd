@@ -46,6 +46,8 @@ func _ready():
 func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.
 	if delete_mapping:
-		upnp.delete_port_mapping(mapped_port, "UDP")
-		upnp.delete_port_mapping(mapped_port, "TCP")
+		var gateway = upnp.get_gateway()
+		if gateway and gateway.is_valid_gateway():
+			gateway.delete_port_mapping(mapped_port, "UDP")
+			gateway.delete_port_mapping(mapped_port, "TCP")
 	thread.wait_to_finish()
