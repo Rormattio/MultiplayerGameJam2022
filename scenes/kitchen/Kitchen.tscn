@@ -46,4 +46,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Trash" type="Button" parent="."]
+margin_left = 300.0
+margin_top = 500.0
+margin_right = 344.0
+margin_bottom = 520.0
+text = "trash"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="ChangeDish" to="." method="_on_ChangeDish_pressed"]
+[connection signal="pressed" from="Trash" to="." method="_on_Trash_pressed"]

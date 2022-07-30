@@ -22,11 +22,8 @@ var command_counter = 0
 
 var ingredient_sprites = {}
 var ingredient_stocks = {}
-var dish_ingredient_offsets = [
-	[0,20],
-	[-30,-10],
-	[30,-10],
-]
+var max_ingredients = 4
+
 var dish_ingredients
 var dish_ingredients_n = 0
 
@@ -36,7 +33,7 @@ func _ready():
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	
 	dish_ingredients = []
-	for idx in range(len(dish_ingredient_offsets)):
+	for idx in range(max_ingredients):
 		dish_ingredients.append(null)
 	
 	# CHEFFE
@@ -113,35 +110,24 @@ func _on_ButtonPressed():
 			dish.append(ingredient_name)
 	Global.cheffe_send_dish(dish)
 
-func _on_ingredient_dish_set(toggled, ingredient_name):
-	if toggled:
-		var idx = dish_ingredients.find(null)
-		assert(idx > -1)
-		var image = ingredient_sprites[ingredient_name]
-		var sprite = Sprite.new()
-		sprite.set_texture(image)
-		sprite.name = ingredient_name # give it a name s that we can easily find it and delete it later
-		dish_container.add_child(sprite)
-		#sprite.position.x = dish_ingredient_offsets[idx][0]
-		#sprite.position.y = dish_ingredient_offsets[idx][1]
-		dish_ingredients[idx] = ingredient_name
-		dish_ingredients_n += 1
-		if dish_ingredients_n == len(dish_ingredient_offsets):
-			for ingredient_name in ingredient_stocks:
-				if not (ingredient_name in dish_ingredients):
-					var ingredient_stock = ingredient_stocks[ingredient_name]
-					ingredient_stock.get_node("CheckBox").disabled = true
-	else:
-		dish_container.get_node(ingredient_name).queue_free() # find and delete by name
-		var idx = dish_ingredients.find(ingredient_name)
-		assert(idx > -1)
-		dish_ingredients[idx] = null
-		dish_ingredients_n -= 1
-		if dish_ingredients_n == len(dish_ingredient_offsets) - 1:
-			for ingredient_name in ingredient_stocks:
-				var ingredient_stock = ingredient_stocks[ingredient_name]
-				ingredient_stock.get_node("CheckBox").disabled = false
-		
+func _on_ingredient_dish_set(ingredient_name):
+	var idx = dish_ingredients.find(null)
+	if (idx == -1 or ingredient_name in dish_ingredients): # all_ingredients are already used
+		return
+	var image = ingredient_sprites[ingredient_name]
+	var sprite = Sprite.new()
+	sprite.set_texture(image)
+	sprite.name = ingredient_name # give it a name s that we can easily find it and delete it later
+	dish_container.add_child(sprite)
+	dish_ingredients[idx] = ingredient_name
+	dish_ingredients_n += 1
+
+func remove_ingredient(ingredient_name):
+	dish_container.get_node(ingredient_name).queue_free() # find and delete by name
+	var idx = dish_ingredients.find(ingredient_name)
+	assert(idx > -1)
+	dish_ingredients[idx] = null
+	dish_ingredients_n -= 1
 
 func _on_ChangeDish_pressed():
 	if (current_dish == "plate"):
@@ -154,4 +140,9 @@ func _on_ChangeDish_pressed():
 		dish_front.hide()
 		current_dish = "plate"
 		change_dish.icon = load("res://assets/food/bowl.png")
-	pass # Replace with function body.
+
+func _on_Trash_pressed():
+	print(dish_ingredients)
+	for ingredient_name in dish_ingredients:
+		if ingredient_name != null:
+			remove_ingredient(ingredient_name)
