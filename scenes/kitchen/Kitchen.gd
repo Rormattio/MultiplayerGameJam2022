@@ -3,12 +3,15 @@ extends Node
 var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
 var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn")
 
+onready var send_dish = $SendDish
+
 var cheffe
 
 var ingredient_stocks = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	send_dish.connect("pressed", self, "_on_ButtonPressed")
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	cheffe = cheffe_scene.instance()
 	add_child(cheffe)
@@ -42,8 +45,6 @@ func _ready():
 		if x > w:
 			x = start_x
 			y += dy
-		
-		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -51,3 +52,14 @@ func _ready():
 
 func _on_WaiterCommand_Sent(dish):
 	print("waiter command ", dish)
+
+func _on_ButtonPressed():
+	var dish = ""
+	for ingredient_name in ingredient_stocks:
+		var ingredient_stock = ingredient_stocks[ingredient_name]
+		if ingredient_stock.get_node("CheckBox").pressed:
+			if len(dish) > 0:
+				dish += " "
+			dish += ingredient_name
+	Global.cheffe_send_dish(dish)
+
