@@ -22,7 +22,7 @@ func _ready() -> void:
 	device_local_ip_address.text = Network.ip_address
 
 func _upnp_completed(error):
-	print("upnp done", Upnp.external_ip_address)
+	print("upnp done ", Upnp.external_ip_address)
 	if error == UPNP.UPNP_RESULT_SUCCESS:
 		device_external_ip_address.text = Upnp.external_ip_address
 		device_external_ip_address.show()
