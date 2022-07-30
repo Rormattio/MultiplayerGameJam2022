@@ -12,3 +12,5 @@ margin_left = 15.0
 margin_top = 10.0
 margin_right = 39.0
 margin_bottom = 34.0
+
+[connection signal="toggled" from="CheckBox" to="." method="_on_CheckBox_toggled"]
