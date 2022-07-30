@@ -88,4 +88,4 @@ func _on_Patron_clicked(patron):
 		tray.remove_dish(dish)
 		patron.serve_dish(dish)
 	else:
-		patron.toggle_wanted_dish()
+		patron._on_Patron_clicked()
