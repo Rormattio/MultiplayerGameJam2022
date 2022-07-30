@@ -49,6 +49,11 @@ func _process(_delta):
 	pass
 
 func _on_CheffeDish_Sent(dish):
+	# create received dish and add to top tray
+	# on click, select
+	# on select patron, remove from tray, add to table
+	# patron scores
+
 	print("cheffe dish ", dish)
 
 func get_current_order() -> String:

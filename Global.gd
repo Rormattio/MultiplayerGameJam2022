@@ -59,3 +59,6 @@ func cheffe_send_dish(dish):
 
 remote func on_cheffe_dish(dish):
 	emit_signal("cheffe_dish_sent", dish)
+
+func rand_array(array : Array):
+	return array[randi() % array.size()]
