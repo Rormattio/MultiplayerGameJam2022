@@ -63,7 +63,7 @@ func serve_dish(dish):
 	# Move dish in front of patron
 	$DishPosition.add_child(dish)
 	dish.position = Vector2.ZERO
-	dish.scale = Vector2(1.0/5.0, 1.0/5.0)
+	dish.scale = Vector2(1.0/4.0, 1.0/4.0)
 	dish.z_index = 100 # to appear above the table
 	# Advance state
 	dish.state = dish.State.SERVED
