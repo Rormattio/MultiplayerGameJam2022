@@ -3,6 +3,36 @@ extends Node
 signal cheffe_dish_sent(dish)
 signal waiter_command_sent(command)
 
+var base_ingredient_names = [
+	"black_forest_hole",
+	"blue_banana",
+	"bread",
+	"bread_blue",
+	"bread_green",
+	"bread_grey",
+	"bread_top",
+	"bread_top_blue",
+	"bread_top_green",
+	"bread_top_grey",
+	"crab",
+	"ghosts",
+	"grumpy_puree",
+	"happy_puree",
+	"mecha_ham",
+	"mighty_puree",
+	"planet_earth",
+	"planet_jupiter",
+	"planet_mars",
+	"planet_neptune",
+	"planet_saturn",
+	"smirky_puree",
+	"springs",
+	"squid_green",
+	"squid_space",
+	"squid_yellow",
+	"worried_puree",
+]
+
 var ingredient_names = [
 	"black_forest_hole",
 	"blue_banana",

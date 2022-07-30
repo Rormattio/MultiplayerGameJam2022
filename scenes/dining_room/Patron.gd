@@ -22,7 +22,7 @@ var sway_t
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var food_files = []
-	for ingredient_name in Global.ingredient_names:
+	for ingredient_name in Global.base_ingredient_names:
 		food_files.append("res://assets/food/" + ingredient_name + ".png")
 
 	for f in food_files:
@@ -123,5 +123,5 @@ func hide_wanted_dish():
 	$DishWish.hide()
 
 func generate_dish():
-	var food_img = food_assets[randi() % food_assets.size()]
+	var food_img = Global.rand_array(food_assets)
 	$DishWish/Sprite.texture = food_img
