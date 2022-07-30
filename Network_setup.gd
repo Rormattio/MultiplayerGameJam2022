@@ -6,14 +6,27 @@ var dining_room_scene = preload("res://scenes/dining_room/Dining_room.tscn")
 onready var multiplayer_config_ui = $Multiplayer_configure
 onready var server_ip_address = $Multiplayer_configure/Server_ip_address
 
-onready var device_ip_address = $Multiplayer_configure/Device_ip_address
+onready var device_local_ip_address = $Multiplayer_configure/Device_local_ip_address
+onready var external_ip_address_label = $Multiplayer_configure/external_ip_address_label
+onready var device_external_ip_address = $Multiplayer_configure/Device_external_ip_address
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 
-	device_ip_address.text = Network.ip_address
+	Upnp.connect("upnp_completed", self, "_upnp_completed")
+	external_ip_address_label.hide()
+	device_external_ip_address.hide()
+
+	device_local_ip_address.text = Network.ip_address
+
+func _upnp_completed(error):
+	print("upnp done", Upnp.external_ip_address)
+	if error == UPNP.UPNP_RESULT_SUCCESS:
+		device_external_ip_address.text = Upnp.external_ip_address
+		device_external_ip_address.show()
+		external_ip_address_label.show()
 
 func _player_connected(id) -> void:
 	print("Player " + str(id) + " has connected")
