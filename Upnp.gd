@@ -7,6 +7,7 @@ var thread = null
 var upnp = null
 var delete_mapping = false
 var mapped_port
+var external_ip_address = null
 
 func _upnp_setup(server_port):
 	# UPNP queries take some time.
@@ -30,6 +31,8 @@ func _upnp_setup(server_port):
 			push_error(str(err))
 			emit_signal("upnp_completed", err)
 			return
+
+		external_ip_address = upnp.get_gateway().query_external_address()
 
 		delete_mapping = true
 		mapped_port = server_port
