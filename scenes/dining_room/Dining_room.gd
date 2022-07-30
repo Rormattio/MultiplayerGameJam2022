@@ -2,8 +2,9 @@ extends Node
 
 var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
 
+onready var tray = $Tray
+
 var waiter
-var tray
 
 func _ready():
 	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
@@ -19,7 +20,7 @@ func _ready():
 	waiter = waiter_scene.instance()
 	add_child(waiter)
 
-	tray = $Tray
+	$Trash.connect("gui_input", self, "_on_Trash_gui_input")
 
 	var words = [
 		"scrumptuous",
@@ -89,3 +90,13 @@ func _on_Patron_clicked(patron):
 		patron.serve_dish(dish)
 	else:
 		patron._on_Patron_clicked()
+
+func _on_Trash_clicked():
+	if tray.selected_dish != null:
+		var dish = tray.selected_dish
+		tray.remove_dish(dish)
+		dish.queue_free()
+
+func _on_Trash_gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
+		_on_Trash_clicked()
