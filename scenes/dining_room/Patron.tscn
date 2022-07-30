@@ -47,7 +47,6 @@ shape = SubResource( 3 )
 
 [node name="DishWish" type="Node2D" parent="."]
 position = Vector2( 0, -8 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Background" type="Panel" parent="DishWish"]
 margin_top = -48.0
@@ -57,12 +56,11 @@ custom_styles/panel = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="DishWish"]
 position = Vector2( 16, -32 )
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
 [node name="DishScore" type="Node2D" parent="."]
 position = Vector2( 0, -8 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Background" type="Panel" parent="DishScore"]
 margin_top = -46.0
