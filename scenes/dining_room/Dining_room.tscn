@@ -32,11 +32,11 @@ scale = Vector2( 5, 5 )
 
 [node name="WordList" type="ItemList" parent="."]
 margin_left = 192.0
-margin_top = 192.0
+margin_top = 160.0
 margin_right = 704.0
 margin_bottom = 416.0
 custom_fonts/font = ExtResource( 4 )
-max_columns = 4
+max_columns = 3
 same_column_width = true
 
 [node name="OrderPreview" type="Label" parent="."]
@@ -83,7 +83,6 @@ custom_fonts/font = ExtResource( 4 )
 text = "Trash"
 
 [node name="DebugButton" type="Button" parent="Trash"]
-visible = false
 margin_left = -24.0
 margin_top = -408.0
 margin_right = 69.0
