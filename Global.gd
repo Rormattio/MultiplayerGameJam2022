@@ -15,7 +15,7 @@ var ingredient_names = [
 	"ghosts",
 	"grumpy_puree",
 	"happy_puree",
-	"meca_ham",
+	"mecha_ham",
 	"mighty_puree",
 	"smirky_puree",
 	"smoke_green",
