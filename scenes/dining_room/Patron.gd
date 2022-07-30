@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal patron_clicked(Patron)
+
 var food_assets = []
 
 enum State {
@@ -34,18 +36,16 @@ func _process(_delta):
 
 func _on_Patron_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-		_on_Patron_pressed()
+		emit_signal("patron_clicked", self)
 
-func _on_Patron_pressed():
-	if state == State.WAITING_TO_ORDER:
-		toggle_wanted_dish()
-	elif state == State.WAITING_TO_EAT:
-		pass # TODO
-	elif state == State.EATING:
-		pass # nothing to be done
-	else:
-		assert(false)
-
+func serve_dish(dish):
+	# Move dish in front of patron
+	$DishPosition.add_child(dish)
+	dish.position = Vector2.ZERO
+	dish.scale = Vector2(1.0/5.0, 1.0/5.0)
+	dish.z_index = 100 # to be above the table
+	# Advance state
+	dish.state = dish.State.SERVED
 
 func toggle_wanted_dish():
 	if $DishWish.visible:

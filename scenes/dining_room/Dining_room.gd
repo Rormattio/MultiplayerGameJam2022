@@ -3,6 +3,7 @@ extends Node
 var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
 
 var waiter
+var tray
 
 func _ready():
 	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
@@ -17,6 +18,8 @@ func _ready():
 
 	waiter = waiter_scene.instance()
 	add_child(waiter)
+
+	tray = $Tray
 
 	var words = [
 		"scrumptuous",
@@ -45,16 +48,16 @@ func _ready():
 	for w in words:
 		$WordList.add_item(w)
 
+	$Patron.connect("patron_clicked", self, "_on_Patron_clicked")
+	$Patron2.connect("patron_clicked", self, "_on_Patron_clicked")
+	$Patron3.connect("patron_clicked", self, "_on_Patron_clicked")
+
 func _process(_delta):
 	pass
 
 func _on_CheffeDish_Sent(dish):
-	# create received dish and add to top tray
-	# on click, select
-	# on select patron, remove from tray, add to table
-	# patron scores
-
-	print("cheffe dish ", dish)
+	print("cheffe sends dish ", dish)
+	tray.add_dish(dish)
 
 func get_current_order() -> String:
 	return $OrderPreview.text.strip_edges()
@@ -78,3 +81,11 @@ func _on_SendOrder_pressed():
 func _on_ClearOrder_pressed():
 	$OrderPreview.text = ""
 	$SendOrder.disabled = true
+
+func _on_Patron_clicked(patron):
+	if tray.selected_dish != null:
+		var dish = tray.selected_dish
+		tray.remove_dish(dish)
+		patron.serve_dish(dish)
+	else:
+		patron.toggle_wanted_dish()

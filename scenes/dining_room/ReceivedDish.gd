@@ -2,13 +2,18 @@ extends Node2D
 
 signal dish_clicked(ReceivedDish)
 
-var selected
+var state
+
+enum State {
+	UNSERVED,
+	SELECTED,
+	SERVED,
+}
 
 func _ready():
-	selected = false
+	state = State.UNSERVED
 
 	$RootForOffset/Background.connect("gui_input", self, "_on_input_received")
-	pass
 
 func add_ingredient(ingredient_name):
 	var texture = load("res://assets/food/" + ingredient_name + ".png")
@@ -17,9 +22,11 @@ func add_ingredient(ingredient_name):
 	$RootForOffset.add_child(sprite)
 
 func set_selected(a_selected: bool):
-	selected = a_selected
-	$RootForOffset.position.y = 30 if selected else 0
+	state = State.SELECTED if a_selected else State.UNSERVED
+	$RootForOffset.position.y = 30 if (state == State.SELECTED) else 0
 
 func _on_input_received(event: InputEvent):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
+		if state == State.SERVED:
+			return
 		emit_signal("dish_clicked", self)
