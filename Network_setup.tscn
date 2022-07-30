@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
 
 [node name="Main" type="Node"]
 
@@ -48,7 +54,7 @@ custom_fonts/font = ExtResource( 3 )
 align = 1
 placeholder_text = "server address"
 
-[node name="Device_local_ip_address" type="Label" parent="Network_setup/Multiplayer_configure"]
+[node name="Device_local_ip_address" type="LineEdit" parent="Network_setup/Multiplayer_configure"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -56,9 +62,13 @@ margin_left = 200.0
 margin_top = -520.0
 margin_right = -969.0
 margin_bottom = -478.0
+custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
+custom_styles/read_only = SubResource( 1 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
 text = "192.12.12.12"
-valign = 1
+editable = false
 
 [node name="or" type="Label" parent="Network_setup/Multiplayer_configure"]
 margin_left = 616.0
@@ -89,7 +99,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "Your external ip:"
 valign = 1
 
-[node name="Device_external_ip_address" type="Label" parent="Network_setup/Multiplayer_configure"]
+[node name="Device_external_ip_address" type="LineEdit" parent="Network_setup/Multiplayer_configure"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -97,9 +107,13 @@ margin_left = 200.0
 margin_top = -472.0
 margin_right = -969.0
 margin_bottom = -430.0
+custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
+custom_styles/read_only = SubResource( 1 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
 text = "192.12.12.12"
-valign = 1
+editable = false
 
 [connection signal="pressed" from="Network_setup/Multiplayer_configure/Create_server" to="Network_setup" method="_on_Create_server_pressed"]
 [connection signal="pressed" from="Network_setup/Multiplayer_configure/Join_server" to="Network_setup" method="_on_Join_server_pressed"]
