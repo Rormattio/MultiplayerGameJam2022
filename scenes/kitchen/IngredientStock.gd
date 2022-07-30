@@ -1,8 +1,9 @@
 extends Node
 
 onready var checkbox = $CheckBox
+onready var button = $Button
 
-signal ingredient_dish_set(toggled, ingredient_name)
+signal ingredient_dish_set(ingredient_name)
 
 var ingredient_name
 
@@ -14,5 +15,5 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _on_CheckBox_toggled(toggled):
-	emit_signal("ingredient_dish_set", toggled, ingredient_name)
+func _on_Button_pressed():
+	emit_signal("ingredient_dish_set", ingredient_name)
