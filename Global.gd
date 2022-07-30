@@ -3,6 +3,31 @@ extends Node
 signal cheffe_dish_sent(dish)
 signal waiter_command_sent(command)
 
+var ingredient_names = [
+	"black_forest_hole",
+	"blue_banana",
+	"ghosts",
+	"grumpy_puree",
+	"happy_puree",
+	"mighty_puree",
+	"smirky_puree",
+	"smoke_green",
+	"smoke_kaki",
+	"smoke_orange",
+	"smoke_pink",
+	"smoke_purple",
+	"springs",
+	"squid_green",
+	"squid_space",
+	"squid_yellow",
+	"stars_blue",
+	"stars_green",
+	"stars_pink",
+	"stars_purple",
+	"stars_yellow",
+	"worried_puree",
+]
+
 func _ready():
 	randomize()
 

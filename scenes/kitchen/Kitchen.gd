@@ -29,24 +29,13 @@ func _ready():
 	add_child(cheffe)
 	
 	# STOCK
-	var ingredient_names = [
-		"black_forest_hole",
-		"blue_banana",
-		"ghosts",
-		"grumpy_puree",
-		"happy_puree",
-		"mighty_puree",
-		"smirky_puree",
-		"springs",
-		"worried_puree",
-	]
 	var start_x = 50
 	var x = start_x
 	var y = 50
 	var dx = 64
 	var w = dx*4
 	var dy = 64
-	for ingredient_name in ingredient_names:
+	for ingredient_name in Global.ingredient_names:
 		var ingredient_stock = ingredient_stock_scene.instance()
 		add_child(ingredient_stock)
 		ingredient_stock.connect("ingredient_dish_set", self, "_on_ingredient_dish_set")
