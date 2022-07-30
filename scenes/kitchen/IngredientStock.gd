@@ -1,6 +1,5 @@
 extends Node
 
-onready var checkbox = $CheckBox
 onready var button = $Button
 
 signal ingredient_dish_set(ingredient_name)
