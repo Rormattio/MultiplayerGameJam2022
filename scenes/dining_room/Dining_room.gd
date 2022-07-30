@@ -1,10 +1,13 @@
 extends Node2D
 
+const MAX_WORDS_IN_ORDER = 4
+
 var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
 
 onready var tray = $Tray
 
 var waiter
+var current_order = []
 
 func _ready():
 	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
@@ -16,6 +19,7 @@ func _ready():
 
 	$WordList.connect("item_selected", self, "_on_WordList_item_selected")
 	$OrderPreview.text = ""
+	current_order.clear()
 
 	waiter = waiter_scene.instance()
 	add_child(waiter)
@@ -73,11 +77,14 @@ func build_word_list():
 
 	for w in colors:
 		chosen_color_words.append(Global.rand_array(w))
+	chosen_color_words.shuffle()
 
 	for w in forms:
 		chosen_form_words.append(Global.rand_array(w))
+	chosen_form_words.shuffle()
 
 	chosen_thing_words = things
+	chosen_thing_words.shuffle()
 
 	for i in range(max(chosen_color_words.size(), max(chosen_form_words.size(), chosen_thing_words.size()))):
 		if i < chosen_color_words.size():
@@ -103,14 +110,22 @@ func _on_CheffeDish_Sent(dish):
 func get_current_order() -> String:
 	return $OrderPreview.text.strip_edges()
 
+func get_current_order_word_count() -> int:
+	return current_order.size()
+
 func send_order(order):
 	print("sent order ", order)
 	Global.waiter_send_command(order)
 
 func _on_WordList_item_selected(index: int):
-	var word = $WordList.get_item_text(index)
-	$OrderPreview.text += " " + word
 	$WordList.unselect_all()
+
+	if get_current_order_word_count() == MAX_WORDS_IN_ORDER:
+		return
+
+	var word = $WordList.get_item_text(index)
+	current_order.append(word)
+	$OrderPreview.text += " " + word
 	$SendOrder.disabled = false
 
 func _on_SendOrder_pressed():
@@ -118,9 +133,11 @@ func _on_SendOrder_pressed():
 	send_order(order)
 	$SendOrder.disabled = true
 	$OrderPreview.text = ""
+	current_order.clear()
 
 func _on_ClearOrder_pressed():
 	$OrderPreview.text = ""
+	current_order.clear()
 	$SendOrder.disabled = true
 
 func _on_Patron_clicked(patron):
