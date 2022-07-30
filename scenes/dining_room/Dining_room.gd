@@ -1,16 +1,18 @@
 extends Node
 
+var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+var waiter
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var player_instance = Global.instance_node_at_location(player, Players, Vector2(rand_range(0, 1920), rand_range(0, 1080)))
-
+	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
+	waiter = waiter_scene.instance()
+	add_child(waiter)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func _on_CheffeDish_Sent(dish):
+	print("cheffe dish ", dish)
