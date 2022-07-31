@@ -3,6 +3,7 @@ extends Node2D
 var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
 var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn")
 var command_scene = preload("res://scenes/kitchen/Command.tscn")
+var Dish = preload("res://Dish.gd")
 
 onready var send_dish = $SendDish
 onready var change_dish = $ChangeDish
@@ -131,23 +132,44 @@ func remove_ingredient(ingredient_name):
 	dish_ingredients[idx] = null
 	dish_ingredients_n -= 1
 
-func _on_ChangeDish_pressed():
-	if (current_dish == "plate"):
-		dish_back.texture = load("res://assets/food/bowl_back.png")
-		dish_front.show()
-		current_dish = "bowl"
-		change_dish.icon = load("res://assets/food/plate.png")
-	else:
+func _set_plate():
 		dish_back.texture = load("res://assets/food/plate.png")
 		dish_front.hide()
 		current_dish = "plate"
 		change_dish.icon = load("res://assets/food/bowl.png")
 
-func _on_Trash_pressed():
-	print(dish_ingredients)
+func _set_bowl():
+		dish_back.texture = load("res://assets/food/bowl_back.png")
+		dish_front.show()
+		current_dish = "bowl"
+		change_dish.icon = load("res://assets/food/plate.png")
+		
+func _on_ChangeDish_pressed():
+	if (current_dish == "plate"):
+		_set_bowl()
+	else:
+		assert(current_dish == "bowl")
+		_set_plate()
+
+func _clear_dish():
+	print("Clearing : ", dish_ingredients)
 	for ingredient_name in dish_ingredients:
 		if ingredient_name != null:
 			remove_ingredient(ingredient_name)
+	
+func _on_Trash_pressed():
+	_clear_dish()
+
+func _on_Randomize_pressed():
+	_clear_dish()
+	
+	var new_dish = Dish.new()
+	new_dish.randomize()
+	new_dish.debug_print()
+
+	# TODO : For now we marshall Dish to what's used there but we should share the representation
+	return
+
 
 func _on_PatronDishScore_Sent(dish, score):
 	# TODO: actually show the dish
