@@ -45,17 +45,10 @@ func _set_visible(_visible):
 	# TODO: we may also need to enable/disable controls eg pickable_inputs
 
 func pop_up(_patrons):
-	# TODO: also take in the table so that we can reconstruct the positions of patrons relative to the table
 	_set_visible(true)
 	current_order.clear()
 	order_preview.text = ""
 	patrons = _patrons
-
-	var x = 960
-	for patron in patrons:
-		patron.get_node("CommandAvatar").global_position.x = x
-		patron.get_node("CommandAvatar").global_position.y = 250
-		x += 60
 	
 func pop_down():
 	_set_visible(false)
