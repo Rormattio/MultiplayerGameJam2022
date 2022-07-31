@@ -1,11 +1,12 @@
 extends Node
 
+const Patron = preload("res://scenes/dining_room/Patron.tscn")
+
 onready var tray = $Tray
 onready var layout = $Layout
 onready var dining_room = $DiningRoom
 onready var waiter = $Layout/Waiter
-
-onready var patron_dummy = $Patrons/Patron # TODO; these should be spawned at runtime
+onready var patrons = $Patrons
 
 
 # Called when the node enters the scene tree for the first time.
@@ -15,11 +16,24 @@ func _ready():
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
 	dining_room.tray = tray
 
-	patron_dummy.connect("patron_clicked", self, "_on_Patron_clicked")
+	spawn_patron()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func spawn_patron():
+	var patron_dummy = Patron.instance()
+	patrons.add_child(patron_dummy)
+	patron_dummy.connect("patron_clicked", self, "_on_Patron_clicked")
+	patron_dummy.level_avatar.position.x = 20
+	patron_dummy.level_avatar.position.y = 100
+	patron_dummy.connect("patron_leaves", self, "_on_patron_leaves")
+	patron_dummy.set_level_avatar_visible(dining_room.state == dining_room.State.NOT_VISIBLE)
+	# TODO: set the command_avatar.position positions correctly relative to the table as given in patron_dummy.destination
+	patron_dummy.destination = Vector2(440, 125)
+	patron_dummy.command_avatar.position.x = 960
+	patron_dummy.command_avatar.position.y = 250
 
 func _on_CheffeDish_Sent(dish):
 	print("cheffe sends dish ", dish)
@@ -29,10 +43,7 @@ func _set_layout_visible(_visible):
 	layout.visible = _visible
 	# TODO: we may also need to enable/disable controls eg pickable_inputs
 	for patron in $Patrons.get_children():
-		patron.get_node("LevelAvatar").visible = _visible
-		patron.get_node("LevelAvatar").input_pickable = _visible
-		patron.get_node("CommandAvatar").visible = not _visible
-		patron.get_node("CommandAvatar").input_pickable = not _visible
+		patron.set_level_avatar_visible(_visible)
 	
 func _on_Patron_clicked(patron):
 	if (patron.get_node("LevelAvatar").global_position.distance_to(waiter.position) < 80) and (dining_room.state == dining_room.State.NOT_VISIBLE):
@@ -53,6 +64,9 @@ func _on_Patron_clicked(patron):
 			patron.State.SHOW_DISH_SCORE:
 				patron.hide_dish_score()
 				patron.set_state(patron.State.LEAVING)
+
+func _on_patron_leaves(patron):
+	spawn_patron()
 
 func on_close_command_popup():
 	assert(dining_room.state == dining_room.State.VISIBLE)
