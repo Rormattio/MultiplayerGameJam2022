@@ -4,6 +4,7 @@ var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
 var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn")
 var command_scene = preload("res://scenes/kitchen/Command.tscn")
 var Dish = preload("res://Dish.gd")
+var DishRenderer = preload("res://DishRenderer.gd")
 
 onready var send_dish = $SendDish
 onready var change_dish = $ChangeDish
