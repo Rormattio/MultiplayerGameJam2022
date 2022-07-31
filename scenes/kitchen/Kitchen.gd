@@ -126,7 +126,9 @@ func _on_ingredient_dish_set(ingredient_name):
 	var sprite = Sprite.new()
 	sprite.set_texture(image)
 	sprite.name = ingredient_name # give it a name s that we can easily find it and delete it later
+	assert(not dish_container.has_node(ingredient_name))
 	dish_container.add_child(sprite)
+	assert(dish_container.has_node(ingredient_name))
 	dish_ingredients[idx] = ingredient_name
 	dish_ingredients_n += 1
 
@@ -136,8 +138,8 @@ func _on_ingredient_dish_set(ingredient_name):
 
 func remove_ingredient(ingredient_name):
 	var node = dish_container.get_node(ingredient_name);
-	if node != null:
-		node.queue_free() # find and delete by name
+	assert(node != null)
+	dish_container.remove_child(node)
 	var idx = dish_ingredients.find(ingredient_name)
 	assert(idx > -1)
 	dish_ingredients[idx] = null
