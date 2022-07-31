@@ -129,7 +129,6 @@ class IngredientDesc:
 		
 var ingredient_descs = [
 	IngredientDesc.new("black_forest_hole", null),
-	IngredientDesc.new("black_forest_hole", null),
 	IngredientDesc.new("blue_banana", null),
 	IngredientDesc.new("bread", Sfx.FFFT),
 	IngredientDesc.new("bread_blue", Sfx.FFFT),
