@@ -1,6 +1,7 @@
 extends Node
 
 signal patron_clicked(patron)
+signal patron_leaves(patron)
 
 onready var dish_wish = $CommandAvatar/DishWish
 onready var dish_score = $CommandAvatar/DishScore
@@ -23,6 +24,8 @@ enum State {
 var state
 var wanted_dish
 var dish_score_value
+var destination
+var level_avatar_is_visible
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,6 +35,10 @@ func _ready():
 
 	for f in food_files:
 		food_assets.append(load(f))
+
+	command_avatar.patron = self
+	level_avatar_is_visible = true
+	set_level_avatar_visible(level_avatar_is_visible)
 
 	wanted_dish = null
 	hide_wanted_dish()
@@ -44,12 +51,18 @@ func _ready():
 
 	$EatTimer.connect("timeout", self, "_on_EatTimer_timeout")
 	$EnteringTimer.connect("timeout", self, "_on_EnteringTimer_timeout")
-	
-	command_avatar.visible = false
-	command_avatar.patron = self
+	$LeavingTimer.connect("timeout", self, "_on_LeavingTimer_timeout")
 	
 	command_avatar.connect("patron_avatar_command_clicked", self, "_on_any_avatar_clicked")
 	level_avatar.connect("patron_avatar_level_clicked", self, "_on_any_avatar_clicked")
+
+func set_level_avatar_visible(_visible):
+	level_avatar_is_visible = _visible
+	level_avatar.visible = _visible
+	level_avatar.input_pickable = _visible
+	var command_avatar_is_visible = (not _visible) and (state > State.ENTERING) and (state < State.LEAVING)
+	command_avatar.visible = command_avatar_is_visible
+	command_avatar.input_pickable = command_avatar_is_visible
 
 func serve_dish(dish):
 	# Move dish in front of patron
@@ -83,8 +96,12 @@ func set_state(a_state):
 
 		State.SHOW_DISH_SCORE:
 			show_dish_score()
+		
+		State.LEAVING:
+			$LeavingTimer.start()
 
 	state = a_state
+	set_level_avatar_visible(level_avatar_is_visible) # refresh, in case we changed state
 
 func compute_dish_score(wanted_dish, dish):
 	# TODO
@@ -99,6 +116,11 @@ func hide_dish_score():
 
 func _on_EnteringTimer_timeout():
 	set_state(State.WAITING_TO_ORDER)
+	level_avatar.position = destination
+
+func _on_LeavingTimer_timeout():
+	emit_signal("patron_leaves", self)
+	queue_free()
 
 func _on_EatTimer_timeout():
 	var dish = dish_position.get_child(0)
