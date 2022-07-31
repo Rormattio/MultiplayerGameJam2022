@@ -29,20 +29,8 @@ var main_ingredients = [
 	"squid_yellow",
 ]
 
+# TODO : Remove
 var top_ingredients = [
-	"flag_blue",
-	"flag_fr",
-	"flag_yellow",
-	"smoke_green",
-	"smoke_kaki",
-	"smoke_orange",
-	"smoke_pink",
-	"smoke_purple",
-	"stars_blue",
-	"stars_green",
-	"stars_pink",
-	"stars_purple",
-	"stars_yellow",
 ]
 
 var bottom_burger_ingredients = [
@@ -140,9 +128,9 @@ var ingredient_descs = [
 	IngredientDesc.new("bread_top_green", [], Sfx.FFFT),
 	IngredientDesc.new("bread_top_grey", [], Sfx.FFFT),
 	IngredientDesc.new("crab", [], null),
-	IngredientDesc.new("flag_blue", [], null),
-	IngredientDesc.new("flag_fr", [], null),
-	IngredientDesc.new("flag_yellow", [], null),
+	IngredientDesc.new("flag_blue", ["top"], null),
+	IngredientDesc.new("flag_fr", ["top"], null),
+	IngredientDesc.new("flag_yellow", ["top"], null),
 	IngredientDesc.new("ghosts", [], null),
 	IngredientDesc.new("puree_grumpy", ["bottom"], Sfx.SPLOTCH),
 	IngredientDesc.new("puree_happy", ["bottom"], Sfx.SPLOTCH),
@@ -155,20 +143,20 @@ var ingredient_descs = [
 	IngredientDesc.new("planet_mars", [], Sfx.POP),
 	IngredientDesc.new("planet_neptune", [], Sfx.POP),
 	IngredientDesc.new("planet_saturn", [], Sfx.POP),
-	IngredientDesc.new("smoke_green", [], Sfx.SHHOO),
-	IngredientDesc.new("smoke_kaki", [], Sfx.SHHOO),
-	IngredientDesc.new("smoke_orange", [], Sfx.SHHOO),
-	IngredientDesc.new("smoke_pink", [], Sfx.SHHOO),
-	IngredientDesc.new("smoke_purple", [], Sfx.SHHOO),
+	IngredientDesc.new("smoke_green", ["top"], Sfx.SHHOO),
+	IngredientDesc.new("smoke_kaki", ["top"], Sfx.SHHOO),
+	IngredientDesc.new("smoke_orange", ["top"], Sfx.SHHOO),
+	IngredientDesc.new("smoke_pink", ["top"], Sfx.SHHOO),
+	IngredientDesc.new("smoke_purple", ["top"], Sfx.SHHOO),
 	IngredientDesc.new("springs", [], null),
 	IngredientDesc.new("squid_green", [], Sfx.TENTACLE),
 	IngredientDesc.new("squid_space", [], Sfx.TENTACLE),
 	IngredientDesc.new("squid_yellow", [], Sfx.TENTACLE),
-	IngredientDesc.new("stars_blue", [], null),
-	IngredientDesc.new("stars_green", [], null),
-	IngredientDesc.new("stars_pink", [], null),
-	IngredientDesc.new("stars_purple", [], null),
-	IngredientDesc.new("stars_yellow", [], null),
+	IngredientDesc.new("stars_blue", ["top"], null),
+	IngredientDesc.new("stars_green", ["top"], null),
+	IngredientDesc.new("stars_pink", ["top"], null),
+	IngredientDesc.new("stars_purple", ["top"], null),
+	IngredientDesc.new("stars_yellow", ["top"], null),
 ]
 
 func get_ingredient_count():
@@ -225,6 +213,11 @@ func _ready():
 	for desc in ingredient_descs:
 		if desc.has_tag("bottom"):
 			bottom_ingredients.append(desc.name)
+
+	# Build top_ingredients for bw-compat
+	for desc in ingredient_descs:
+		if desc.has_tag("top"):
+			top_ingredients.append(desc.name)
 	
 	check_ingredient_metadata()
 	randomize()
