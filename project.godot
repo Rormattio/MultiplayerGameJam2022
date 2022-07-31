@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "ReceivedDish",
+"language": "GDScript",
+"path": "res://scenes/dining_room/ReceivedDish.gd"
+} ]
+_global_script_class_icons={
+"ReceivedDish": ""
+}
+
 [application]
 
 config/name="MultiplayerGameJam2022"

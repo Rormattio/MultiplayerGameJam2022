@@ -71,9 +71,10 @@ func set_state(a_state):
 			show_wanted_dish()
 			
 		State.WAITING_TO_EAT:
-			hide_wanted_dish()
-
+			pass
+			
 		State.EATING:
+			hide_wanted_dish()
 			$EatTimer.start()
 
 		State.SHOW_DISH_SCORE:

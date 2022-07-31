@@ -57,12 +57,6 @@ func pop_up(_patrons):
 	
 func pop_down():
 	_set_visible(false)
-	for patron in patrons:
-		match patron.state:
-			patron.State.ORDERING:
-				patron.set_state(patron.State.WAITING_TO_EAT)
-			patron.State.SHOW_DISH_SCORE:
-				patron.set_state(patron.State.LEAVING)
 	patrons.clear()
 	
 func _process(_delta):

@@ -42,7 +42,8 @@ func _on_Patron_clicked(patron):
 		match patron.state:
 			patron.State.WAITING_TO_ORDER:
 				patron.set_state(patron.State.ORDERING)
-			patron.State.ORDERING:
+				patron.set_state(patron.State.WAITING_TO_EAT)
+			patron.State.WAITING_TO_EAT:
 				if tray.selected_dish != null:
 					var dish = tray.selected_dish
 					tray.remove_dish(dish)
