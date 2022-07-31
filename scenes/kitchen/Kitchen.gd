@@ -129,8 +129,8 @@ func _on_ingredient_dish_set(ingredient_name):
 
 func remove_ingredient(ingredient_name):
 	var node = dish_container.get_node(ingredient_name);
-	assert(node != null)
-	node.queue_free() # find and delete by name
+	if node != null:
+		node.queue_free() # find and delete by name
 	var idx = dish_ingredients.find(ingredient_name)
 	assert(idx > -1)
 	dish_ingredients[idx] = null
