@@ -7,7 +7,16 @@ static func _load_food_texture(ingredient):
 	var result = load("res://assets/food/" + ingredient + ".png")
 	assert(result != null)
 	return result
+
+static func _add_sprite(root, ingredient, z_index):
+	assert(root != null)
+	assert(ingredient != "")
 	
+	var top = Sprite.new()
+	top.z_index = z_index
+	top.texture = _load_food_texture(ingredient)
+	root.add_child(top)
+
 static func render_dish(dish : Dish) -> Node2D:
 	assert(dish != null)
 	var root = Node2D.new()
@@ -22,44 +31,21 @@ static func render_dish(dish : Dish) -> Node2D:
 	root.add_child(dish_back)
 	
 	if dish.meal_type == Dish.MealType.BURGER:
-		var bottom_burger = Sprite.new()
-		bottom_burger.z_index = 1
-		bottom_burger.texture = _load_food_texture(dish.burger_component_bottom_burger)
-		root.add_child(bottom_burger)
+		_add_sprite(root, dish.burger_component_bottom_burger, 1)
+		_add_sprite(root, dish.burger_component_mid_burger, 1)
+		_add_sprite(root, dish.burger_component_top_burger, 1)
 		
-		var mid_burger = Sprite.new()
-		mid_burger.z_index = 1
-		mid_burger.texture = _load_food_texture(dish.burger_component_mid_burger)
-		root.add_child(mid_burger)
-
-		var top_burger = Sprite.new()
-		top_burger.z_index = 1
-		top_burger.texture = _load_food_texture(dish.burger_component_top_burger)
-		root.add_child(top_burger)
-
 		if dish.burger_component_top != "":
-			var top = Sprite.new()
-			top.z_index = 1
-			top.texture = _load_food_texture(dish.burger_component_top)
-			root.add_child(top)
+			_add_sprite(root, dish.burger_component_top, 1)
 	else:
 		if dish.non_burger_component_bottom != "":
-			var bottom = Sprite.new()
-			bottom.z_index = 1
-			bottom.texture = _load_food_texture(dish.non_burger_component_bottom)
-			root.add_child(bottom)
+			_add_sprite(root, dish.non_burger_component_bottom, 1)
 		
 		if dish.non_burger_component_main != "":
-			var main = Sprite.new()
-			main.z_index = 1
-			main.texture = _load_food_texture(dish.non_burger_component_main)
-			root.add_child(main)
+			_add_sprite(root, dish.non_burger_component_main, 1)
 		
 		if dish.non_burger_component_top != "":
-			var top = Sprite.new()
-			top.z_index = 1
-			top.texture = _load_food_texture(dish.non_burger_component_top)
-			root.add_child(top)
+			_add_sprite(root, dish.non_burger_component_top, 1)
 	
 	if (dish.container_type == Dish.ContainerType.BOWL):
 		var dish_front = Sprite.new()
