@@ -8,21 +8,21 @@
 
 config_version=4
 
-_global_script_class_icons={
-"ReceivedDish": ""
+_global_script_classes=[ {
 "base": "Reference",
 "class": "Order",
 "language": "GDScript",
-"path": "res://scenes/shared/Order.gd",
-"Order": ""
-} ]
-
-_global_script_classes=[ {
+"path": "res://scenes/shared/Order.gd"
+}, {
 "base": "Node2D",
 "class": "ReceivedDish",
 "language": "GDScript",
 "path": "res://scenes/dining_room/ReceivedDish.gd"
 } ]
+_global_script_class_icons={
+"Order": "",
+"ReceivedDish": ""
+}
 
 [application]
 
