@@ -1,41 +1,66 @@
 extends Node2D
 
+signal close_command_popup()
+
 const Order = preload("res://scenes/shared/Order.gd")
 
 const MAX_WORDS_IN_ORDER = 4
 
-var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
+var tray
+onready var command_gui = $Command_GUI
+onready var wordlist = $Command_GUI/WordList
+onready var clear_order = $Command_GUI/ClearOrder
+onready var send_order = $Command_GUI/SendOrder
+onready var order_preview = $Command_GUI/OrderPreview
 
-onready var tray = $Tray
+var patrons = [] # actual Patron instances
+var patron_avatars = [] # clickable bigger patron sprites
 
-var waiter
 var current_order = []
 
+enum State {
+	VISIBLE,
+	NOT_VISIBLE,
+}
+var state
+
 func _ready():
-	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
-
-	$SendOrder.connect("pressed", self, "_on_SendOrder_pressed")
-	$SendOrder.disabled = true
-
-	$ClearOrder.connect("pressed", self, "_on_ClearOrder_pressed")
-
-	$WordList.connect("item_selected", self, "_on_WordList_item_selected")
-	$OrderPreview.text = ""
-	current_order.clear()
-
-	waiter = waiter_scene.instance()
-	add_child(waiter)
+	# Command GUI
+	_set_visible(false)
+	send_order.connect("pressed", self, "_on_SendOrder_pressed")
+	send_order.disabled = true
+	clear_order.connect("pressed", self, "_on_ClearOrder_pressed")
+	wordlist.connect("item_selected", self, "_on_WordList_item_selected")
+	wordlist.max_columns = 3
+	build_word_list()
 
 	$Trash.connect("gui_input", self, "_on_Trash_gui_input")
 
-	$WordList.max_columns = 3
+func _set_visible(_visible):
+	visible = _visible
+	if _visible:
+		state = State.VISIBLE
+	else:
+		state = State.NOT_VISIBLE
+	# TODO: we may also need to enable/disable controls eg pickable_inputs
 
-	build_word_list()
+func pop_up(_patrons):
+	# TODO: also take in the table so that we can reconstruct the positions of patrons relative to the table
+	_set_visible(true)
+	current_order.clear()
+	order_preview.text = ""
+	patrons = _patrons
 
-	$Patron.connect("patron_clicked", self, "_on_Patron_clicked")
-	$Patron2.connect("patron_clicked", self, "_on_Patron_clicked")
-	$Patron3.connect("patron_clicked", self, "_on_Patron_clicked")
-
+	var x = 960
+	for patron in patrons:
+		patron.get_node("CommandAvatar").global_position.x = x
+		patron.get_node("CommandAvatar").global_position.y = 250
+		x += 60
+	
+func pop_down():
+	_set_visible(false)
+	patrons.clear()
+	
 func _process(_delta):
 	pass
 
@@ -90,27 +115,22 @@ func build_word_list():
 
 	for i in range(max(chosen_color_words.size(), max(chosen_form_words.size(), chosen_thing_words.size()))):
 		if i < chosen_color_words.size():
-			$WordList.add_item(chosen_color_words[i])
+			wordlist.add_item(chosen_color_words[i])
 		else:
-			$WordList.add_item("")
+			wordlist.add_item("")
 
 		if i < chosen_form_words.size():
-			$WordList.add_item(chosen_form_words[i])
+			wordlist.add_item(chosen_form_words[i])
 		else:
-			$WordList.add_item("")
+			wordlist.add_item("")
 
 		if i < chosen_thing_words.size():
-			$WordList.add_item(chosen_thing_words[i])
+			wordlist.add_item(chosen_thing_words[i])
 		else:
-			$WordList.add_item("")
-
-
-func _on_CheffeDish_Sent(dish):
-	print("cheffe sends dish ", dish)
-	tray.add_dish(dish)
+			wordlist.add_item("")
 
 func get_current_order_text() -> String:
-	return $OrderPreview.text.strip_edges()
+	return order_preview.text.strip_edges()
 
 func get_current_order_word_count() -> int:
 	return current_order.size()
@@ -120,36 +140,28 @@ func send_order(order: Order):
 	Global.waiter_send_command(order)
 
 func _on_WordList_item_selected(index: int):
-	$WordList.unselect_all()
+	wordlist.unselect_all()
 
 	if get_current_order_word_count() == MAX_WORDS_IN_ORDER:
 		return
 
-	var word = $WordList.get_item_text(index)
+	var word = wordlist.get_item_text(index)
 	current_order.append(word)
-	$OrderPreview.text += " " + word
-	$SendOrder.disabled = false
+	order_preview.text += " " + word
+	send_order.disabled = false
 
 func _on_SendOrder_pressed():
 	var order = Order.new()
 	order.init(get_current_order_text())
 	send_order(order)
-	$SendOrder.disabled = true
-	$OrderPreview.text = ""
+	send_order.disabled = true
+	order_preview.text = ""
 	current_order.clear()
 
 func _on_ClearOrder_pressed():
-	$OrderPreview.text = ""
+	order_preview.text = ""
 	current_order.clear()
-	$SendOrder.disabled = true
-
-func _on_Patron_clicked(patron):
-	if tray.selected_dish != null and patron.state == patron.State.WAITING_TO_ORDER:
-		var dish = tray.selected_dish
-		tray.remove_dish(dish)
-		patron.serve_dish(dish)
-	else:
-		patron._on_Patron_clicked()
+	send_order.disabled = true
 
 func _on_Trash_clicked():
 	if tray.selected_dish != null:
@@ -160,3 +172,6 @@ func _on_Trash_clicked():
 func _on_Trash_gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		_on_Trash_clicked()
+
+func _on_Close_button_up():
+	emit_signal("close_command_popup")
