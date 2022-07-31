@@ -2,7 +2,7 @@ extends Object
 
 # dish = (container, meal)
 # container = bowl | plate
-# meal = 5burger | non-burger
+# meal = burger | non-burger
 # non_burger = (bottom | _, main | _, top | _)
 # burger = (bottom-burger, mid-burger, top-burger, top | _)
 
@@ -21,6 +21,11 @@ var non_burger_component_bottom
 var non_burger_component_main
 var non_burger_component_top
 
+const BURGER_COMPONENT_TOP_PROBABILITY = 0.5
+const NON_BURGER_COMPONENT_BOTTOM_PROBABILITY = 0.5
+const NON_BURGER_COMPONENT_MAIN_PROBABILITY = 0.8
+const NON_BURGER_COMPONENT_TOP_PROBABILITY = 0.5
+
 func randomize_dish_container():
 	return ContainerType.get(ContainerType.keys()[randi() % ContainerType.size()])
 
@@ -33,16 +38,28 @@ func randomize_burger():
 	burger_component_mid_burger = Global.mid_burger_ingredients[randi() % Global.mid_burger_ingredients.size()]
 	burger_component_top_burger = Global.top_burger_ingredients[randi() % Global.top_burger_ingredients.size()]
 
-	burger_component_top = Global.top_ingredients[randi() % Global.top_ingredients.size()]
+	if randf() <= BURGER_COMPONENT_TOP_PROBABILITY:
+		burger_component_top = Global.top_ingredients[randi() % Global.top_ingredients.size()]
+	else:
+		burger_component_top = ""
 	return
 	
 func randomize_non_burger():
 	assert(mealType == MealType.NON_BURGER)
-	# TODO optional bottom and top
-	non_burger_component_bottom = Global.bottom_ingredients[randi() % Global.bottom_ingredients.size()]
-	non_burger_component_main = Global.main_ingredients[randi() % Global.main_ingredients.size()]
+	if randf() <= NON_BURGER_COMPONENT_BOTTOM_PROBABILITY:
+		non_burger_component_bottom = Global.bottom_ingredients[randi() % Global.bottom_ingredients.size()]
+	else:
+		non_burger_component_bottom = ""
 
-	non_burger_component_top = Global.top_ingredients[randi() % Global.top_ingredients.size()]
+	if randf() <= NON_BURGER_COMPONENT_MAIN_PROBABILITY:
+		non_burger_component_main = Global.main_ingredients[randi() % Global.main_ingredients.size()]
+	else:
+		non_burger_component_main = ""
+
+	if randf() <= NON_BURGER_COMPONENT_TOP_PROBABILITY:
+		non_burger_component_top = Global.top_ingredients[randi() % Global.top_ingredients.size()]
+	else:
+		non_burger_component_top = ""
 	return
 
 func randomize():
