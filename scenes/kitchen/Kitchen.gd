@@ -114,11 +114,10 @@ func _on_ButtonPressed():
 	Global.cheffe_send_dish(dish)
 
 func _on_ingredient_dish_set(ingredient_name):
-	if ingredient_name == "":
-		return # Nothing to do
+	assert(ingredient_name != "")
 	var idx = dish_ingredients.find(null)
 	if (idx == -1 or ingredient_name in dish_ingredients): # all_ingredients are already used
-		return
+		return false
 	var image = ingredient_sprites[ingredient_name]
 	var sprite = Sprite.new()
 	sprite.set_texture(image)
@@ -126,9 +125,12 @@ func _on_ingredient_dish_set(ingredient_name):
 	dish_container.add_child(sprite)
 	dish_ingredients[idx] = ingredient_name
 	dish_ingredients_n += 1
+	return true
 
 func remove_ingredient(ingredient_name):
-	dish_container.get_node(ingredient_name).queue_free() # find and delete by name
+	var node = dish_container.get_node(ingredient_name);
+	assert(node != null)
+	node.queue_free() # find and delete by name
 	var idx = dish_ingredients.find(ingredient_name)
 	assert(idx > -1)
 	dish_ingredients[idx] = null
@@ -176,12 +178,16 @@ func _set_dish(new_dish):
 		_on_ingredient_dish_set(new_dish.burger_component_bottom_burger)
 		_on_ingredient_dish_set(new_dish.burger_component_mid_burger)
 		_on_ingredient_dish_set(new_dish.burger_component_top_burger)
-		_on_ingredient_dish_set(new_dish.burger_component_top)
+		if new_dish.burger_component_top != "":
+			_on_ingredient_dish_set(new_dish.burger_component_top)
 	else:
 		assert(new_dish.meal_type == Dish.MealType.NON_BURGER)
-		_on_ingredient_dish_set(new_dish.non_burger_component_bottom)
-		_on_ingredient_dish_set(new_dish.non_burger_component_main)
-		_on_ingredient_dish_set(new_dish.non_burger_component_top)
+		if new_dish.non_burger_component_bottom != "":
+			_on_ingredient_dish_set(new_dish.non_burger_component_bottom)
+		if new_dish.non_burger_component_main != "":
+			_on_ingredient_dish_set(new_dish.non_burger_component_main)
+		if new_dish.non_burger_component_top != "":
+			_on_ingredient_dish_set(new_dish.non_burger_component_top)
 	
 func _on_Randomize_pressed():
 	
