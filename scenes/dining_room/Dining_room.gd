@@ -1,5 +1,7 @@
 extends Node2D
 
+signal close_command_popup()
+
 const MAX_WORDS_IN_ORDER = 4
 
 var tray
@@ -13,9 +15,15 @@ var patrons = []
 
 var current_order = []
 
+enum State {
+	VISIBLE,
+	NOT_VISIBLE,
+}
+var state
+
 func _ready():
 	# Command GUI
-	command_gui.visible = false
+	_set_visible(false)
 	send_order.connect("pressed", self, "_on_SendOrder_pressed")
 	send_order.disabled = true
 	clear_order.connect("pressed", self, "_on_ClearOrder_pressed")
@@ -25,18 +33,32 @@ func _ready():
 
 	$Trash.connect("gui_input", self, "_on_Trash_gui_input")
 
+func _set_visible(_visible):
+	visible = _visible
+	if _visible:
+		state = State.VISIBLE
+	else:
+		state = State.NOT_VISIBLE
+	# TODO: we may also need to enable/disable controls
+
 func pop_up(patrons):
+	# TODO: also take in the table so that we can reconstruct the positions of patrons relative to the table
+	_set_visible(true)
 	current_order.clear()
 	order_preview.text = ""
 	patrons.clear()
 
 	for patron in patrons:
-		patron.connect("patron_clicked", self, "_on_Patron_clicked")
 		patrons.append(patron)
 	
 func pop_down():
+	_set_visible(false)
 	for patron in patrons:
-		patron.disconnect("patron_clicked", self, "_on_Patron_clicked")
+		match patron.state:
+			patron.State.ORDERING:
+				patron.set_state(patron.State.WAITING_TO_EAT)
+			patron.State.SHOW_DISH_SCORE:
+				patron.set_state(patron.State.LEAVING)
 	patrons.clear()
 	
 func _process(_delta):
@@ -140,14 +162,6 @@ func _on_ClearOrder_pressed():
 	current_order.clear()
 	send_order.disabled = true
 
-func _on_Patron_clicked(patron):
-	if tray.selected_dish != null and patron.state == patron.State.ORDERING:
-		var dish = tray.selected_dish
-		tray.remove_dish(dish)
-		patron.serve_dish(dish)
-	else:
-		patron._on_Patron_clicked()
-
 func _on_Trash_clicked():
 	if tray.selected_dish != null:
 		var dish = tray.selected_dish
@@ -157,3 +171,6 @@ func _on_Trash_clicked():
 func _on_Trash_gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		_on_Trash_clicked()
+
+func _on_Close_button_up():
+	emit_signal("close_command_popup")
