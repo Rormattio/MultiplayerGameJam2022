@@ -33,11 +33,8 @@ var main_ingredients = [
 var top_ingredients = [
 ]
 
+# TODO : Remove
 var bottom_burger_ingredients = [
-	"bread",
-	"bread_blue",
-	"bread_green",
-	"bread_grey",
 ]
 
 var mid_burger_ingredients = [
@@ -49,11 +46,8 @@ var mid_burger_ingredients = [
 	"planet_saturn",
 ]
 
+# TODO : Remove
 var top_burger_ingredients = [
-	"bread_top",
-	"bread_top_blue",
-	"bread_top_green",
-	"bread_top_grey",
 ]
 
 var base_ingredient_names = [
@@ -119,14 +113,14 @@ class IngredientDesc:
 var ingredient_descs = [
 	IngredientDesc.new("black_forest_hole", [], null),
 	IngredientDesc.new("blue_banana", [], null),
-	IngredientDesc.new("bread", [], Sfx.FFFT),
-	IngredientDesc.new("bread_blue", [], Sfx.FFFT),
-	IngredientDesc.new("bread_green", [], Sfx.FFFT),
-	IngredientDesc.new("bread_grey", [], Sfx.FFFT),
-	IngredientDesc.new("bread_top", [], Sfx.FFFT),
-	IngredientDesc.new("bread_top_blue", [], Sfx.FFFT),
-	IngredientDesc.new("bread_top_green", [], Sfx.FFFT),
-	IngredientDesc.new("bread_top_grey", [], Sfx.FFFT),
+	IngredientDesc.new("bread", ["bottom_burger"], Sfx.FFFT),
+	IngredientDesc.new("bread_blue", ["bottom_burger"], Sfx.FFFT),
+	IngredientDesc.new("bread_green", ["bottom_burger"], Sfx.FFFT),
+	IngredientDesc.new("bread_grey", ["bottom_burger"], Sfx.FFFT),
+	IngredientDesc.new("bread_top", ["top_burger"], Sfx.FFFT),
+	IngredientDesc.new("bread_top_blue", ["top_burger"], Sfx.FFFT),
+	IngredientDesc.new("bread_top_green", ["top_burger"], Sfx.FFFT),
+	IngredientDesc.new("bread_top_grey", ["top_burger"], Sfx.FFFT),
 	IngredientDesc.new("crab", [], null),
 	IngredientDesc.new("flag_blue", ["top"], null),
 	IngredientDesc.new("flag_fr", ["top"], null),
@@ -218,7 +212,17 @@ func _ready():
 	for desc in ingredient_descs:
 		if desc.has_tag("top"):
 			top_ingredients.append(desc.name)
+
+	# Build bottom_burger_ingredients for bw-compat
+	for desc in ingredient_descs:
+		if desc.has_tag("bottom_burger"):
+			bottom_burger_ingredients.append(desc.name)
 	
+	# Build top_burger_ingredients for bw-compat
+	for desc in ingredient_descs:
+		if desc.has_tag("top_burger"):
+			top_burger_ingredients.append(desc.name)
+
 	check_ingredient_metadata()
 	randomize()
 
