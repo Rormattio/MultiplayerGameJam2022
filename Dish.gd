@@ -9,8 +9,8 @@ extends Object
 enum ContainerType { BOWL, PLATE }
 enum MealType { BURGER, NON_BURGER }
 
-var containerType
-var mealType
+var container_type
+var meal_type
 
 var burger_component_bottom_burger
 var burger_component_mid_burger
@@ -33,7 +33,7 @@ func randomize_dish_meal_type():
 	return MealType.get(MealType.keys()[randi() % MealType.size()])
 	
 func randomize_burger():
-	assert(mealType == MealType.BURGER)
+	assert(meal_type == MealType.BURGER)
 	burger_component_bottom_burger = Global.bottom_burger_ingredients[randi() % Global.bottom_burger_ingredients.size()]
 	burger_component_mid_burger = Global.mid_burger_ingredients[randi() % Global.mid_burger_ingredients.size()]
 	burger_component_top_burger = Global.top_burger_ingredients[randi() % Global.top_burger_ingredients.size()]
@@ -45,7 +45,7 @@ func randomize_burger():
 	return
 	
 func randomize_non_burger():
-	assert(mealType == MealType.NON_BURGER)
+	assert(meal_type == MealType.NON_BURGER)
 	if randf() <= NON_BURGER_COMPONENT_BOTTOM_PROBABILITY:
 		non_burger_component_bottom = Global.bottom_ingredients[randi() % Global.bottom_ingredients.size()]
 	else:
@@ -63,24 +63,24 @@ func randomize_non_burger():
 	return
 
 func randomize():
-	containerType = randomize_dish_container()
-	mealType = randomize_dish_meal_type();
-	if mealType == MealType.BURGER:
+	container_type = randomize_dish_container()
+	meal_type = randomize_dish_meal_type();
+	if meal_type == MealType.BURGER:
 		randomize_burger()
 	else:
-		assert(mealType == MealType.NON_BURGER)
+		assert(meal_type == MealType.NON_BURGER)
 		randomize_non_burger()
 
 func debug_print():
-	print("Container: ", ContainerType.keys()[containerType])
-	print("Meal: ", MealType.keys()[mealType])
-	if mealType == MealType.BURGER:
+	print("Container: ", ContainerType.keys()[container_type])
+	print("Meal: ", MealType.keys()[meal_type])
+	if meal_type == MealType.BURGER:
 		print("Burger bottom: ", burger_component_bottom_burger)
 		print("Burger mid: ", burger_component_mid_burger)
 		print("Burger top: ", burger_component_top_burger)
 		print("Top: ", burger_component_top)
 	else:
-		assert(mealType == MealType.NON_BURGER)
+		assert(meal_type == MealType.NON_BURGER)
 		print("Bottom: ", non_burger_component_bottom)
 		print("Main: ", non_burger_component_main)
 		print("Top: ", non_burger_component_top)

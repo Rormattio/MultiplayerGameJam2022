@@ -167,6 +167,12 @@ func _on_Randomize_pressed():
 	new_dish.randomize()
 	new_dish.debug_print()
 
+	if new_dish.container_type == Dish.ContainerType.BOWL:
+		_set_bowl()
+	else:
+		assert(new_dish.container_type == Dish.ContainerType.PLATE)
+		_set_plate()
+		
 	# TODO : For now we marshall Dish to what's used there but we should share the representation
 	return
 
