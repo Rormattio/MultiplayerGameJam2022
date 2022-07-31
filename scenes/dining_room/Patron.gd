@@ -1,5 +1,9 @@
 extends Node
 
+const Dish = preload("res://Dish.gd")
+const DishRenderer = preload("res://DishRenderer.gd")
+
+
 signal patron_clicked(patron)
 signal patron_leaves(patron)
 
@@ -22,7 +26,7 @@ enum State {
 }
 
 var state
-var wanted_dish
+var wanted_dish # Repr
 var dish_score_value
 var destination
 var level_avatar_is_visible
@@ -148,5 +152,12 @@ func hide_wanted_dish():
 	dish_wish.hide()
 
 func generate_dish():
-	var food_img = Global.rand_array(food_assets)
-	dish_wish.get_node("Sprite").texture = food_img
+	var random_dish = Dish.new()
+	random_dish.randomize()
+	random_dish.debug_print()
+	var random_dish_node = DishRenderer.render_dish(random_dish)
+	# TODO remove childs
+	assert(dish_wish.get_node("Sprite").get_child_count() == 0)
+	dish_wish.get_node("Sprite").add_child(random_dish_node)
+	#var food_img = Global.rand_array(food_assets)
+	#dish_wish.get_node("Sprite").texture = food_img
