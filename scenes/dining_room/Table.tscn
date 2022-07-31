@@ -10,9 +10,8 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 14.0
-height = 38.0
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 29, 64 )
 
 [node name="Table" type="KinematicBody2D"]
 
@@ -23,5 +22,6 @@ animation = "walk"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -5.13791e-06, 3 )
 rotation = 1.5708
 shape = SubResource( 3 )
