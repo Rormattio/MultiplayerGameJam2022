@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/worried_puree.png-416f8dae90dfa50b622541e7f6cd16e8.stex"
+path="res://.import/server_up_0.png-b1a9aac98b023b2e01a31ef673db175d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/worried_puree.png"
-dest_files=[ "res://.import/worried_puree.png-416f8dae90dfa50b622541e7f6cd16e8.stex" ]
+source_file="res://assets/server/server_up_0.png"
+dest_files=[ "res://.import/server_up_0.png-b1a9aac98b023b2e01a31ef673db175d.stex" ]
 
 [params]
 
