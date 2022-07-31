@@ -4,11 +4,11 @@ signal cheffe_dish_sent(dish)
 signal waiter_command_sent(command)
 
 var bottom_ingredients = [
-	"grumpy_puree",
-	"happy_puree",
-	"mighty_puree",
-	"smirky_puree",
-	"worried_puree",
+	"puree_grumpy",
+	"puree_happy",
+	"puree_mighty",
+	"puree_smirky",
+	"puree_worried",
 ]
 
 var main_ingredients = [
@@ -80,21 +80,21 @@ var base_ingredient_names = [
 	"bread_top_grey",
 	"crab",
 	"ghosts",
-	"grumpy_puree",
-	"happy_puree",
+	"puree_grumpy",
+	"puree_happy",
+	"puree_mighty",
+	"puree_smirky",
+	"puree_worried",
 	"mecha_ham",
-	"mighty_puree",
 	"planet_earth",
 	"planet_jupiter",
 	"planet_mars",
 	"planet_neptune",
 	"planet_saturn",
-	"smirky_puree",
 	"springs",
 	"squid_green",
 	"squid_space",
 	"squid_yellow",
-	"worried_puree",
 ]
 
 var ingredient_names = [
@@ -113,16 +113,17 @@ var ingredient_names = [
 	"flag_fr",
 	"flag_yellow",
 	"ghosts",
-	"grumpy_puree",
-	"happy_puree",
+	"puree_grumpy",
+	"puree_happy",
+	"puree_mighty",
+	"puree_smirky",
+	"puree_worried",
 	"mecha_ham",
-	"mighty_puree",
 	"planet_earth",
 	"planet_jupiter",
 	"planet_mars",
 	"planet_neptune",
 	"planet_saturn",
-	"smirky_puree",
 	"smoke_green",
 	"smoke_kaki",
 	"smoke_orange",
@@ -137,7 +138,6 @@ var ingredient_names = [
 	"stars_pink",
 	"stars_purple",
 	"stars_yellow",
-	"worried_puree",
 ]
 
 func _ready():
