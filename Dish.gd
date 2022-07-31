@@ -62,15 +62,22 @@ func randomize_non_burger():
 		non_burger_component_top = ""
 	return
 
+func is_valid():
+	# TODO: Here we will prevent impossible combinations if necessary
+	return true
+	
 func randomize():
-	container_type = randomize_dish_container()
-	meal_type = randomize_dish_meal_type();
-	if meal_type == MealType.BURGER:
-		randomize_burger()
-	else:
-		assert(meal_type == MealType.NON_BURGER)
-		randomize_non_burger()
-
+	while true:
+		container_type = randomize_dish_container()
+		meal_type = randomize_dish_meal_type();
+		if meal_type == MealType.BURGER:
+			randomize_burger()
+		else:
+			assert(meal_type == MealType.NON_BURGER)
+			randomize_non_burger()
+		if is_valid():
+			break
+			
 func debug_print():
 	print("Container: ", ContainerType.keys()[container_type])
 	print("Meal: ", MealType.keys()[meal_type])
