@@ -1,7 +1,10 @@
 extends Node
 
 signal cheffe_dish_sent(dish)
-signal waiter_command_sent(command)
+signal waiter_command_sent(Order)
+signal patron_dish_score_sent(dish, score)
+
+var id_counter = 0
 
 var bottom_ingredients = [
 	"puree_grumpy",
@@ -192,11 +195,13 @@ func instance_node(node: Object, parent: Object) -> Object:
 	parent.add_child(node_instance)
 	return node_instance
 
-func waiter_send_command(command):
-	rpc("on_waiter_command", command)
+func waiter_send_command(command: Order):
+	rpc("on_waiter_command", command.serialize())
 
-remote func on_waiter_command(command):
-	emit_signal("waiter_command_sent", command)
+remote func on_waiter_command(command: Array):
+	var order = Order.new()
+	order.unserialize(command)
+	emit_signal("waiter_command_sent", order)
 
 func cheffe_send_dish(dish):
 	rpc("on_cheffe_dish", dish)
@@ -204,5 +209,15 @@ func cheffe_send_dish(dish):
 remote func on_cheffe_dish(dish):
 	emit_signal("cheffe_dish_sent", dish)
 
+func patron_send_dish_score(dish, score):
+	rpc("on_patron_dish_score_sent", dish, score)
+
+remote func on_patron_dish_score_sent(dish, score):
+	emit_signal("patron_dish_score_sent", dish, score)
+
 func rand_array(array : Array):
 	return array[randi() % array.size()]
+
+func gen_id() -> int:
+	id_counter += 1
+	return id_counter

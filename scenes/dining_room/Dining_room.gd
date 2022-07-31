@@ -1,5 +1,7 @@
 extends Node2D
 
+const Order = preload("res://scenes/shared/Order.gd")
+
 const MAX_WORDS_IN_ORDER = 4
 
 var waiter_scene = preload("res://scenes/dining_room/Waiter.tscn")
@@ -107,13 +109,13 @@ func _on_CheffeDish_Sent(dish):
 	print("cheffe sends dish ", dish)
 	tray.add_dish(dish)
 
-func get_current_order() -> String:
+func get_current_order_text() -> String:
 	return $OrderPreview.text.strip_edges()
 
 func get_current_order_word_count() -> int:
 	return current_order.size()
 
-func send_order(order):
+func send_order(order: Order):
 	print("sent order ", order)
 	Global.waiter_send_command(order)
 
@@ -129,7 +131,8 @@ func _on_WordList_item_selected(index: int):
 	$SendOrder.disabled = false
 
 func _on_SendOrder_pressed():
-	var order = get_current_order()
+	var order = Order.new()
+	order.init(get_current_order_text())
 	send_order(order)
 	$SendOrder.disabled = true
 	$OrderPreview.text = ""

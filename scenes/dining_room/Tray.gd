@@ -13,8 +13,7 @@ func _ready():
 
 func add_dish(dish):
 	var received_dish = received_dish_scene.instance()
-	for ingredient_name in dish:
-		received_dish.add_ingredient(ingredient_name)
+	received_dish.build(dish)
 
 	# Move all dishes one place to the right
 	for d in dishes:
