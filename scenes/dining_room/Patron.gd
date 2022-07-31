@@ -7,6 +7,7 @@ var food_assets = []
 enum State {
 	ENTERING,
 	WAITING_TO_ORDER,
+	ORDERING,
 	WAITING_TO_EAT,
 	EATING,
 	SHOW_DISH_SCORE,
@@ -53,7 +54,7 @@ func _on_Patron_input_event(_viewport, event, _shape_idx):
 
 func _on_Patron_clicked():
 	match state:
-		State.WAITING_TO_ORDER:
+		State.ORDERING:
 			toggle_wanted_dish()
 		State.SHOW_DISH_SCORE:
 			hide_dish_score()
@@ -74,7 +75,7 @@ func set_state(a_state):
 		State.ENTERING:
 			$EnteringTimer.start()
 
-		State.WAITING_TO_ORDER:
+		State.ORDERING:
 			wanted_dish = generate_dish()
 			show_wanted_dish()
 
