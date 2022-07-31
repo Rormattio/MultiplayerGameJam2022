@@ -31,15 +31,16 @@ var dish_ingredients_n = 0
 func _ready():
 	send_dish.connect("pressed", self, "_on_ButtonPressed")
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
-	
+	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
+
 	dish_ingredients = []
 	for idx in range(max_ingredients):
 		dish_ingredients.append(null)
-	
+
 	# CHEFFE
 	cheffe = cheffe_scene.instance()
 	add_child(cheffe)
-	
+
 	# STOCK
 	var start_x = 900
 	var x = start_x
@@ -62,7 +63,7 @@ func _ready():
 		if x > w + start_x:
 			x = start_x
 			y += dy
-	
+
 	# DISH
 	dish_front.hide()
 	for asset in [dish_back, dish_front]:
@@ -75,10 +76,11 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _on_WaiterCommand_Sent(dish):
-	print("waiter command ", dish)
-	var words = dish.split(" ")
+func _on_WaiterCommand_Sent(order: Order):
+	print("waiter command ", order)
+	var words = order.text.split(" ")
 	var command = command_scene.instance()
+	command.order = order
 	commands_container.add_child(command)
 	command.connect("close_command", self, "_on_close_command")
 	command.name = str(command_counter)
@@ -146,3 +148,7 @@ func _on_Trash_pressed():
 	for ingredient_name in dish_ingredients:
 		if ingredient_name != null:
 			remove_ingredient(ingredient_name)
+
+func _on_PatronDishScore_Sent(dish, score):
+	# TODO: actually show the dish
+	print("dish score ", dish, score)

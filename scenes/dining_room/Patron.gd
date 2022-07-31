@@ -105,6 +105,7 @@ func _on_EatTimer_timeout():
 	var dish = $DishPosition.get_child(0)
 
 	dish_score = compute_dish_score(wanted_dish, dish)
+	Global.patron_send_dish_score(dish.dish, dish_score)
 
 	rotation = 0
 	dish.queue_free()
