@@ -26,13 +26,13 @@ const NON_BURGER_COMPONENT_BOTTOM_PROBABILITY = 0.5
 const NON_BURGER_COMPONENT_MAIN_PROBABILITY = 0.8
 const NON_BURGER_COMPONENT_TOP_PROBABILITY = 0.5
 
-func randomize_dish_container():
+func _randomize_dish_container():
 	return ContainerType.get(ContainerType.keys()[randi() % ContainerType.size()])
 
-func randomize_dish_meal_type():
+func _randomize_dish_meal_type():
 	return MealType.get(MealType.keys()[randi() % MealType.size()])
 	
-func randomize_burger():
+func _randomize_burger():
 	assert(meal_type == MealType.BURGER)
 	burger_component_bottom_burger = Global.bottom_burger_ingredients[randi() % Global.bottom_burger_ingredients.size()]
 	burger_component_mid_burger = Global.mid_burger_ingredients[randi() % Global.mid_burger_ingredients.size()]
@@ -44,7 +44,7 @@ func randomize_burger():
 		burger_component_top = ""
 	return
 	
-func randomize_non_burger():
+func _randomize_non_burger():
 	assert(meal_type == MealType.NON_BURGER)
 	if randf() <= NON_BURGER_COMPONENT_BOTTOM_PROBABILITY:
 		non_burger_component_bottom = Global.bottom_ingredients[randi() % Global.bottom_ingredients.size()]
@@ -68,13 +68,13 @@ func is_valid():
 	
 func randomize():
 	while true:
-		container_type = randomize_dish_container()
-		meal_type = randomize_dish_meal_type();
+		container_type = _randomize_dish_container()
+		meal_type = _randomize_dish_meal_type();
 		if meal_type == MealType.BURGER:
-			randomize_burger()
+			_randomize_burger()
 		else:
 			assert(meal_type == MealType.NON_BURGER)
-			randomize_non_burger()
+			_randomize_non_burger()
 		if is_valid():
 			break
 			
