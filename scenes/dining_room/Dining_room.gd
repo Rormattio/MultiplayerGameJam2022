@@ -11,7 +11,8 @@ onready var clear_order = $Command_GUI/ClearOrder
 onready var send_order = $Command_GUI/SendOrder
 onready var order_preview = $Command_GUI/OrderPreview
 
-var patrons = []
+var patrons = [] # actual Patron instances
+var patron_avatars = [] # clickable bigger patron sprites
 
 var current_order = []
 
@@ -39,17 +40,20 @@ func _set_visible(_visible):
 		state = State.VISIBLE
 	else:
 		state = State.NOT_VISIBLE
-	# TODO: we may also need to enable/disable controls
+	# TODO: we may also need to enable/disable controls eg pickable_inputs
 
-func pop_up(patrons):
+func pop_up(_patrons):
 	# TODO: also take in the table so that we can reconstruct the positions of patrons relative to the table
 	_set_visible(true)
 	current_order.clear()
 	order_preview.text = ""
-	patrons.clear()
+	patrons = _patrons
 
+	var x = 960
 	for patron in patrons:
-		patrons.append(patron)
+		patron.get_node("CommandAvatar").global_position.x = x
+		patron.get_node("CommandAvatar").global_position.y = 250
+		x += 60
 	
 func pop_down():
 	_set_visible(false)

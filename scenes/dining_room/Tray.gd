@@ -9,8 +9,6 @@ func _ready():
 	dishes = []
 	selected_dish = null
 
-	pass
-
 func add_dish(dish):
 	var received_dish = received_dish_scene.instance()
 	for ingredient_name in dish:
