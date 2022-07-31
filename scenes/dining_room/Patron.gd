@@ -1,23 +1,28 @@
-extends KinematicBody2D
+extends Node
 
-signal patron_clicked(Patron)
+signal patron_clicked(patron)
+
+onready var dish_wish = $CommandAvatar/DishWish
+onready var dish_score = $CommandAvatar/DishScore
+onready var dish_position = $CommandAvatar/DishPosition
+onready var command_avatar = $CommandAvatar
+onready var level_avatar = $LevelAvatar
 
 var food_assets = []
 
 enum State {
 	ENTERING,
 	WAITING_TO_ORDER,
+	ORDERING, # state in zoomed-in view
 	WAITING_TO_EAT,
 	EATING,
-	SHOW_DISH_SCORE,
-#	LEAVING,
+	SHOW_DISH_SCORE, # state in zoomed-in view
+	LEAVING,
 }
 
 var state
 var wanted_dish
-var dish_score
-
-var sway_t
+var dish_score_value
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,35 +38,22 @@ func _ready():
 	hide_dish_score()
 	set_state(State.ENTERING)
 
-	dish_score = 0
+	dish_score_value = 0
 
 	connect("input_event", self, "_on_Patron_input_event")
 
 	$EatTimer.connect("timeout", self, "_on_EatTimer_timeout")
 	$EnteringTimer.connect("timeout", self, "_on_EnteringTimer_timeout")
-
-	sway_t = 0
-
-func _physics_process(_delta):
-	if state == State.EATING:
-		sway_t += 0.2
-		rotation = 0.3*sin(sway_t)
-
-func _on_Patron_input_event(_viewport, event, _shape_idx):
-	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-		emit_signal("patron_clicked", self)
-
-func _on_Patron_clicked():
-	match state:
-		State.WAITING_TO_ORDER:
-			toggle_wanted_dish()
-		State.SHOW_DISH_SCORE:
-			hide_dish_score()
-			set_state(State.ENTERING)
+	
+	command_avatar.visible = false
+	command_avatar.patron = self
+	
+	command_avatar.connect("patron_avatar_command_clicked", self, "_on_any_avatar_clicked")
+	level_avatar.connect("patron_avatar_level_clicked", self, "_on_any_avatar_clicked")
 
 func serve_dish(dish):
 	# Move dish in front of patron
-	$DishPosition.add_child(dish)
+	dish_position.add_child(dish)
 	dish.position = Vector2.ZERO
 	dish.scale = Vector2(1.0/4.0, 1.0/4.0)
 	dish.z_index = 100 # to appear above the table
@@ -74,10 +66,13 @@ func set_state(a_state):
 		State.ENTERING:
 			$EnteringTimer.start()
 
-		State.WAITING_TO_ORDER:
+		State.ORDERING:
 			wanted_dish = generate_dish()
 			show_wanted_dish()
-
+			
+		State.WAITING_TO_EAT:
+			pass
+			
 		State.EATING:
 			hide_wanted_dish()
 			$EatTimer.start()
@@ -92,37 +87,40 @@ func compute_dish_score(wanted_dish, dish):
 	return 5
 
 func show_dish_score():
-	$DishScore/Label.text = str(dish_score)
-	$DishScore.show()
+	dish_score.get_node("Label").text = str(dish_score_value)
+	dish_score.show()
 
 func hide_dish_score():
-	$DishScore.hide()
+	dish_score.hide()
 
 func _on_EnteringTimer_timeout():
 	set_state(State.WAITING_TO_ORDER)
 
 func _on_EatTimer_timeout():
-	var dish = $DishPosition.get_child(0)
+	var dish = dish_position.get_child(0)
 
-	dish_score = compute_dish_score(wanted_dish, dish)
-	Global.patron_send_dish_score(dish.dish, dish_score)
+	dish_score_value = compute_dish_score(wanted_dish, dish)
+	Global.patron_send_dish_score(dish.dish, dish_score_value)
 
-	rotation = 0
+	command_avatar.rotation = 0
 	dish.queue_free()
 	set_state(State.SHOW_DISH_SCORE)
 
+func _on_any_avatar_clicked():
+	emit_signal("patron_clicked", self)
+
 func toggle_wanted_dish():
-	if $DishWish.visible:
+	if dish_wish.visible:
 		hide_wanted_dish()
 	else:
 		show_wanted_dish()
 
 func show_wanted_dish():
-	$DishWish.show()
+	dish_wish.show()
 
 func hide_wanted_dish():
-	$DishWish.hide()
+	dish_wish.hide()
 
 func generate_dish():
 	var food_img = Global.rand_array(food_assets)
-	$DishWish/Sprite.texture = food_img
+	dish_wish.get_node("Sprite").texture = food_img
