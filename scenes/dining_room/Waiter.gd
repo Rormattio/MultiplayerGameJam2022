@@ -24,12 +24,12 @@ func _process(_delta: float) -> void:
 		
 		if abs(velocity.x) >= abs(velocity.y):
 			if velocity.x < 0:
-				sprite.play("walk_right") # TODO sprite.play("walk_left")
+				sprite.play("walk_left")
 			else:
 				sprite.play("walk_right")
 		else:
 			if velocity.y < 0:
-				sprite.play("walk_down") # TODO sprite.play("walk_up")
+				sprite.play("walk_up")
 			else:
 				sprite.play("walk_down")
 		if velocity.x == 0 and velocity.y == 0:
