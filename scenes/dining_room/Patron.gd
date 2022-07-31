@@ -100,6 +100,7 @@ func _on_EatTimer_timeout():
 	var dish = dish_position.get_child(0)
 
 	dish_score_value = compute_dish_score(wanted_dish, dish)
+	Global.patron_send_dish_score(dish.dish, dish_score_value)
 
 	command_avatar.rotation = 0
 	dish.queue_free()

@@ -2,6 +2,8 @@ extends Node2D
 
 signal close_command_popup()
 
+const Order = preload("res://scenes/shared/Order.gd")
+
 const MAX_WORDS_IN_ORDER = 4
 
 var tray
@@ -127,13 +129,13 @@ func build_word_list():
 		else:
 			wordlist.add_item("")
 
-func get_current_order() -> String:
+func get_current_order_text() -> String:
 	return order_preview.text.strip_edges()
 
 func get_current_order_word_count() -> int:
 	return current_order.size()
 
-func send_order(order):
+func send_order(order: Order):
 	print("sent order ", order)
 	Global.waiter_send_command(order)
 
@@ -149,7 +151,8 @@ func _on_WordList_item_selected(index: int):
 	send_order.disabled = false
 
 func _on_SendOrder_pressed():
-	var order = get_current_order()
+	var order = Order.new()
+	order.init(get_current_order_text())
 	send_order(order)
 	send_order.disabled = true
 	order_preview.text = ""
