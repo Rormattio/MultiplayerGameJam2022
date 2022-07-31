@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/dining_room/Patron.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/dining_room/Waiter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/dining_room/Dining_room.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/dining_room/Table.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/dining_room/Dining_room_level.gd" type="Script" id=5]
+
+[node name="Node" type="Node"]
+script = ExtResource( 5 )
+
+[node name="DiningRoom" parent="." instance=ExtResource( 3 )]
+
+[node name="Layout" type="Node2D" parent="."]
+
+[node name="Patron" parent="Layout" instance=ExtResource( 1 )]
+position = Vector2( 574, 304 )
+
+[node name="Table" parent="Layout" instance=ExtResource( 4 )]
+position = Vector2( 441, 163 )
+
+[node name="Table2" parent="Layout" instance=ExtResource( 4 )]
+position = Vector2( 573, 327 )
+
+[node name="Table3" parent="Layout" instance=ExtResource( 4 )]
+position = Vector2( 285, 285 )
+
+[node name="Table4" parent="Layout" instance=ExtResource( 4 )]
+position = Vector2( 157, 396 )
+
+[node name="Table5" parent="Layout" instance=ExtResource( 4 )]
+position = Vector2( 382, 471 )
+
+[node name="Waiter" parent="Layout" instance=ExtResource( 2 )]
+position = Vector2( 186, 81 )
+
+[node name="Tray" type="Node2D" parent="."]
