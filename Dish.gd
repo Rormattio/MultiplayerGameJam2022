@@ -63,7 +63,9 @@ func _randomize_non_burger():
 	return
 
 func is_valid():
-	# TODO: Here we will prevent impossible combinations if necessary
+	# Here we will prevent impossible combinations if necessary
+	if (container_type == ContainerType.BOWL) and (meal_type == MealType.BURGER):
+		return false # The lower part is not visible
 	return true
 	
 func randomize():
