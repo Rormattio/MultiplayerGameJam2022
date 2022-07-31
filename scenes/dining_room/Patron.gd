@@ -62,6 +62,10 @@ func serve_dish(dish):
 	set_state(State.EATING)
 
 func set_state(a_state):
+	if state != null:
+		print("Patron.set_state ", State.keys()[state], " -> ", State.keys()[a_state])
+	else:
+		print("Patron.set_state ", State.keys()[a_state])
 	match a_state:
 		State.ENTERING:
 			$EnteringTimer.start()
