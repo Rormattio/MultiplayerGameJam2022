@@ -7,11 +7,11 @@ var food_assets = []
 enum State {
 	ENTERING,
 	WAITING_TO_ORDER,
-	ORDERING,
+	ORDERING, # state in zoomed-in view
 	WAITING_TO_EAT,
 	EATING,
-	SHOW_DISH_SCORE,
-#	LEAVING,
+	SHOW_DISH_SCORE, # state in zoomed-in view
+	LEAVING,
 }
 
 var state
@@ -52,14 +52,6 @@ func _on_Patron_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		emit_signal("patron_clicked", self)
 
-func _on_Patron_clicked():
-	match state:
-		State.ORDERING:
-			toggle_wanted_dish()
-		State.SHOW_DISH_SCORE:
-			hide_dish_score()
-			set_state(State.ENTERING)
-
 func serve_dish(dish):
 	# Move dish in front of patron
 	$DishPosition.add_child(dish)
@@ -78,9 +70,11 @@ func set_state(a_state):
 		State.ORDERING:
 			wanted_dish = generate_dish()
 			show_wanted_dish()
+			
+		State.WAITING_TO_EAT:
+			hide_wanted_dish()
 
 		State.EATING:
-			hide_wanted_dish()
 			$EatTimer.start()
 
 		State.SHOW_DISH_SCORE:

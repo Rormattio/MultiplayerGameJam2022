@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/dining_room/Dining_room.gd" type="Script" id=1]
 [ext_resource path="res://assets/dummy/table.png" type="Texture" id=2]
@@ -8,6 +8,18 @@
 bg_color = Color( 0.3396, 0.45, 0.162, 1 )
 corner_radius_top_left = 20
 corner_radius_top_right = 20
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.513726, 0.192157, 0.192157, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="DiningRoom" type="Node2D"]
 script = ExtResource( 1 )
@@ -75,3 +87,27 @@ text = "Receive dish"
 position = Vector2( 960, 416 )
 scale = Vector2( 5, 5 )
 texture = ExtResource( 2 )
+
+[node name="Close" type="Control" parent="."]
+margin_left = 1139.0
+margin_top = 72.0
+margin_right = 1179.0
+margin_bottom = 112.0
+rect_scale = Vector2( 2, 2 )
+
+[node name="Button" type="Button" parent="Close"]
+margin_top = 1.0
+margin_right = 20.0
+margin_bottom = 19.0
+custom_styles/normal = SubResource( 2 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Close"]
+margin_left = 5.0
+margin_top = -1.0
+margin_right = 28.0
+margin_bottom = 29.0
+mouse_filter = 2
+custom_fonts/normal_font = ExtResource( 4 )
+text = "X"
+
+[connection signal="button_up" from="Close/Button" to="." method="_on_Close_button_up"]
