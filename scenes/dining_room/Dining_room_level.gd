@@ -26,12 +26,12 @@ func spawn_patron():
 	var patron_dummy = Patron.instance()
 	patrons.add_child(patron_dummy)
 	patron_dummy.connect("patron_clicked", self, "_on_Patron_clicked")
-	patron_dummy.level_avatar.position.x = 20
-	patron_dummy.level_avatar.position.y = 100
+	patron_dummy.level_avatar.position.x = 546
+	patron_dummy.level_avatar.position.y = 130
 	patron_dummy.connect("patron_leaves", self, "_on_patron_leaves")
 	patron_dummy.set_level_avatar_visible(dining_room.state == dining_room.State.NOT_VISIBLE)
 	# TODO: set the command_avatar.position positions correctly relative to the table as given in patron_dummy.destination
-	patron_dummy.destination = Vector2(440, 125)
+	patron_dummy.destination = Vector2(575, 250)
 	patron_dummy.command_avatar.position.x = 960
 	patron_dummy.command_avatar.position.y = 250
 
