@@ -153,6 +153,13 @@ func get_ingredient_desc(name):
 		if desc.name == name:
 			return desc
 	return null
+
+func get_ingredient_names_with_tag(tag):
+	var result = []
+	for desc in ingredient_descs:
+		if desc.has_tag(tag):
+			result.append(desc.name)
+	return result
 	
 func get_ingredient_count():
 	return ingredient_descs.size()
@@ -205,14 +212,10 @@ func _ready():
 			ingredient_names_to_sfx[desc.name] = desc.sfx
 	
 	# Build bottom_ingredients for bw-compat
-	for desc in ingredient_descs:
-		if desc.has_tag("bottom"):
-			bottom_ingredients.append(desc.name)
+	bottom_ingredients = get_ingredient_names_with_tag("bottom")
 
 	# Build top_ingredients for bw-compat
-	for desc in ingredient_descs:
-		if desc.has_tag("top"):
-			top_ingredients.append(desc.name)
+	top_ingredients = get_ingredient_names_with_tag("top")
 
 	# Build bottom_burger_ingredients for bw-compat
 	for desc in ingredient_descs:
