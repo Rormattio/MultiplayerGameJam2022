@@ -114,6 +114,8 @@ func _on_ButtonPressed():
 	Global.cheffe_send_dish(dish)
 
 func _on_ingredient_dish_set(ingredient_name):
+	if ingredient_name == "":
+		return # Nothing to do
 	var idx = dish_ingredients.find(null)
 	if (idx == -1 or ingredient_name in dish_ingredients): # all_ingredients are already used
 		return
@@ -160,12 +162,8 @@ func _clear_dish():
 func _on_Trash_pressed():
 	_clear_dish()
 
-func _on_Randomize_pressed():
+func _set_dish(new_dish):
 	_clear_dish()
-	
-	var new_dish = Dish.new()
-	new_dish.randomize()
-	new_dish.debug_print()
 
 	if new_dish.container_type == Dish.ContainerType.BOWL:
 		_set_bowl()
@@ -174,7 +172,24 @@ func _on_Randomize_pressed():
 		_set_plate()
 		
 	# TODO : For now we marshall Dish to what's used there but we should share the representation
-	return
+	if (new_dish.meal_type == Dish.MealType.BURGER):
+		_on_ingredient_dish_set(new_dish.burger_component_bottom_burger)
+		_on_ingredient_dish_set(new_dish.burger_component_mid_burger)
+		_on_ingredient_dish_set(new_dish.burger_component_top_burger)
+		_on_ingredient_dish_set(new_dish.burger_component_top)
+	else:
+		assert(new_dish.meal_type == Dish.MealType.NON_BURGER)
+		_on_ingredient_dish_set(new_dish.non_burger_component_bottom)
+		_on_ingredient_dish_set(new_dish.non_burger_component_main)
+		_on_ingredient_dish_set(new_dish.non_burger_component_top)
+	
+func _on_Randomize_pressed():
+	
+	var new_dish = Dish.new()
+	new_dish.randomize()
+	new_dish.debug_print()
+
+	_set_dish(new_dish)
 
 
 func _on_PatronDishScore_Sent(dish, score):
