@@ -134,6 +134,7 @@ func _on_ingredient_dish_set(ingredient_name):
 
 	if Global.ingredient_names_to_sfx.has(ingredient_name):
 		AudioSfx.play(Global.ingredient_names_to_sfx[ingredient_name])
+		
 	return true
 
 func remove_ingredient(ingredient_name):
