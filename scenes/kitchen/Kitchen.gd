@@ -207,6 +207,13 @@ func _on_Randomize_pressed():
 	var new_dish = Dish.new()
 	new_dish.randomize()
 	new_dish.debug_print()
+	
+	# Debug code for the DishRenderer
+	if false:
+		var new_dish_sprite = DishRenderer.render_dish(new_dish)
+		new_dish_sprite.position = Vector2(0, 200)
+		new_dish_sprite.global_scale = Vector2(3, 3)
+		add_child(new_dish_sprite)
 
 	_set_dish(new_dish)
 
