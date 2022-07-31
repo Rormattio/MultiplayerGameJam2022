@@ -140,7 +140,46 @@ var ingredient_names = [
 	"stars_yellow",
 ]
 
+func get_ingredient_count():
+	return ingredient_names.size()
+
+func is_ingredient(name):
+	return ingredient_names.has(name)
+
+func is_bottom_ingredient(name):
+	assert(is_ingredient(name))
+	return bottom_ingredients.has(name)
+
+func is_main_ingredient(name):
+	assert(is_ingredient(name))
+	return main_ingredients.has(name)
+
+func is_top_ingredient(name):
+	assert(is_ingredient(name))
+	return top_ingredients.has(name)
+
+func is_bottom_burger_ingredient(name):
+	assert(is_ingredient(name))
+	return bottom_burger_ingredients.has(name)
+
+func is_mid_burger_ingredient(name):
+	assert(is_ingredient(name))
+	return mid_burger_ingredients.has(name)
+
+func is_top_burger_ingredient(name):
+	assert(is_ingredient(name))
+	return top_burger_ingredients.has(name)
+
+func check_ingredient_metadata():
+	var ingredient_count = get_ingredient_count()
+	for i in range(ingredient_count):
+		var name = ingredient_names[i]
+		assert(is_ingredient(name))
+		assert(is_bottom_ingredient(name) or is_main_ingredient(name) or is_top_ingredient(name) or
+			   is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name));
+	
 func _ready():
+	check_ingredient_metadata()
 	randomize()
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
