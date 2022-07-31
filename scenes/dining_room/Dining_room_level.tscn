@@ -11,10 +11,12 @@ script = ExtResource( 5 )
 
 [node name="DiningRoom" parent="." instance=ExtResource( 3 )]
 
-[node name="Layout" type="Node2D" parent="."]
+[node name="Patrons" type="Node2D" parent="."]
 
-[node name="Patron" parent="Layout" instance=ExtResource( 1 )]
-position = Vector2( 574, 304 )
+[node name="Patron" parent="Patrons" instance=ExtResource( 1 )]
+position = Vector2( 439, 138 )
+
+[node name="Layout" type="Node2D" parent="."]
 
 [node name="Table" parent="Layout" instance=ExtResource( 4 )]
 position = Vector2( 441, 163 )
