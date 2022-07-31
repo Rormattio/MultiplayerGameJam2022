@@ -107,6 +107,7 @@ func _on_close_command(name):
 	command.queue_free() # find and delete by name
 
 func _on_ButtonPressed():
+	AudioSfx.play(Global.Sfx.CLICK)
 	var dish = []
 	for ingredient_name in dish_ingredients:
 		if ingredient_name != null:
@@ -125,6 +126,9 @@ func _on_ingredient_dish_set(ingredient_name):
 	dish_container.add_child(sprite)
 	dish_ingredients[idx] = ingredient_name
 	dish_ingredients_n += 1
+
+	if Global.ingredient_names_to_sfx.has(ingredient_name):
+		AudioSfx.play(Global.ingredient_names_to_sfx[ingredient_name])
 	return true
 
 func remove_ingredient(ingredient_name):
@@ -147,8 +151,9 @@ func _set_bowl():
 		dish_front.show()
 		current_dish = "bowl"
 		change_dish.icon = load("res://assets/food/plate.png")
-		
+
 func _on_ChangeDish_pressed():
+	AudioSfx.play(Global.Sfx.CLICK)
 	if (current_dish == "plate"):
 		_set_bowl()
 	else:
@@ -160,8 +165,9 @@ func _clear_dish():
 	for ingredient_name in dish_ingredients:
 		if ingredient_name != null:
 			remove_ingredient(ingredient_name)
-	
+
 func _on_Trash_pressed():
+	AudioSfx.play(Global.Sfx.CLICK)
 	_clear_dish()
 
 func _set_dish(new_dish):
@@ -172,7 +178,7 @@ func _set_dish(new_dish):
 	else:
 		assert(new_dish.container_type == Dish.ContainerType.PLATE)
 		_set_plate()
-		
+
 	# TODO : For now we marshall Dish to what's used there but we should share the representation
 	if (new_dish.meal_type == Dish.MealType.BURGER):
 		_on_ingredient_dish_set(new_dish.burger_component_bottom_burger)
@@ -188,9 +194,9 @@ func _set_dish(new_dish):
 			_on_ingredient_dish_set(new_dish.non_burger_component_main)
 		if new_dish.non_burger_component_top != "":
 			_on_ingredient_dish_set(new_dish.non_burger_component_top)
-	
+
 func _on_Randomize_pressed():
-	
+
 	var new_dish = Dish.new()
 	new_dish.randomize()
 	new_dish.debug_print()

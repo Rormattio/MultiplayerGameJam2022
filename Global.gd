@@ -143,6 +143,47 @@ var ingredient_names = [
 	"stars_yellow",
 ]
 
+enum Sfx {
+	SPLOTCH,
+	POP,
+	TENTACLE,
+	FFFT,
+	SHHOO,
+	CLICK,
+}
+
+var ingredient_names_to_sfx = {
+	"bread"             : Sfx.FFFT,
+	"bread_blue"		: Sfx.FFFT,
+	"bread_green"		: Sfx.FFFT,
+	"bread_grey"		: Sfx.FFFT,
+	"bread_top"		    : Sfx.FFFT,
+	"bread_top_blue"	: Sfx.FFFT,
+	"bread_top_green"	: Sfx.FFFT,
+	"bread_top_grey"	: Sfx.FFFT,
+	"puree_grumpy"		: Sfx.SPLOTCH,
+	"puree_happy"		: Sfx.SPLOTCH,
+	"puree_mighty"		: Sfx.SPLOTCH,
+	"puree_smirky"		: Sfx.SPLOTCH,
+	"puree_worried"		: Sfx.SPLOTCH,
+	"planet_earth"		: Sfx.POP,
+	"planet_jupiter"	: Sfx.POP,
+	"planet_mars"		: Sfx.POP,
+	"planet_neptune"	: Sfx.POP,
+	"planet_saturn"		: Sfx.POP,
+	"squid_green"       : Sfx.TENTACLE,
+	"squid_space"       : Sfx.TENTACLE,
+	"squid_yellow"      : Sfx.TENTACLE,
+	"smoke_green"       : Sfx.SHHOO,
+	"smoke_kaki"        : Sfx.SHHOO,
+	"smoke_orange"      : Sfx.SHHOO,
+	"smoke_pink"        : Sfx.SHHOO,
+	"smoke_purple"      : Sfx.SHHOO,
+}
+
+
+
+
 func get_ingredient_count():
 	return ingredient_names.size()
 
@@ -182,7 +223,7 @@ func check_ingredient_metadata():
 			   is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
-	
+
 func _ready():
 	check_ingredient_metadata()
 	randomize()

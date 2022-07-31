@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/splotch.ogg-b2b4fb97572e20e50576a3b3b1c52185.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/splotch.ogg"
+dest_files=[ "res://.import/splotch.ogg-b2b4fb97572e20e50576a3b3b1c52185.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

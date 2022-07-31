@@ -29,6 +29,7 @@ config/icon="res://icon.png"
 Network="*res://Network.gd"
 Global="*res://Global.gd"
 Upnp="*res://Upnp.gd"
+AudioSfx="*res://scenes/shared/AudioSfx.tscn"
 
 [display]
 
