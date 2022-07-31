@@ -4,9 +4,6 @@ var kitchen_scene = preload("res://scenes/kitchen/Kitchen.tscn")
 var dining_room_scene = preload("res://scenes/dining_room/Dining_room.tscn")
 var dual_scene = preload("res://scenes/dual_scene.tscn")
 
-# debug code
-var Dish = preload("Dish.gd")
-
 onready var multiplayer_config_ui = $Multiplayer_configure
 onready var server_ip_address = $Multiplayer_configure/Server_ip_address
 
@@ -14,11 +11,6 @@ onready var device_local_ip_address = $Multiplayer_configure/Device_local_ip_add
 onready var external_ip_address_label = $Multiplayer_configure/external_ip_address_label
 onready var device_external_ip_address = $Multiplayer_configure/Device_external_ip_address
 onready var connection_status = $connection_status
-
-func randomize_dish():
-	var result = Dish.new()
-	result.randomize()
-	return result
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -32,13 +24,6 @@ func _ready() -> void:
 	device_external_ip_address.hide()
 
 	device_local_ip_address.text = Network.ip_address
-	
-	#debug code
-	var toto = randomize_dish()
-	toto.debug_print()
-	var toto2 = randomize_dish()
-	toto2.debug_print()
-
 
 func _upnp_completed(error):
 	print("upnp done ", Upnp.external_ip_address)
