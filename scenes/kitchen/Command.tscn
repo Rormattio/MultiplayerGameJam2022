@@ -35,6 +35,7 @@ margin_left = 81.0
 margin_top = -1.0
 margin_right = 104.0
 margin_bottom = 29.0
+mouse_filter = 2
 custom_fonts/normal_font = ExtResource( 1 )
 text = "X"
 
