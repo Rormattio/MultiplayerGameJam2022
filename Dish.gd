@@ -81,6 +81,6 @@ func debug_print():
 		print("Top: ", burger_component_top)
 	else:
 		assert(mealType == MealType.NON_BURGER)
-		print("Non-burger bottom: ", non_burger_component_bottom)
-		print("Non-burger main: ", non_burger_component_main)
-		print("Non-burger top: ", non_burger_component_top)
+		print("Bottom: ", non_burger_component_bottom)
+		print("Main: ", non_burger_component_main)
+		print("Top: ", non_burger_component_top)
