@@ -156,6 +156,7 @@ func generate_dish():
 	random_dish.randomize()
 	random_dish.debug_print()
 	var random_dish_node = DishRenderer.render_dish(random_dish)
+	random_dish_node.scale = Vector2(2, 2)
 	# TODO remove childs
 	assert(dish_wish.get_node("Sprite").get_child_count() == 0)
 	dish_wish.get_node("Sprite").add_child(random_dish_node)
