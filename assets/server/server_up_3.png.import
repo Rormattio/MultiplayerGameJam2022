@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/happy_puree.png-168664afc8ba947e2cdd7fbf346d2954.stex"
+path="res://.import/server_up_3.png-c02e94da5814e1113681cdd5c771357c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/happy_puree.png"
-dest_files=[ "res://.import/happy_puree.png-168664afc8ba947e2cdd7fbf346d2954.stex" ]
+source_file="res://assets/server/server_up_3.png"
+dest_files=[ "res://.import/server_up_3.png-c02e94da5814e1113681cdd5c771357c.stex" ]
 
 [params]
 

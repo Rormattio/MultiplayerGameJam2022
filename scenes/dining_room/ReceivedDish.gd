@@ -3,6 +3,7 @@ extends Node2D
 signal dish_clicked(ReceivedDish)
 
 var state
+var dish
 
 enum State {
 	UNSERVED,
@@ -14,6 +15,11 @@ func _ready():
 	state = State.UNSERVED
 
 	$RootForOffset/Background.connect("gui_input", self, "_on_input_received")
+
+func build(a_dish):
+	self.dish = a_dish
+	for ingredient_name in a_dish:
+		add_ingredient(ingredient_name)
 
 func add_ingredient(ingredient_name):
 	var texture = load("res://assets/food/" + ingredient_name + ".png")

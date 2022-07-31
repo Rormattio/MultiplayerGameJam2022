@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/smirky_puree.png-8ca3fa794bb463ec355ae1840d4b1819.stex"
+path="res://.import/server_up_2.png-57decae55d7414d48711114666504c65.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/smirky_puree.png"
-dest_files=[ "res://.import/smirky_puree.png-8ca3fa794bb463ec355ae1840d4b1819.stex" ]
+source_file="res://assets/server/server_up_2.png"
+dest_files=[ "res://.import/server_up_2.png-57decae55d7414d48711114666504c65.stex" ]
 
 [params]
 
