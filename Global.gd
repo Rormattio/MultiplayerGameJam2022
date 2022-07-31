@@ -218,19 +218,13 @@ func _ready():
 	top_ingredients = get_ingredient_names_with_tag("top")
 
 	# Build bottom_burger_ingredients for bw-compat
-	for desc in ingredient_descs:
-		if desc.has_tag("bottom_burger"):
-			bottom_burger_ingredients.append(desc.name)
+	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
 	
 	# Build mid_burger_ingredients for bw-compat
-	for desc in ingredient_descs:
-		if desc.has_tag("mid_burger"):
-			mid_burger_ingredients.append(desc.name)
+	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
 	
 	# Build top_burger_ingredients for bw-compat
-	for desc in ingredient_descs:
-		if desc.has_tag("top_burger"):
-			top_burger_ingredients.append(desc.name)
+	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
 
 	check_ingredient_metadata()
 	randomize()
