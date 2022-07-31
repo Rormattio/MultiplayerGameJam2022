@@ -37,13 +37,8 @@ var top_ingredients = [
 var bottom_burger_ingredients = [
 ]
 
+# TODO : Remove
 var mid_burger_ingredients = [
-	"crab",
-	"planet_earth",
-	"planet_jupiter",
-	"planet_mars",
-	"planet_neptune",
-	"planet_saturn",
 ]
 
 # TODO : Remove
@@ -121,7 +116,7 @@ var ingredient_descs = [
 	IngredientDesc.new("bread_top_blue", ["top_burger"], Sfx.FFFT),
 	IngredientDesc.new("bread_top_green", ["top_burger"], Sfx.FFFT),
 	IngredientDesc.new("bread_top_grey", ["top_burger"], Sfx.FFFT),
-	IngredientDesc.new("crab", [], null),
+	IngredientDesc.new("crab", ["mid_burger"], null),
 	IngredientDesc.new("flag_blue", ["top"], null),
 	IngredientDesc.new("flag_fr", ["top"], null),
 	IngredientDesc.new("flag_yellow", ["top"], null),
@@ -132,11 +127,11 @@ var ingredient_descs = [
 	IngredientDesc.new("puree_smirky", ["bottom"], Sfx.SPLOTCH),
 	IngredientDesc.new("puree_worried", ["bottom"], Sfx.SPLOTCH),
 	IngredientDesc.new("mecha_ham", [], null),
-	IngredientDesc.new("planet_earth", [], Sfx.POP),
-	IngredientDesc.new("planet_jupiter", [], Sfx.POP),
-	IngredientDesc.new("planet_mars", [], Sfx.POP),
-	IngredientDesc.new("planet_neptune", [], Sfx.POP),
-	IngredientDesc.new("planet_saturn", [], Sfx.POP),
+	IngredientDesc.new("planet_earth", ["mid_burger"], Sfx.POP),
+	IngredientDesc.new("planet_jupiter", ["mid_burger"], Sfx.POP),
+	IngredientDesc.new("planet_mars", ["mid_burger"], Sfx.POP),
+	IngredientDesc.new("planet_neptune", ["mid_burger"], Sfx.POP),
+	IngredientDesc.new("planet_saturn", ["mid_burger"], Sfx.POP),
 	IngredientDesc.new("smoke_green", ["top"], Sfx.SHHOO),
 	IngredientDesc.new("smoke_kaki", ["top"], Sfx.SHHOO),
 	IngredientDesc.new("smoke_orange", ["top"], Sfx.SHHOO),
@@ -217,6 +212,11 @@ func _ready():
 	for desc in ingredient_descs:
 		if desc.has_tag("bottom_burger"):
 			bottom_burger_ingredients.append(desc.name)
+	
+	# Build mid_burger_ingredients for bw-compat
+	for desc in ingredient_descs:
+		if desc.has_tag("mid_burger"):
+			mid_burger_ingredients.append(desc.name)
 	
 	# Build top_burger_ingredients for bw-compat
 	for desc in ingredient_descs:
