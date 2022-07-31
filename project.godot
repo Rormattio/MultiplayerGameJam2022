@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Order",
+"language": "GDScript",
+"path": "res://scenes/shared/Order.gd"
+} ]
+_global_script_class_icons={
+"Order": ""
+}
+
 [application]
 
 config/name="MultiplayerGameJam2022"
