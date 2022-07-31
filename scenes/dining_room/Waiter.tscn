@@ -1,16 +1,25 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/dining_room/Waiter.gd" type="Script" id=1]
-[ext_resource path="res://assets/frog3.png" type="Texture" id=2]
-[ext_resource path="res://assets/frog2.png" type="Texture" id=3]
-[ext_resource path="res://assets/frog1.png" type="Texture" id=4]
-[ext_resource path="res://assets/frog0.png" type="Texture" id=5]
+[ext_resource path="res://assets/server/server_down_2.png" type="Texture" id=2]
+[ext_resource path="res://assets/server/server_right_2.png" type="Texture" id=3]
+[ext_resource path="res://assets/server/server_right_1.png" type="Texture" id=4]
+[ext_resource path="res://assets/server/server_down_0.png" type="Texture" id=5]
+[ext_resource path="res://assets/server/server_down_1.png" type="Texture" id=6]
+[ext_resource path="res://assets/server/server_down_3.png" type="Texture" id=7]
+[ext_resource path="res://assets/server/server_right_0.png" type="Texture" id=8]
+[ext_resource path="res://assets/server/server_right_3.png" type="Texture" id=9]
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 9 ) ],
 "loop": true,
-"name": "walk",
+"name": "walk_right",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walk_down",
 "speed": 5.0
 } ]
 
@@ -24,7 +33,7 @@ script = ExtResource( 1 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 pause_mode = 1
 frames = SubResource( 2 )
-animation = "walk"
+animation = "walk_right"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

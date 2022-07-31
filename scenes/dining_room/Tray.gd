@@ -2,14 +2,12 @@ extends Node2D
 
 var received_dish_scene = preload("res://scenes/dining_room/ReceivedDish.tscn")
 
-var dishes
-var selected_dish
+var dishes = []
+var selected_dish = null
 
 func _ready():
 	dishes = []
 	selected_dish = null
-
-	pass
 
 func add_dish(dish):
 	var received_dish = received_dish_scene.instance()
