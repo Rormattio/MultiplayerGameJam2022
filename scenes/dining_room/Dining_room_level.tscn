@@ -15,7 +15,7 @@ script = ExtResource( 5 )
 [node name="Patrons" type="Node2D" parent="."]
 
 [node name="Patron" parent="Patrons" instance=ExtResource( 1 )]
-position = Vector2( 439, 138 )
+position = Vector2( 439, 119 )
 
 [node name="Layout" type="Node2D" parent="."]
 

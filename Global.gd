@@ -4,6 +4,8 @@ signal cheffe_dish_sent(dish)
 signal waiter_command_sent(Order)
 signal patron_dish_score_sent(dish, score)
 
+var DEBUG = true
+
 var id_counter = 0
 
 var bottom_ingredients = [

@@ -56,9 +56,6 @@ margin_top = 400.0
 margin_right = 376.0
 margin_bottom = 470.0
 icon = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Trash" type="Button" parent="."]
 margin_left = 525.0
@@ -67,16 +64,21 @@ margin_right = 641.0
 margin_bottom = 652.0
 custom_fonts/font = ExtResource( 4 )
 custom_styles/normal = SubResource( 1 )
-text = "trash"
 icon = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Trash"]
+margin_left = 59.0
+margin_top = 22.0
+margin_right = 151.0
+margin_bottom = 75.0
+mouse_filter = 2
+custom_fonts/normal_font = ExtResource( 4 )
+text = "TRASH"
 
 [node name="Randomize" type="Button" parent="."]
 margin_left = 683.0
 margin_top = 596.0
-margin_right = 766.0
+margin_right = 777.0
 margin_bottom = 623.0
 custom_fonts/font = ExtResource( 4 )
 custom_styles/normal = SubResource( 1 )

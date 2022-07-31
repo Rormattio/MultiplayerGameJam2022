@@ -10,12 +10,16 @@ onready var server_ip_address = $Multiplayer_configure/Server_ip_address
 onready var device_local_ip_address = $Multiplayer_configure/Device_local_ip_address
 onready var external_ip_address_label = $Multiplayer_configure/external_ip_address_label
 onready var device_external_ip_address = $Multiplayer_configure/Device_external_ip_address
+onready var create_server_and_client = $Multiplayer_configure/create_server_and_client
 onready var connection_status = $connection_status
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
+	
+	if not Global.DEBUG:
+		create_server_and_client.queue_free()
 
 	connection_status.hide()
 

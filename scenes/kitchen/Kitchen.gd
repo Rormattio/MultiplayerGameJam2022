@@ -33,6 +33,9 @@ func _ready():
 	send_dish.connect("pressed", self, "_on_ButtonPressed")
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
+	
+	if not Global.DEBUG:
+		$Randomize.queue_free()
 
 	dish_ingredients = []
 	for idx in range(max_ingredients):
