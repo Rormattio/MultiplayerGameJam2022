@@ -8,12 +8,8 @@ var DEBUG = true
 
 var id_counter = 0
 
+# TODO : Remove
 var bottom_ingredients = [
-	"puree_grumpy",
-	"puree_happy",
-	"puree_mighty",
-	"puree_smirky",
-	"puree_worried",
 ]
 
 var main_ingredients = [
@@ -121,53 +117,58 @@ var ingredient_names_to_sfx = {
 
 class IngredientDesc:
 	var name
+	var tags
 	var sfx
 
-	func _init(n, s):
+	func has_tag(tag):
+		return tags.has(tag)
+		
+	func _init(n, t, s):
 		name = n
+		tags = t
 		sfx  = s
 		
 var ingredient_descs = [
-	IngredientDesc.new("black_forest_hole", null),
-	IngredientDesc.new("blue_banana", null),
-	IngredientDesc.new("bread", Sfx.FFFT),
-	IngredientDesc.new("bread_blue", Sfx.FFFT),
-	IngredientDesc.new("bread_green", Sfx.FFFT),
-	IngredientDesc.new("bread_grey", Sfx.FFFT),
-	IngredientDesc.new("bread_top", Sfx.FFFT),
-	IngredientDesc.new("bread_top_blue", Sfx.FFFT),
-	IngredientDesc.new("bread_top_green", Sfx.FFFT),
-	IngredientDesc.new("bread_top_grey", Sfx.FFFT),
-	IngredientDesc.new("crab", null),
-	IngredientDesc.new("flag_blue", null),
-	IngredientDesc.new("flag_fr", null),
-	IngredientDesc.new("flag_yellow", null),
-	IngredientDesc.new("ghosts", null),
-	IngredientDesc.new("puree_grumpy", Sfx.SPLOTCH),
-	IngredientDesc.new("puree_happy", Sfx.SPLOTCH),
-	IngredientDesc.new("puree_mighty", Sfx.SPLOTCH),
-	IngredientDesc.new("puree_smirky", Sfx.SPLOTCH),
-	IngredientDesc.new("puree_worried", Sfx.SPLOTCH),
-	IngredientDesc.new("mecha_ham", null),
-	IngredientDesc.new("planet_earth", Sfx.POP),
-	IngredientDesc.new("planet_jupiter", Sfx.POP),
-	IngredientDesc.new("planet_mars", Sfx.POP),
-	IngredientDesc.new("planet_neptune", Sfx.POP),
-	IngredientDesc.new("planet_saturn", Sfx.POP),
-	IngredientDesc.new("smoke_green", Sfx.SHHOO),
-	IngredientDesc.new("smoke_kaki", Sfx.SHHOO),
-	IngredientDesc.new("smoke_orange", Sfx.SHHOO),
-	IngredientDesc.new("smoke_pink", Sfx.SHHOO),
-	IngredientDesc.new("smoke_purple", Sfx.SHHOO),
-	IngredientDesc.new("springs", null),
-	IngredientDesc.new("squid_green", Sfx.TENTACLE),
-	IngredientDesc.new("squid_space", Sfx.TENTACLE),
-	IngredientDesc.new("squid_yellow", Sfx.TENTACLE),
-	IngredientDesc.new("stars_blue", null),
-	IngredientDesc.new("stars_green", null),
-	IngredientDesc.new("stars_pink", null),
-	IngredientDesc.new("stars_purple", null),
-	IngredientDesc.new("stars_yellow", null),
+	IngredientDesc.new("black_forest_hole", [], null),
+	IngredientDesc.new("blue_banana", [], null),
+	IngredientDesc.new("bread", [], Sfx.FFFT),
+	IngredientDesc.new("bread_blue", [], Sfx.FFFT),
+	IngredientDesc.new("bread_green", [], Sfx.FFFT),
+	IngredientDesc.new("bread_grey", [], Sfx.FFFT),
+	IngredientDesc.new("bread_top", [], Sfx.FFFT),
+	IngredientDesc.new("bread_top_blue", [], Sfx.FFFT),
+	IngredientDesc.new("bread_top_green", [], Sfx.FFFT),
+	IngredientDesc.new("bread_top_grey", [], Sfx.FFFT),
+	IngredientDesc.new("crab", [], null),
+	IngredientDesc.new("flag_blue", [], null),
+	IngredientDesc.new("flag_fr", [], null),
+	IngredientDesc.new("flag_yellow", [], null),
+	IngredientDesc.new("ghosts", [], null),
+	IngredientDesc.new("puree_grumpy", ["bottom"], Sfx.SPLOTCH),
+	IngredientDesc.new("puree_happy", ["bottom"], Sfx.SPLOTCH),
+	IngredientDesc.new("puree_mighty", ["bottom"], Sfx.SPLOTCH),
+	IngredientDesc.new("puree_smirky", ["bottom"], Sfx.SPLOTCH),
+	IngredientDesc.new("puree_worried", ["bottom"], Sfx.SPLOTCH),
+	IngredientDesc.new("mecha_ham", [], null),
+	IngredientDesc.new("planet_earth", [], Sfx.POP),
+	IngredientDesc.new("planet_jupiter", [], Sfx.POP),
+	IngredientDesc.new("planet_mars", [], Sfx.POP),
+	IngredientDesc.new("planet_neptune", [], Sfx.POP),
+	IngredientDesc.new("planet_saturn", [], Sfx.POP),
+	IngredientDesc.new("smoke_green", [], Sfx.SHHOO),
+	IngredientDesc.new("smoke_kaki", [], Sfx.SHHOO),
+	IngredientDesc.new("smoke_orange", [], Sfx.SHHOO),
+	IngredientDesc.new("smoke_pink", [], Sfx.SHHOO),
+	IngredientDesc.new("smoke_purple", [], Sfx.SHHOO),
+	IngredientDesc.new("springs", [], null),
+	IngredientDesc.new("squid_green", [], Sfx.TENTACLE),
+	IngredientDesc.new("squid_space", [], Sfx.TENTACLE),
+	IngredientDesc.new("squid_yellow", [], Sfx.TENTACLE),
+	IngredientDesc.new("stars_blue", [], null),
+	IngredientDesc.new("stars_green", [], null),
+	IngredientDesc.new("stars_pink", [], null),
+	IngredientDesc.new("stars_purple", [], null),
+	IngredientDesc.new("stars_yellow", [], null),
 ]
 
 func get_ingredient_count():
@@ -219,6 +220,11 @@ func _ready():
 	for desc in ingredient_descs:
 		if desc.sfx:
 			ingredient_names_to_sfx[desc.name] = desc.sfx
+	
+	# Build bottom_ingredients for bw-compat
+	for desc in ingredient_descs:
+		if desc.has_tag("bottom"):
+			bottom_ingredients.append(desc.name)
 	
 	check_ingredient_metadata()
 	randomize()
