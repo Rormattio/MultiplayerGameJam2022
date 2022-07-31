@@ -11,7 +11,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 29, 64 )
+extents = Vector2( 22, 59.5 )
 
 [node name="Table" type="KinematicBody2D"]
 
@@ -22,6 +22,6 @@ animation = "walk"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -5.13791e-06, 3 )
+position = Vector2( -0.500009, -19 )
 rotation = 1.5708
 shape = SubResource( 3 )
