@@ -102,47 +102,8 @@ var base_ingredient_names = [
 	"squid_yellow",
 ]
 
+# TODO : Remove
 var ingredient_names = [
-	"black_forest_hole",
-	"blue_banana",
-	"bread",
-	"bread_blue",
-	"bread_green",
-	"bread_grey",
-	"bread_top",
-	"bread_top_blue",
-	"bread_top_green",
-	"bread_top_grey",
-	"crab",
-	"flag_blue",
-	"flag_fr",
-	"flag_yellow",
-	"ghosts",
-	"puree_grumpy",
-	"puree_happy",
-	"puree_mighty",
-	"puree_smirky",
-	"puree_worried",
-	"mecha_ham",
-	"planet_earth",
-	"planet_jupiter",
-	"planet_mars",
-	"planet_neptune",
-	"planet_saturn",
-	"smoke_green",
-	"smoke_kaki",
-	"smoke_orange",
-	"smoke_pink",
-	"smoke_purple",
-	"springs",
-	"squid_green",
-	"squid_space",
-	"squid_yellow",
-	"stars_blue",
-	"stars_green",
-	"stars_pink",
-	"stars_purple",
-	"stars_yellow",
 ]
 
 enum Sfx {
@@ -154,37 +115,61 @@ enum Sfx {
 	CLICK,
 }
 
+# TODO : Remove
 var ingredient_names_to_sfx = {
-	"bread"             : Sfx.FFFT,
-	"bread_blue"		: Sfx.FFFT,
-	"bread_green"		: Sfx.FFFT,
-	"bread_grey"		: Sfx.FFFT,
-	"bread_top"		    : Sfx.FFFT,
-	"bread_top_blue"	: Sfx.FFFT,
-	"bread_top_green"	: Sfx.FFFT,
-	"bread_top_grey"	: Sfx.FFFT,
-	"puree_grumpy"		: Sfx.SPLOTCH,
-	"puree_happy"		: Sfx.SPLOTCH,
-	"puree_mighty"		: Sfx.SPLOTCH,
-	"puree_smirky"		: Sfx.SPLOTCH,
-	"puree_worried"		: Sfx.SPLOTCH,
-	"planet_earth"		: Sfx.POP,
-	"planet_jupiter"	: Sfx.POP,
-	"planet_mars"		: Sfx.POP,
-	"planet_neptune"	: Sfx.POP,
-	"planet_saturn"		: Sfx.POP,
-	"squid_green"       : Sfx.TENTACLE,
-	"squid_space"       : Sfx.TENTACLE,
-	"squid_yellow"      : Sfx.TENTACLE,
-	"smoke_green"       : Sfx.SHHOO,
-	"smoke_kaki"        : Sfx.SHHOO,
-	"smoke_orange"      : Sfx.SHHOO,
-	"smoke_pink"        : Sfx.SHHOO,
-	"smoke_purple"      : Sfx.SHHOO,
 }
 
+class IngredientDesc:
+	var name
+	var sfx
 
-
+	func _init(n, s):
+		name = n
+		sfx  = s
+		
+var ingredient_descs = [
+	IngredientDesc.new("black_forest_hole", null),
+	IngredientDesc.new("black_forest_hole", null),
+	IngredientDesc.new("blue_banana", null),
+	IngredientDesc.new("bread", Sfx.FFFT),
+	IngredientDesc.new("bread_blue", Sfx.FFFT),
+	IngredientDesc.new("bread_green", Sfx.FFFT),
+	IngredientDesc.new("bread_grey", Sfx.FFFT),
+	IngredientDesc.new("bread_top", Sfx.FFFT),
+	IngredientDesc.new("bread_top_blue", Sfx.FFFT),
+	IngredientDesc.new("bread_top_green", Sfx.FFFT),
+	IngredientDesc.new("bread_top_grey", Sfx.FFFT),
+	IngredientDesc.new("crab", null),
+	IngredientDesc.new("flag_blue", null),
+	IngredientDesc.new("flag_fr", null),
+	IngredientDesc.new("flag_yellow", null),
+	IngredientDesc.new("ghosts", null),
+	IngredientDesc.new("puree_grumpy", Sfx.SPLOTCH),
+	IngredientDesc.new("puree_happy", Sfx.SPLOTCH),
+	IngredientDesc.new("puree_mighty", Sfx.SPLOTCH),
+	IngredientDesc.new("puree_smirky", Sfx.SPLOTCH),
+	IngredientDesc.new("puree_worried", Sfx.SPLOTCH),
+	IngredientDesc.new("mecha_ham", null),
+	IngredientDesc.new("planet_earth", Sfx.POP),
+	IngredientDesc.new("planet_jupiter", Sfx.POP),
+	IngredientDesc.new("planet_mars", Sfx.POP),
+	IngredientDesc.new("planet_neptune", Sfx.POP),
+	IngredientDesc.new("planet_saturn", Sfx.POP),
+	IngredientDesc.new("smoke_green", Sfx.SHHOO),
+	IngredientDesc.new("smoke_kaki", Sfx.SHHOO),
+	IngredientDesc.new("smoke_orange", Sfx.SHHOO),
+	IngredientDesc.new("smoke_pink", Sfx.SHHOO),
+	IngredientDesc.new("smoke_purple", Sfx.SHHOO),
+	IngredientDesc.new("springs", null),
+	IngredientDesc.new("squid_green", Sfx.TENTACLE),
+	IngredientDesc.new("squid_space", Sfx.TENTACLE),
+	IngredientDesc.new("squid_yellow", Sfx.TENTACLE),
+	IngredientDesc.new("stars_blue", null),
+	IngredientDesc.new("stars_green", null),
+	IngredientDesc.new("stars_pink", null),
+	IngredientDesc.new("stars_purple", null),
+	IngredientDesc.new("stars_yellow", null),
+]
 
 func get_ingredient_count():
 	return ingredient_names.size()
@@ -227,6 +212,15 @@ func check_ingredient_metadata():
 		assert(load(png_name) != null)
 
 func _ready():
+	# Build ingredient_names for bw-compat
+	for desc in ingredient_descs:
+		ingredient_names.append(desc.name)
+	
+	# Build ingredient_names_to_sfx for bw-compat
+	for desc in ingredient_descs:
+		if desc.sfx:
+			ingredient_names_to_sfx[desc.name] = desc.sfx
+	
 	check_ingredient_metadata()
 	randomize()
 
