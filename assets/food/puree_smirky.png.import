@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mighty_puree.png-6a510cb96b26ff6ea4543bcc2a1091ef.stex"
+path="res://.import/puree_smirky.png-d3f2a1fc1944bbd2715826d93cc5f802.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/mighty_puree.png"
-dest_files=[ "res://.import/mighty_puree.png-6a510cb96b26ff6ea4543bcc2a1091ef.stex" ]
+source_file="res://assets/food/puree_smirky.png"
+dest_files=[ "res://.import/puree_smirky.png-d3f2a1fc1944bbd2715826d93cc5f802.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2

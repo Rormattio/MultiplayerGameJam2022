@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/smirky_puree.png-8ca3fa794bb463ec355ae1840d4b1819.stex"
+path="res://.import/puree_happy.png-705e553ad8e8108a83fb9901ee6eed54.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/smirky_puree.png"
-dest_files=[ "res://.import/smirky_puree.png-8ca3fa794bb463ec355ae1840d4b1819.stex" ]
+source_file="res://assets/food/puree_happy.png"
+dest_files=[ "res://.import/puree_happy.png-705e553ad8e8108a83fb9901ee6eed54.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
