@@ -69,6 +69,23 @@ func is_valid():
 	if (container_type == ContainerType.BOWL) and (meal_type == MealType.NON_BURGER) and (non_burger_component_bottom != ""):
 		return false # The lower part is not visible
 	return true
+
+func make_unambiguous_token_list():
+	var result = []
+	result.append(ContainerType.keys()[container_type])
+	result.append(MealType.keys()[meal_type])
+	if meal_type == MealType.BURGER:
+		result.append(burger_component_bottom_burger)
+		result.append(burger_component_mid_burger)
+		result.append(burger_component_top_burger)
+		result.append(burger_component_top)
+	else:
+		assert(meal_type == MealType.NON_BURGER)
+		result.append(non_burger_component_bottom)
+		result.append(non_burger_component_main)
+		result.append(non_burger_component_top)
+
+	return result	
 	
 func randomize():
 	while true:
@@ -95,3 +112,4 @@ func debug_print():
 		print("Bottom: ", non_burger_component_bottom)
 		print("Main: ", non_burger_component_main)
 		print("Top: ", non_burger_component_top)
+	print("Unambiguous token list: ", make_unambiguous_token_list())
