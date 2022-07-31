@@ -179,7 +179,9 @@ func check_ingredient_metadata():
 		var name = ingredient_names[i]
 		assert(is_ingredient(name))
 		assert(is_bottom_ingredient(name) or is_main_ingredient(name) or is_top_ingredient(name) or
-			   is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name));
+			   is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
+		var png_name = "res://assets/food/" + name + ".png"
+		assert(load(png_name) != null)
 	
 func _ready():
 	check_ingredient_metadata()
