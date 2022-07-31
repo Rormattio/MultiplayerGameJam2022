@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "Order",
 "language": "GDScript",
 "path": "res://scenes/shared/Order.gd"
-}, {
-"base": "Node2D",
-"class": "ReceivedDish",
-"language": "GDScript",
-"path": "res://scenes/dining_room/ReceivedDish.gd"
 } ]
 _global_script_class_icons={
-"Order": "",
-"ReceivedDish": ""
+"Order": ""
 }
 
 [application]
