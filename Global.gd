@@ -148,11 +148,17 @@ var ingredient_descs = [
 	IngredientDesc.new("stars_yellow", ["top"], null),
 ]
 
+func get_ingredient_desc(name):
+	for desc in ingredient_descs:
+		if desc.name == name:
+			return desc
+	return null
+	
 func get_ingredient_count():
-	return ingredient_names.size()
+	return ingredient_descs.size()
 
 func is_ingredient(name):
-	return ingredient_names.has(name)
+	return get_ingredient_desc(name) != null
 
 func is_bottom_ingredient(name):
 	assert(is_ingredient(name))
