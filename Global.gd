@@ -86,6 +86,7 @@ enum Sfx {
 	FFFT,
 	SHHOO,
 	CLICK,
+	SCHBOING
 }
 
 # TODO : Remove
@@ -205,7 +206,7 @@ var ingredient_descs = [
 		Sfx.SHHOO),
 	IngredientDesc.new("springs", [],
 		[], [],
-		null),
+		Sfx.SCHBOING),
 	IngredientDesc.new("squid_green", [],
 		[], [],
 		Sfx.TENTACLE),
