@@ -208,7 +208,14 @@ func _on_ingredient_dish_set(ingredient_name):
 				else:
 					padding_needed = 0
 			1:
-				padding_needed = 0
+				var is_burger = dish_ingredients[0] != "" and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+				if is_burger:
+					padding_needed = 0
+				else:
+					if Global.is_top_ingredient(ingredient_name):
+						padding_needed = 1
+					else:
+						padding_needed = 0
 			2:
 				padding_needed = 0
 			3:
