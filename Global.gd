@@ -209,6 +209,8 @@ var ingredient_descs = [
 		null),
 ]
 
+var plain_keywords_occurrences = {}
+
 func get_ingredient_desc(name):
 	for desc in ingredient_descs:
 		if desc.name == name:
@@ -255,7 +257,7 @@ func is_top_burger_ingredient(name):
 	assert(is_ingredient(name))
 	return top_burger_ingredients.has(name)
 
-func check_ingredient_metadata():
+func _check_ingredient_metadata():
 	var ingredient_count = get_ingredient_count()
 	for i in range(ingredient_count):
 		var name = ingredient_names[i]
@@ -290,8 +292,24 @@ func _ready():
 	# Build top_burger_ingredients for bw-compat
 	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
 
-	check_ingredient_metadata()
+	_check_ingredient_metadata()
 	randomize()
+	
+	# Let's make sure we populate the keywords to at least 3 items, with generated specific keywords
+	for desc in ingredient_descs:
+		var count = desc.plain_keywords_fr.size()
+		if count < 3:
+			for i in range(3-count):
+				desc.plain_keywords_fr.append(desc.name + "_plain" + str(i))
+				
+	for desc in ingredient_descs:
+		for kw in desc.plain_keywords_fr:
+			var count = plain_keywords_occurrences.get(kw, 0)
+			count += 1
+			plain_keywords_occurrences[kw] = count
+			
+	print("plain_keywords_occurrences: ", plain_keywords_occurrences)
+	
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
 	var node_instance = instance_node(node, parent)
