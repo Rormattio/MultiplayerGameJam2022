@@ -21,8 +21,10 @@ enum State {
 	EATING,
 	SHOW_DISH_SCORE, # state in zoomed-in view
 	LEAVING,
+	DELETE,
 }
 
+var speed = 200
 var state
 var wanted_dish # Repr
 var dish_score_value
@@ -30,6 +32,8 @@ var destination
 var level_avatar_is_visible
 var command_avatar_is_visible
 var sitting_at_table
+var path_to_follow
+var path_offset = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,8 +50,6 @@ func _ready():
 	connect("input_event", self, "_on_Patron_input_event")
 
 	$EatTimer.connect("timeout", self, "_on_EatTimer_timeout")
-	$EnteringTimer.connect("timeout", self, "_on_EnteringTimer_timeout")
-	$LeavingTimer.connect("timeout", self, "_on_LeavingTimer_timeout")
 	
 	command_avatar.connect("patron_avatar_command_clicked", self, "_on_any_avatar_clicked")
 	level_avatar.connect("patron_avatar_level_clicked", self, "_on_any_avatar_clicked")
@@ -55,6 +57,24 @@ func _ready():
 func init():
 	set_state(State.ENTERING)
 	refresh_avatars_visible()
+
+func _process(delta):
+	match state:
+		State.ENTERING:
+			path_offset += speed*delta
+			path_to_follow.set_offset(path_offset)
+			var new_position = path_to_follow.get_position()
+			if level_avatar.position == new_position:
+				set_state(State.WAITING_TO_ORDER)
+				path_offset -= speed*delta
+			level_avatar.position = new_position
+		State.LEAVING:
+			path_offset -= speed*delta
+			path_to_follow.set_offset(path_offset)
+			var new_position = path_to_follow.get_position()
+			if level_avatar.position == new_position:
+				set_state(State.DELETE)
+			level_avatar.position = new_position
 
 func refresh_avatars_visible():
 	set_avatars_visible(level_avatar_is_visible)
@@ -87,7 +107,7 @@ func set_state(a_state):
 		print("Patron.set_state ", State.keys()[a_state])
 	match a_state:
 		State.ENTERING:
-			$EnteringTimer.start()
+			pass
 
 		State.ORDERING:
 			wanted_dish = generate_dish()
@@ -105,7 +125,9 @@ func set_state(a_state):
 		
 		State.LEAVING:
 			emit_signal("patron_leaves", self)
-			$LeavingTimer.start()
+		
+		State.DELETE:
+			queue_free()
 
 	state = a_state
 	refresh_avatars_visible()
@@ -120,13 +142,6 @@ func show_dish_score():
 
 func hide_dish_score():
 	dish_score.hide()
-
-func _on_EnteringTimer_timeout():
-	set_state(State.WAITING_TO_ORDER)
-	level_avatar.position = destination
-
-func _on_LeavingTimer_timeout():
-	queue_free()
 
 func _on_EatTimer_timeout():
 	var dish = dish_position.get_child(0)
