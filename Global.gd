@@ -102,20 +102,20 @@ class IngredientDesc:
 
 	func has_tag(tag):
 		return tags.has(tag)
-		
+
 	func has_any_tag(tag_list):
 		for t in tag_list:
 			if tags.has(t):
 				return true
 		return false
-		
+
 	func _init(n, t, pk, ok, s):
 		name = n
 		tags = t
 		plain_keywords_fr = pk
 		obscure_keywords_fr = pk
 		sfx  = s
-		
+
 var ingredient_descs = [
 	IngredientDesc.new("black_forest_hole", [],
 		[], [],
@@ -247,14 +247,14 @@ func get_ingredient_desc(name):
 
 func ingredient_has_tag(name, flag):
 	return get_ingredient_desc(name).has_tag(flag)
-		
+
 func get_ingredient_names_with_tag(tag):
 	var result = []
 	for desc in ingredient_descs:
 		if desc.has_tag(tag):
 			result.append(desc.name)
 	return result
-	
+
 func get_ingredient_count():
 	return ingredient_descs.size()
 
@@ -299,12 +299,12 @@ func _ready():
 	# Build ingredient_names for bw-compat
 	for desc in ingredient_descs:
 		ingredient_names.append(desc.name)
-	
+
 	# Build ingredient_names_to_sfx for bw-compat
 	for desc in ingredient_descs:
-		if desc.sfx:
+		if desc.sfx != null:
 			ingredient_names_to_sfx[desc.name] = desc.sfx
-	
+
 	# Build bottom_ingredients for bw-compat
 	bottom_ingredients = get_ingredient_names_with_tag("bottom")
 
@@ -313,10 +313,10 @@ func _ready():
 
 	# Build bottom_burger_ingredients for bw-compat
 	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
-	
+
 	# Build mid_burger_ingredients for bw-compat
 	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
-	
+
 	# Build top_burger_ingredients for bw-compat
 	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
 
