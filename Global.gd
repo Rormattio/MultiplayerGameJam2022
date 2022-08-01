@@ -210,6 +210,7 @@ var ingredient_descs = [
 ]
 
 var plain_keywords_occurrences = {}
+var plain_keywords_reachability = {}
 
 func get_ingredient_desc(name):
 	for desc in ingredient_descs:
@@ -307,8 +308,13 @@ func _ready():
 			var count = plain_keywords_occurrences.get(kw, 0)
 			count += 1
 			plain_keywords_occurrences[kw] = count
+
+			var reachability = plain_keywords_reachability.get(kw, [])
+			reachability.append(desc.name)
+			plain_keywords_reachability[kw] = reachability
 			
 	print("plain_keywords_occurrences: ", plain_keywords_occurrences)
+	print("plain_keywords_reachability: ", plain_keywords_reachability)
 	
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
