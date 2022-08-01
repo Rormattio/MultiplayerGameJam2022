@@ -22,4 +22,7 @@ func play(sfx):
 			$shhoo.play()
 		Global.Sfx.CLICK:
 			$click.play()
+		Global.Sfx.SCHBOING:
+			$shhoo.pitch_scale = rand_range(0.9, 1.1)
+			$schboing.play()
 		_: assert(false)

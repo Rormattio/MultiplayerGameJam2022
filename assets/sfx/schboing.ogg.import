@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/schboing.ogg-b7174e17da387e717f286b9b3f141280.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/schboing.ogg"
+dest_files=[ "res://.import/schboing.ogg-b7174e17da387e717f286b9b3f141280.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
