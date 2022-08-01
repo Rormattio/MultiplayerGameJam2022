@@ -341,10 +341,10 @@ remote func on_waiter_command(command: Array):
 	order.unserialize(command)
 	emit_signal("waiter_command_sent", order)
 
-func cheffe_send_dish(dish):
+func cheffe_send_dish(dish : Array):
 	rpc("on_cheffe_dish", dish)
 
-remote func on_cheffe_dish(dish):
+remote func on_cheffe_dish(dish : Array):
 	emit_signal("cheffe_dish_sent", dish)
 
 func patron_send_dish_score(dish, score):

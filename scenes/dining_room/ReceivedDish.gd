@@ -1,5 +1,8 @@
 extends Node2D
 
+const Dish = preload("res://Dish.gd")
+const DishRenderer = preload("res://DishRenderer.gd")
+
 signal dish_clicked(ReceivedDish)
 
 var state
@@ -16,18 +19,21 @@ func _ready():
 
 	$RootForOffset/Background.connect("gui_input", self, "_on_input_received")
 
-func build(a_dish):
-	self.dish = a_dish
-	for ingredient_name in a_dish:
-		if ingredient_name != "":
-			add_ingredient(ingredient_name)
+func build(a_dish : Array):
+	# TODO : The container type isn't passed :0
+	var container_type = Dish.ContainerType.PLATE
+	
+	self.dish = Dish.new()
+	var can_make_a_dish = self.dish.make_from_linear_ingredients(container_type, a_dish)
+	assert(can_make_a_dish) 
+	assert(self.dish.is_valid())
 
-func add_ingredient(ingredient_name):
-	assert(ingredient_name != "")
-	var texture = load("res://assets/food/" + ingredient_name + ".png")
-	var sprite = Sprite.new()
-	sprite.texture = texture
-	$RootForOffset.add_child(sprite)
+	var new_dish_sprite = DishRenderer.render_dish(self.dish)
+	new_dish_sprite.position = Vector2(0, 0)
+	new_dish_sprite.global_scale = Vector2(1, 1)
+	
+	$RootForOffset.add_child(new_dish_sprite)
+
 
 func set_selected(a_selected: bool):
 	state = State.SELECTED if a_selected else State.UNSERVED
