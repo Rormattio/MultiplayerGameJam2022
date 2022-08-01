@@ -19,9 +19,11 @@ func _ready():
 func build(a_dish):
 	self.dish = a_dish
 	for ingredient_name in a_dish:
-		add_ingredient(ingredient_name)
+		if ingredient_name != "":
+			add_ingredient(ingredient_name)
 
 func add_ingredient(ingredient_name):
+	assert(ingredient_name != "")
 	var texture = load("res://assets/food/" + ingredient_name + ".png")
 	var sprite = Sprite.new()
 	sprite.texture = texture
