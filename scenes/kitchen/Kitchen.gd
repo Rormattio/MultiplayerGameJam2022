@@ -31,7 +31,7 @@ var dish_ingredients_n = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	send_dish.connect("pressed", self, "_on_ButtonPressed")
+	send_dish.connect("pressed", self, "_on_SendDish_Pressed")
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
 
@@ -42,9 +42,10 @@ func _ready():
 	for idx in range(max_ingredients):
 		dish_ingredients.append("")
 
+	# TODO: add hands maybe?
 	# CHEFFE
-	cheffe = cheffe_scene.instance()
-	add_child(cheffe)
+	# cheffe = cheffe_scene.instance()
+	# add_child(cheffe)
 
 	# DISH
 	dish_front.hide()
@@ -178,7 +179,7 @@ func _on_close_command(name):
 	active_commands.remove(command_idx)
 	command.queue_free() # find and delete by name
 
-func _on_ButtonPressed():
+func _on_SendDish_Pressed():
 	AudioSfx.play(Global.Sfx.CLICK)
 
 	var container_type
@@ -191,6 +192,13 @@ func _on_ButtonPressed():
 	var can_make_a_dish = induced_dish.make_from_linear_ingredients(container_type, dish_ingredients)
 	assert(can_make_a_dish)
 	assert(induced_dish.is_valid())
+
+	$Counter.add_dish_wherever(induced_dish)
+	if $Counter.get_free_slots_count() == 0:
+		$SendDish.disabled = true
+
+	_clear_dish()
+	_refresh_stock()
 
 	var serialized_dish = induced_dish.serialize()
 	Global.cheffe_send_dish(serialized_dish)
