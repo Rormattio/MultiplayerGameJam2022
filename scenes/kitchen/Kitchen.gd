@@ -287,7 +287,7 @@ func _on_Trash_pressed():
 	_clear_dish()
 	_refresh_stock()
 
-func _set_dish(new_dish):
+func _set_dish(new_dish : Dish):
 	_clear_dish()
 
 	if new_dish.container_type == Dish.ContainerType.BOWL:
