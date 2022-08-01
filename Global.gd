@@ -268,6 +268,33 @@ func _check_ingredient_metadata():
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
 
+func make_keyword_list():
+	print("make_keyword_list")
+	var result = []
+	
+	var remaining_ingredients = Global.ingredient_names.duplicate()
+	
+	for desc in Global.ingredient_descs:
+		var ingredient = desc.name
+		
+		var reach_path_count = 0
+		for kw in result:
+			var reached_ingredients = Global.plain_keywords_reachability[kw]
+			if reached_ingredients.has(ingredient):
+				reach_path_count += 1
+		
+		if reach_path_count >= 2:
+			continue
+		
+		var new_kw = null;
+		while true:
+			new_kw = Global.rand_array(desc.plain_keywords_fr)
+			if not result.has(new_kw):
+				break
+		result.append(new_kw)
+				
+	return result
+
 func _ready():
 	# Build ingredient_names for bw-compat
 	for desc in ingredient_descs:
@@ -316,6 +343,8 @@ func _ready():
 	print("plain_keywords_occurrences: ", plain_keywords_occurrences)
 	print("plain_keywords_reachability: ", plain_keywords_reachability)
 	
+	var keyword_list = make_keyword_list()
+	print("keyword_list: ", keyword_list)
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
 	var node_instance = instance_node(node, parent)
