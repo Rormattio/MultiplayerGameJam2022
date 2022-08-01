@@ -272,8 +272,6 @@ func make_keyword_list():
 	print("make_keyword_list")
 	var result = []
 	
-	var remaining_ingredients = Global.ingredient_names.duplicate()
-	
 	for desc in Global.ingredient_descs:
 		var ingredient = desc.name
 		
@@ -288,11 +286,12 @@ func make_keyword_list():
 		
 		var new_kw = null;
 		while true:
-			new_kw = Global.rand_array(desc.plain_keywords_fr)
+			new_kw = desc.plain_keywords_fr[randi() % desc.plain_keywords_fr.size()]
+
 			if not result.has(new_kw):
 				break
 		result.append(new_kw)
-				
+	
 	return result
 
 func _ready():
