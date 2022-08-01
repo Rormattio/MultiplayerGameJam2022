@@ -109,6 +109,42 @@ func make_from_linear_ingredients(_container_type, ingredients):
 	
 	return is_valid()
 
+
+# I can't manage to send Dish through RPC so I serialize it in a dumb way
+func serialize() -> Array:
+	var result = []
+	result.append(container_type)
+	result.append(meal_type)
+
+	if meal_type == MealType.BURGER:
+		result.append(burger_component_bottom_burger)
+		result.append(burger_component_mid_burger)
+		result.append(burger_component_top_burger)
+		result.append(burger_component_top)
+	else:
+		result.append(non_burger_component_bottom)
+		result.append(non_burger_component_main)
+		result.append(non_burger_component_top)
+		result.append("")
+	assert(result.size() == 6)
+	return result
+	
+func deserialize(stream : Array):
+	assert(stream.size() == 6)
+
+	container_type = stream[0]
+	meal_type = stream[1]
+
+	if meal_type == MealType.BURGER:
+		burger_component_bottom_burger = stream[2]
+		burger_component_mid_burger = stream[3]
+		burger_component_top_burger = stream[4]
+		burger_component_top = stream[5]
+	else:
+		non_burger_component_bottom = stream[2]
+		non_burger_component_main = stream[3]
+		non_burger_component_top = stream[4]
+		assert(stream[5] == "")
 		
 func debug_print():
 	print("Container: ", ContainerType.keys()[container_type])
