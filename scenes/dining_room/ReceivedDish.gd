@@ -20,12 +20,8 @@ func _ready():
 	$RootForOffset/Background.connect("gui_input", self, "_on_input_received")
 
 func build(a_dish : Array):
-	# TODO : The container type isn't passed :0
-	var container_type = Dish.ContainerType.PLATE
-	
 	self.dish = Dish.new()
-	var can_make_a_dish = self.dish.make_from_linear_ingredients(container_type, a_dish)
-	assert(can_make_a_dish) 
+	self.dish.deserialize(a_dish)
 	assert(self.dish.is_valid())
 
 	var new_dish_sprite = DishRenderer.render_dish(self.dish)
