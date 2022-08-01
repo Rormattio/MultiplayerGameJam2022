@@ -148,7 +148,7 @@ func deserialize(stream : Array):
 		non_burger_component_top = stream[4]
 		assert(stream[5] == "")
 	assert(is_valid())
-		
+
 func debug_print():
 	print("Container: ", ContainerType.keys()[container_type])
 	print("Meal: ", MealType.keys()[meal_type])
