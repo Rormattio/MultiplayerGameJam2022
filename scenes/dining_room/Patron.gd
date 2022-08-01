@@ -13,8 +13,6 @@ onready var dish_position = $CommandAvatar/DishPosition
 onready var command_avatar = $CommandAvatar
 onready var level_avatar = $LevelAvatar
 
-var food_assets = []
-
 enum State {
 	ENTERING,
 	WAITING_TO_ORDER,
@@ -33,13 +31,6 @@ var level_avatar_is_visible
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var food_files = []
-	for ingredient_name in Global.base_ingredient_names:
-		food_files.append("res://assets/food/" + ingredient_name + ".png")
-
-	for f in food_files:
-		food_assets.append(load(f))
-
 	command_avatar.patron = self
 	level_avatar_is_visible = true
 	set_level_avatar_visible(level_avatar_is_visible)
@@ -160,5 +151,3 @@ func generate_dish():
 	# TODO remove childs
 	assert(dish_wish.get_node("Sprite").get_child_count() == 0)
 	dish_wish.get_node("Sprite").add_child(random_dish_node)
-	#var food_img = Global.rand_array(food_assets)
-	#dish_wish.get_node("Sprite").texture = food_img

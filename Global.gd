@@ -45,36 +45,6 @@ var mid_burger_ingredients = [
 var top_burger_ingredients = [
 ]
 
-var base_ingredient_names = [
-	"black_forest_hole",
-	"blue_banana",
-	"bread",
-	"bread_blue",
-	"bread_green",
-	"bread_grey",
-	"bread_top",
-	"bread_top_blue",
-	"bread_top_green",
-	"bread_top_grey",
-	"crab",
-	"ghosts",
-	"puree_grumpy",
-	"puree_happy",
-	"puree_mighty",
-	"puree_smirky",
-	"puree_worried",
-	"mecha_ham",
-	"planet_earth",
-	"planet_jupiter",
-	"planet_mars",
-	"planet_neptune",
-	"planet_saturn",
-	"springs",
-	"squid_green",
-	"squid_space",
-	"squid_yellow",
-]
-
 # TODO : Remove
 var ingredient_names = [
 ]
