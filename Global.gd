@@ -103,6 +103,12 @@ class IngredientDesc:
 	func has_tag(tag):
 		return tags.has(tag)
 		
+	func has_any_tag(tag_list):
+		for t in tag_list:
+			if tags.has(t):
+				return true
+		return false
+		
 	func _init(n, t, pk, ok, s):
 		name = n
 		tags = t
@@ -144,13 +150,13 @@ var ingredient_descs = [
 	IngredientDesc.new("crab", ["mid_burger"],
 		[], [],
 		null),
-	IngredientDesc.new("flag_blue", ["top"],
+	IngredientDesc.new("flag_blue", ["top", "flag"],
 		[], [],
 		null),
-	IngredientDesc.new("flag_fr", ["top"],
+	IngredientDesc.new("flag_fr", ["top", "flag"],
 		[], [],
 		null),
-	IngredientDesc.new("flag_yellow", ["top"],
+	IngredientDesc.new("flag_yellow", ["top", "flag"],
 		[], [],
 		null),
 	IngredientDesc.new("ghosts", [],
@@ -239,6 +245,9 @@ func get_ingredient_desc(name):
 			return desc
 	return null
 
+func ingredient_has_tag(name, flag):
+	return get_ingredient_desc(name).has_tag(flag)
+		
 func get_ingredient_names_with_tag(tag):
 	var result = []
 	for desc in ingredient_descs:
