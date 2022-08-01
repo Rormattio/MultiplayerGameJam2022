@@ -192,7 +192,8 @@ func _on_ButtonPressed():
 	assert(can_make_a_dish) 
 	assert(induced_dish.is_valid())
 	
-	Global.cheffe_send_dish(dish_ingredients)
+	var serialized_dish = induced_dish.serialize()
+	Global.cheffe_send_dish(serialized_dish)
 
 func _on_ingredient_dish_set(ingredient_name):
 	var idx = dish_ingredients_n
