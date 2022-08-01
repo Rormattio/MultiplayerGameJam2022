@@ -70,8 +70,7 @@ func _ready():
 #	pass
 
 func _is_possible_next_ingredient_0(ingredient_desc):
-	if ingredient_desc == null:
-		return true
+	assert(ingredient_desc != null);
 		
 	if current_dish == "bowl":
 		if ingredient_desc.has_tag("bottom_burger"):
@@ -79,31 +78,39 @@ func _is_possible_next_ingredient_0(ingredient_desc):
 		if ingredient_desc.has_tag("bottom"):
 			return false
 	
-	return not ingredient_desc.has_tag("mid_burger") and not ingredient_desc.has_tag("top_burger")
+	return not ingredient_desc.has_any_tag(["mid_burger", "top_burger", "flag"])
 
 func _is_possible_next_ingredient_1(ingredient_desc):
+	assert(ingredient_desc != null);
+
 	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
 	if is_burger:
-		return (ingredient_desc != null) and ingredient_desc.has_tag("mid_burger")
+		return ingredient_desc.has_tag("mid_burger")
 	else:
-		return true
+		return not ingredient_desc.has_any_tag(["bottom_burger", "mid_burger", "top_burger", "flag"])
 
 func _is_possible_next_ingredient_2(ingredient_desc):
+	assert(ingredient_desc != null);
+
 	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
 	if is_burger:
 		return (ingredient_desc != null) and ingredient_desc.has_tag("top_burger")
 	else:
-		return (ingredient_desc == null) or ingredient_desc.has_tag("top")
+		return ingredient_desc.has_tag("top") and not ingredient_desc.has_tag("flag")
 
 func _is_possible_next_ingredient_3(ingredient_desc):
+	assert(ingredient_desc != null);
+
 	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
 	if is_burger:
-		return (ingredient_desc == null) or ingredient_desc.has_tag("top")
+		return ingredient_desc.has_tag("top")
 	else:
 		return false
 		
 # This should help the player to create a valid Dish
 func _is_possible_next_ingredient(ingredient_desc):
+	assert(ingredient_desc != null);
+	
 	match dish_ingredients_n:
 		0:
 			return _is_possible_next_ingredient_0(ingredient_desc)
