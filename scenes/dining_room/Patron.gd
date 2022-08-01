@@ -28,17 +28,18 @@ var wanted_dish # Repr
 var dish_score_value
 var destination
 var level_avatar_is_visible
+var command_avatar_is_visible
+var sitting_at_table
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	command_avatar.patron = self
-	level_avatar_is_visible = true
-	set_level_avatar_visible(level_avatar_is_visible)
+	level_avatar_is_visible = false
+	command_avatar_is_visible = false
 
 	wanted_dish = null
 	hide_wanted_dish()
 	hide_dish_score()
-	set_state(State.ENTERING)
 
 	dish_score_value = 0
 
@@ -50,12 +51,22 @@ func _ready():
 	
 	command_avatar.connect("patron_avatar_command_clicked", self, "_on_any_avatar_clicked")
 	level_avatar.connect("patron_avatar_level_clicked", self, "_on_any_avatar_clicked")
+	
+func init():
+	set_state(State.ENTERING)
+	refresh_avatars_visible()
 
-func set_level_avatar_visible(_visible):
-	level_avatar_is_visible = _visible
-	level_avatar.visible = _visible
-	level_avatar.input_pickable = _visible
-	var command_avatar_is_visible = (not _visible) and (state > State.ENTERING) and (state < State.LEAVING)
+func refresh_avatars_visible():
+	set_avatars_visible(level_avatar_is_visible)
+
+func set_avatars_visible(_level_avatar_is_visible):
+	level_avatar_is_visible = _level_avatar_is_visible
+	level_avatar.visible = _level_avatar_is_visible
+	level_avatar.input_pickable = _level_avatar_is_visible
+	
+	var _command_avatar_is_visible = sitting_at_table.taking_commands
+	assert(not (_level_avatar_is_visible and _command_avatar_is_visible))
+	command_avatar_is_visible = _command_avatar_is_visible and (state > State.ENTERING) and (state < State.LEAVING)
 	command_avatar.visible = command_avatar_is_visible
 	command_avatar.input_pickable = command_avatar_is_visible
 
@@ -93,10 +104,11 @@ func set_state(a_state):
 			show_dish_score()
 		
 		State.LEAVING:
+			emit_signal("patron_leaves", self)
 			$LeavingTimer.start()
 
 	state = a_state
-	set_level_avatar_visible(level_avatar_is_visible) # refresh, in case we changed state
+	refresh_avatars_visible()
 
 func compute_dish_score(wanted_dish, dish):
 	# TODO
@@ -114,7 +126,6 @@ func _on_EnteringTimer_timeout():
 	level_avatar.position = destination
 
 func _on_LeavingTimer_timeout():
-	emit_signal("patron_leaves", self)
 	queue_free()
 
 func _on_EatTimer_timeout():
