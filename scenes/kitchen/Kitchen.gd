@@ -34,7 +34,7 @@ func _ready():
 	send_dish.connect("pressed", self, "_on_ButtonPressed")
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
-	
+
 	if not Global.DEBUG:
 		$Randomize.queue_free()
 
@@ -53,7 +53,7 @@ func _ready():
 		asset.scale.y = 3
 	dish_container.scale.x = 3
 	dish_container.scale.y = 3
-	
+
 	for ingredient_name in Global.ingredient_names:
 		var ingredient_stock = ingredient_stock_scene.instance()
 		ingredient_stock.connect("ingredient_dish_set", self, "_on_ingredient_dish_set")
@@ -71,13 +71,13 @@ func _ready():
 
 func _is_possible_next_ingredient_0(ingredient_desc):
 	assert(ingredient_desc != null);
-		
+
 	if current_container_type == Dish.ContainerType.BOWL:
 		if ingredient_desc.has_tag("bottom_burger"):
 			return false
 		if ingredient_desc.has_tag("bottom"):
 			return false
-	
+
 	return not ingredient_desc.has_any_tag(["mid_burger", "top_burger", "flag"])
 
 func _is_possible_next_ingredient_1(ingredient_desc):
@@ -106,11 +106,11 @@ func _is_possible_next_ingredient_3(ingredient_desc):
 		return ingredient_desc.has_tag("top")
 	else:
 		return false
-		
+
 # This should help the player to create a valid Dish
 func _is_possible_next_ingredient(ingredient_desc):
 	assert(ingredient_desc != null);
-	
+
 	match dish_ingredients_n:
 		0:
 			return _is_possible_next_ingredient_0(ingredient_desc)
@@ -125,12 +125,12 @@ func _is_possible_next_ingredient(ingredient_desc):
 		_:
 			assert(false)
 			return false
-	
+
 func _refresh_stock():
 	while $IngredientStockContainer.get_child_count() > 0:
 		var node = $IngredientStockContainer.get_child(0)
 		$IngredientStockContainer.remove_child(node)
-		
+
 	var start_x = 900
 	var x = start_x
 	var y = 50
@@ -138,16 +138,16 @@ func _refresh_stock():
 	var w = dx*4
 	var dy = 64
 	for ingredient_desc in Global.ingredient_descs:
-		if _is_possible_next_ingredient(ingredient_desc):
-			var ingredient_name = ingredient_desc.name
-			var ingredient_stock = ingredient_stocks[ingredient_name]
-			ingredient_stock.position.x = x
-			ingredient_stock.position.y = y
-			$IngredientStockContainer.add_child(ingredient_stock)
-			x += dx
-			if x > w + start_x:
-				x = start_x
-				y += dy
+		var ingredient_name = ingredient_desc.name
+		var ingredient_stock = ingredient_stocks[ingredient_name]
+		ingredient_stock.set_enabled(_is_possible_next_ingredient(ingredient_desc))
+		ingredient_stock.position.x = x
+		ingredient_stock.position.y = y
+		$IngredientStockContainer.add_child(ingredient_stock)
+		x += dx
+		if x > w + start_x:
+			x = start_x
+			y += dy
 
 func _on_WaiterCommand_Sent(order: Order):
 	print("waiter command ", order)
@@ -180,7 +180,7 @@ func _on_close_command(name):
 
 func _on_ButtonPressed():
 	AudioSfx.play(Global.Sfx.CLICK)
-	
+
 	var container_type
 	if current_container_type == Dish.ContainerType.PLATE:
 		container_type = Dish.ContainerType.PLATE;
@@ -189,18 +189,18 @@ func _on_ButtonPressed():
 		container_type = Dish.ContainerType.BOWL;
 	var induced_dish = Dish.new()
 	var can_make_a_dish = induced_dish.make_from_linear_ingredients(container_type, dish_ingredients)
-	assert(can_make_a_dish) 
+	assert(can_make_a_dish)
 	assert(induced_dish.is_valid())
-	
+
 	var serialized_dish = induced_dish.serialize()
 	Global.cheffe_send_dish(serialized_dish)
 
 func _on_ingredient_dish_set(ingredient_name):
 	var idx = dish_ingredients_n
 	if ingredient_name != "":
-		
+
 		# dish_ingredients is linear and contains holes to be able to map to a future Dish so we
-		# need to pad it with "" to manage optional components (see Dish grammar) 
+		# need to pad it with "" to manage optional components (see Dish grammar)
 		var padding_needed
 		match dish_ingredients_n:
 			0:
@@ -229,7 +229,7 @@ func _on_ingredient_dish_set(ingredient_name):
 			dish_ingredients[idx] = ""
 			idx += 1
 			dish_ingredients_n += 1
-				
+
 		var image = ingredient_sprites[ingredient_name]
 		var sprite = Sprite.new()
 		sprite.set_texture(image)
@@ -243,7 +243,7 @@ func _on_ingredient_dish_set(ingredient_name):
 
 	if Global.ingredient_names_to_sfx.has(ingredient_name):
 		AudioSfx.play(Global.ingredient_names_to_sfx[ingredient_name])
-		
+
 	_refresh_stock()
 	return true
 
@@ -277,7 +277,7 @@ func _clear_dish():
 			assert(node != null)
 			dish_container.remove_child(node)
 			node.queue_free()
-			
+
 	dish_ingredients = []
 	for idx in range(max_ingredients):
 		dish_ingredients.append("")
@@ -314,7 +314,7 @@ func _on_Randomize_pressed():
 	var new_dish = Dish.new()
 	new_dish.randomize()
 	new_dish.debug_print()
-	
+
 	# Debug code for the DishRenderer
 	if false:
 		var new_dish_sprite = DishRenderer.render_dish(new_dish)
