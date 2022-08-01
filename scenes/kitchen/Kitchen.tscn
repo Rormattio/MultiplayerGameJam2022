@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/kitchen/Kitchen.gd" type="Script" id=1]
 [ext_resource path="res://assets/food/bowl.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/food/plate.png" type="Texture" id=5]
 [ext_resource path="res://assets/misc/trash.png" type="Texture" id=6]
+[ext_resource path="res://scenes/kitchen/Counter.gd" type="Script" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.376471, 0.0862745, 0.0862745, 1 )
@@ -85,6 +86,13 @@ custom_styles/normal = SubResource( 1 )
 text = "RANDOMIZE"
 
 [node name="IngredientStockContainer" type="Node2D" parent="."]
+
+[node name="Counter" type="Line2D" parent="."]
+position = Vector2( 41.5522, 19.9158 )
+scale = Vector2( 0.776119, 0.863158 )
+points = PoolVector2Array( 8, 384, 256, 24 )
+width = 0.0
+script = ExtResource( 7 )
 
 [connection signal="pressed" from="ChangeDish" to="." method="_on_ChangeDish_pressed"]
 [connection signal="pressed" from="Trash" to="." method="_on_Trash_pressed"]
