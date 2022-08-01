@@ -3,8 +3,8 @@ extends Node2D
 var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
 var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn")
 var command_scene = preload("res://scenes/kitchen/Command.tscn")
-var Dish = preload("res://Dish.gd")
-var DishRenderer = preload("res://DishRenderer.gd")
+const Dish = preload("res://Dish.gd")
+const DishRenderer = preload("res://DishRenderer.gd")
 
 onready var send_dish = $SendDish
 onready var change_dish = $ChangeDish
@@ -13,7 +13,7 @@ onready var dish_back = $Dish/DishBack # z index 0
 onready var dish_container = $Dish/DishContainer # z index 1
 onready var dish_front = $Dish/DishFront # z index 2
 
-onready var current_dish = "plate"
+onready var current_container_type = Dish.ContainerType.PLATE
 
 onready var commands_container = $CommandsContainer
 
@@ -72,7 +72,7 @@ func _ready():
 func _is_possible_next_ingredient_0(ingredient_desc):
 	assert(ingredient_desc != null);
 		
-	if current_dish == "bowl":
+	if current_container_type == Dish.ContainerType.BOWL:
 		if ingredient_desc.has_tag("bottom_burger"):
 			return false
 		if ingredient_desc.has_tag("bottom"):
@@ -182,10 +182,10 @@ func _on_ButtonPressed():
 	AudioSfx.play(Global.Sfx.CLICK)
 	
 	var container_type
-	if current_dish == "plate":
+	if current_container_type == Dish.ContainerType.PLATE:
 		container_type = Dish.ContainerType.PLATE;
 	else:
-		assert(current_dish == "bowl")
+		assert(current_container_type == Dish.ContainerType.BOWL)
 		container_type = Dish.ContainerType.BOWL;
 	var induced_dish = Dish.new()
 	var can_make_a_dish = induced_dish.make_from_linear_ingredients(container_type, dish_ingredients)
@@ -249,21 +249,21 @@ func _on_ingredient_dish_set(ingredient_name):
 func _set_plate():
 		dish_back.texture = load("res://assets/food/plate.png")
 		dish_front.hide()
-		current_dish = "plate"
+		current_container_type = Dish.ContainerType.PLATE
 		change_dish.icon = load("res://assets/food/bowl.png")
 
 func _set_bowl():
 		dish_back.texture = load("res://assets/food/bowl_back.png")
 		dish_front.show()
-		current_dish = "bowl"
+		current_container_type = Dish.ContainerType.BOWL
 		change_dish.icon = load("res://assets/food/plate.png")
 
 func _on_ChangeDish_pressed():
 	AudioSfx.play(Global.Sfx.CLICK)
-	if (current_dish == "plate"):
+	if (current_container_type == Dish.ContainerType.PLATE):
 		_set_bowl()
 	else:
-		assert(current_dish == "bowl")
+		assert(current_container_type == Dish.ContainerType.BOWL)
 		_set_plate()
 	_refresh_stock()
 
