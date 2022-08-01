@@ -9,7 +9,7 @@ func _ready():
 	dishes = []
 	selected_dish = null
 
-func add_dish(dish):
+func add_dish(dish : Array):
 	var received_dish = received_dish_scene.instance()
 	received_dish.build(dish)
 

@@ -192,12 +192,7 @@ func _on_ButtonPressed():
 	assert(can_make_a_dish) 
 	assert(induced_dish.is_valid())
 	
-	# Legacy
-	var dish = []
-	for ingredient_name in dish_ingredients:
-		if ingredient_name != null:
-			dish.append(ingredient_name)
-	Global.cheffe_send_dish(dish)
+	Global.cheffe_send_dish(dish_ingredients)
 
 func _on_ingredient_dish_set(ingredient_name):
 	var idx = dish_ingredients_n
