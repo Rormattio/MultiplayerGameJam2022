@@ -99,6 +99,32 @@ func randomize():
 		if is_valid():
 			break
 			
+func make_from_linear_ingredients(_container_type, ingredients):
+	container_type = _container_type
+	assert(ingredients.size() == 4)
+
+	if ingredients[0] == "":
+		meal_type = MealType.NON_BURGER
+	elif Global.is_bottom_burger_ingredient(ingredients[0]):
+		meal_type = MealType.BURGER
+	else:
+		meal_type = MealType.NON_BURGER
+
+	if meal_type == MealType.BURGER:
+		burger_component_bottom_burger = ingredients[0]
+		burger_component_mid_burger = ingredients[1]
+		burger_component_top_burger = ingredients[2]
+		burger_component_top = ingredients[3]
+	else:
+		non_burger_component_bottom = ingredients[0]
+		non_burger_component_main = ingredients[1]
+		non_burger_component_top = ingredients[2]
+		if ingredients[3] != "":
+			return false
+	
+	return is_valid()
+
+		
 func debug_print():
 	print("Container: ", ContainerType.keys()[container_type])
 	print("Meal: ", MealType.keys()[meal_type])

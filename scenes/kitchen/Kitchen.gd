@@ -40,34 +40,11 @@ func _ready():
 
 	dish_ingredients = []
 	for idx in range(max_ingredients):
-		dish_ingredients.append(null)
+		dish_ingredients.append("")
 
 	# CHEFFE
 	cheffe = cheffe_scene.instance()
 	add_child(cheffe)
-
-	# STOCK
-	var start_x = 900
-	var x = start_x
-	var y = 50
-	var dx = 64
-	var w = dx*4
-	var dy = 64
-	for ingredient_name in Global.ingredient_names:
-		var ingredient_stock = ingredient_stock_scene.instance()
-		add_child(ingredient_stock)
-		ingredient_stock.connect("ingredient_dish_set", self, "_on_ingredient_dish_set")
-		ingredient_stocks[ingredient_name] = ingredient_stock
-		ingredient_stock.ingredient_name = ingredient_name
-		ingredient_stock.position.x = x
-		ingredient_stock.position.y = y
-		var ingredient_sprite = load("res://assets/food/" + ingredient_name + ".png")
-		ingredient_sprites[ingredient_name] = ingredient_sprite
-		ingredient_stock.get_node("Sprite").set_texture(ingredient_sprite)
-		x += dx
-		if x > w + start_x:
-			x = start_x
-			y += dy
 
 	# DISH
 	dish_front.hide()
@@ -76,10 +53,94 @@ func _ready():
 		asset.scale.y = 3
 	dish_container.scale.x = 3
 	dish_container.scale.y = 3
+	
+	for ingredient_name in Global.ingredient_names:
+		var ingredient_stock = ingredient_stock_scene.instance()
+		ingredient_stock.connect("ingredient_dish_set", self, "_on_ingredient_dish_set")
+		ingredient_stocks[ingredient_name] = ingredient_stock
+		ingredient_stock.ingredient_name = ingredient_name
+		var ingredient_sprite = load("res://assets/food/" + ingredient_name + ".png")
+		ingredient_sprites[ingredient_name] = ingredient_sprite
+		ingredient_stock.get_node("Sprite").set_texture(ingredient_sprite)
+
+	_refresh_stock()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func _is_possible_next_ingredient_0(ingredient_desc):
+	if ingredient_desc == null:
+		return true
+		
+	if current_dish == "bowl":
+		if ingredient_desc.has_tag("bottom_burger"):
+			return false
+		if ingredient_desc.has_tag("bottom"):
+			return false
+	
+	return not ingredient_desc.has_tag("mid_burger") and not ingredient_desc.has_tag("top_burger")
+
+func _is_possible_next_ingredient_1(ingredient_desc):
+	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+	if is_burger:
+		return (ingredient_desc != null) and ingredient_desc.has_tag("mid_burger")
+	else:
+		return true
+
+func _is_possible_next_ingredient_2(ingredient_desc):
+	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+	if is_burger:
+		return (ingredient_desc != null) and ingredient_desc.has_tag("top_burger")
+	else:
+		return (ingredient_desc == null) or ingredient_desc.has_tag("top")
+
+func _is_possible_next_ingredient_3(ingredient_desc):
+	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+	if is_burger:
+		return (ingredient_desc == null) or ingredient_desc.has_tag("top")
+	else:
+		return false
+		
+# This should help the player to create a valid Dish
+func _is_possible_next_ingredient(ingredient_desc):
+	match dish_ingredients_n:
+		0:
+			return _is_possible_next_ingredient_0(ingredient_desc)
+		1:
+			return _is_possible_next_ingredient_1(ingredient_desc)
+		2:
+			return _is_possible_next_ingredient_2(ingredient_desc)
+		3:
+			return _is_possible_next_ingredient_3(ingredient_desc)
+		4:
+			return false
+		_:
+			assert(false)
+			return false
+	
+func _refresh_stock():
+	while $IngredientStockContainer.get_child_count() > 0:
+		var node = $IngredientStockContainer.get_child(0)
+		$IngredientStockContainer.remove_child(node)
+		
+	var start_x = 900
+	var x = start_x
+	var y = 50
+	var dx = 64
+	var w = dx*4
+	var dy = 64
+	for ingredient_desc in Global.ingredient_descs:
+		if _is_possible_next_ingredient(ingredient_desc):
+			var ingredient_name = ingredient_desc.name
+			var ingredient_stock = ingredient_stocks[ingredient_name]
+			ingredient_stock.position.x = x
+			ingredient_stock.position.y = y
+			$IngredientStockContainer.add_child(ingredient_stock)
+			x += dx
+			if x > w + start_x:
+				x = start_x
+				y += dy
 
 func _on_WaiterCommand_Sent(order: Order):
 	print("waiter command ", order)
@@ -112,6 +173,19 @@ func _on_close_command(name):
 
 func _on_ButtonPressed():
 	AudioSfx.play(Global.Sfx.CLICK)
+	
+	var container_type
+	if current_dish == "plate":
+		container_type = Dish.ContainerType.PLATE;
+	else:
+		assert(current_dish == "bowl")
+		container_type = Dish.ContainerType.BOWL;
+	var induced_dish = Dish.new()
+	var can_make_a_dish = induced_dish.make_from_linear_ingredients(container_type, dish_ingredients)
+	assert(can_make_a_dish) 
+	assert(induced_dish.is_valid())
+	
+	# Legacy
 	var dish = []
 	for ingredient_name in dish_ingredients:
 		if ingredient_name != null:
@@ -119,33 +193,49 @@ func _on_ButtonPressed():
 	Global.cheffe_send_dish(dish)
 
 func _on_ingredient_dish_set(ingredient_name):
-	assert(ingredient_name != "")
-	var idx = dish_ingredients.find(null)
-	if (idx == -1 or ingredient_name in dish_ingredients): # all_ingredients are already used
-		return false
-	var image = ingredient_sprites[ingredient_name]
-	var sprite = Sprite.new()
-	sprite.set_texture(image)
-	sprite.name = ingredient_name # give it a name s that we can easily find it and delete it later
-	assert(not dish_container.has_node(ingredient_name))
-	dish_container.add_child(sprite)
-	assert(dish_container.has_node(ingredient_name))
+	var idx = dish_ingredients_n
+	if ingredient_name != "":
+		
+		# dish_ingredients is linear and contains holes to be able to map to a future Dish so we
+		# need to pad it with "" to manage optional components (see Dish grammar) 
+		var padding_needed
+		match dish_ingredients_n:
+			0:
+				if Global.is_main_ingredient(ingredient_name):
+					padding_needed = 1
+				elif Global.is_top_ingredient(ingredient_name):
+					padding_needed = 2
+				else:
+					padding_needed = 0
+			1:
+				padding_needed = 0
+			2:
+				padding_needed = 0
+			3:
+				padding_needed = 0
+			_:
+				assert(false)
+		for i in range(padding_needed):
+			dish_ingredients[idx] = ""
+			idx += 1
+			dish_ingredients_n += 1
+				
+		var image = ingredient_sprites[ingredient_name]
+		var sprite = Sprite.new()
+		sprite.set_texture(image)
+		sprite.name = ingredient_name # give it a name s that we can easily find it and delete it later
+		assert(not dish_container.has_node(ingredient_name))
+		dish_container.add_child(sprite)
+		assert(dish_container.has_node(ingredient_name))
 	dish_ingredients[idx] = ingredient_name
+	idx += 1
 	dish_ingredients_n += 1
 
 	if Global.ingredient_names_to_sfx.has(ingredient_name):
 		AudioSfx.play(Global.ingredient_names_to_sfx[ingredient_name])
 		
+	_refresh_stock()
 	return true
-
-func remove_ingredient(ingredient_name):
-	var node = dish_container.get_node(ingredient_name);
-	assert(node != null)
-	dish_container.remove_child(node)
-	var idx = dish_ingredients.find(ingredient_name)
-	assert(idx > -1)
-	dish_ingredients[idx] = null
-	dish_ingredients_n -= 1
 
 func _set_plate():
 		dish_back.texture = load("res://assets/food/plate.png")
@@ -166,16 +256,27 @@ func _on_ChangeDish_pressed():
 	else:
 		assert(current_dish == "bowl")
 		_set_plate()
+	_refresh_stock()
 
 func _clear_dish():
 	print("Clearing : ", dish_ingredients)
-	for ingredient_name in dish_ingredients:
-		if ingredient_name != null:
-			remove_ingredient(ingredient_name)
+
+	for idx in range(dish_ingredients_n):
+		if 	dish_ingredients[idx] != "":
+			var node = dish_container.get_node(dish_ingredients[idx])
+			assert(node != null)
+			dish_container.remove_child(node)
+			node.queue_free()
+			
+	dish_ingredients = []
+	for idx in range(max_ingredients):
+		dish_ingredients.append("")
+	dish_ingredients_n = 0
 
 func _on_Trash_pressed():
 	AudioSfx.play(Global.Sfx.CLICK)
 	_clear_dish()
+	_refresh_stock()
 
 func _set_dish(new_dish):
 	_clear_dish()
@@ -191,16 +292,12 @@ func _set_dish(new_dish):
 		_on_ingredient_dish_set(new_dish.burger_component_bottom_burger)
 		_on_ingredient_dish_set(new_dish.burger_component_mid_burger)
 		_on_ingredient_dish_set(new_dish.burger_component_top_burger)
-		if new_dish.burger_component_top != "":
-			_on_ingredient_dish_set(new_dish.burger_component_top)
+		_on_ingredient_dish_set(new_dish.burger_component_top)
 	else:
 		assert(new_dish.meal_type == Dish.MealType.NON_BURGER)
-		if new_dish.non_burger_component_bottom != "":
-			_on_ingredient_dish_set(new_dish.non_burger_component_bottom)
-		if new_dish.non_burger_component_main != "":
-			_on_ingredient_dish_set(new_dish.non_burger_component_main)
-		if new_dish.non_burger_component_top != "":
-			_on_ingredient_dish_set(new_dish.non_burger_component_top)
+		_on_ingredient_dish_set(new_dish.non_burger_component_bottom)
+		_on_ingredient_dish_set(new_dish.non_burger_component_main)
+		_on_ingredient_dish_set(new_dish.non_burger_component_top)
 
 func _on_Randomize_pressed():
 
@@ -216,6 +313,7 @@ func _on_Randomize_pressed():
 		add_child(new_dish_sprite)
 
 	_set_dish(new_dish)
+	_refresh_stock()
 
 
 func _on_PatronDishScore_Sent(dish, score):

@@ -84,6 +84,8 @@ custom_fonts/font = ExtResource( 4 )
 custom_styles/normal = SubResource( 1 )
 text = "RANDOMIZE"
 
+[node name="IngredientStockContainer" type="Node2D" parent="."]
+
 [connection signal="pressed" from="ChangeDish" to="." method="_on_ChangeDish_pressed"]
 [connection signal="pressed" from="Trash" to="." method="_on_Trash_pressed"]
 [connection signal="pressed" from="Randomize" to="." method="_on_Randomize_pressed"]
