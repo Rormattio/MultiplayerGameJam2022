@@ -42,9 +42,10 @@ func _ready():
 	for idx in range(max_ingredients):
 		dish_ingredients.append("")
 
+	# TODO: add hands maybe?
 	# CHEFFE
-	cheffe = cheffe_scene.instance()
-	add_child(cheffe)
+	# cheffe = cheffe_scene.instance()
+	# add_child(cheffe)
 
 	# DISH
 	dish_front.hide()
