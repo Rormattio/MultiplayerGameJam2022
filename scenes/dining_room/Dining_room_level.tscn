@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/dining_room/Waiter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/dining_room/Dining_room.tscn" type="PackedScene" id=3]
@@ -12,6 +12,31 @@ extents = Vector2( 16.5, 389.5 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 663.5, 10 )
+
+[sub_resource type="Curve2D" id=6]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 545, 130, -3.65254, -21.7013, 3.65254, 21.7013, 547, 172, -18.0203, -22.0249, 18.0203, 22.0249, 566, 204, 0, 0, 0, 0, 595, 223, 0, 0, 0, 0, 601, 237 )
+}
+
+[sub_resource type="Curve2D" id=7]
+_data = {
+"points": PoolVector2Array( -15.5566, -30.2723, 15.5566, 30.2723, 546, 130, -46.7313, -23.9212, 46.7313, 23.9212, 609, 175, -18.6878, -24.6945, 18.6878, 24.6945, 837, 200, 0, 0, 0, 0, 852, 233, 0, 0, 0, 0, 867, 237 )
+}
+
+[sub_resource type="Curve2D" id=8]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 546, 129, 31.498, -25.8284, -31.498, 25.8284, 508, 180, 34.6478, -19.5288, -34.6478, 19.5288, 402, 224, 12.5992, -57.9564, -12.5992, 57.9564, 336, 321, 0, 0, 0, 0, 367, 481, 0, 0, 0, 0, 351, 497 )
+}
+
+[sub_resource type="Curve2D" id=9]
+_data = {
+"points": PoolVector2Array( 9.8995, -51.6188, -9.8995, 51.6188, 544, 129, 30.5575, -48.0189, -30.5575, 48.0189, 458, 248, -30.0339, -42.7149, 30.0339, 42.7149, 448, 391, -22.0249, -20.0226, 22.0249, 20.0226, 560, 446, 0, 0, 0, 0, 585, 490, 0, 0, 0, 0, 599, 497 )
+}
+
+[sub_resource type="Curve2D" id=10]
+_data = {
+"points": PoolVector2Array( -0.398104, -44.1896, 0.398104, 44.1896, 545, 130, -29.4597, -18.7109, 29.4597, 18.7109, 587, 182, -26.595, -41.9526, 26.595, 41.9526, 697, 225, -25.0127, -49.0815, 25.0127, 49.0815, 717, 391, -24.0688, -16.5178, 24.0688, 16.5178, 808, 450, 0, 0, 0, 0, 840, 487, 0, 0, 0, 0, 863, 496 )
+}
 
 [node name="Node" type="Node2D"]
 script = ExtResource( 5 )
@@ -61,6 +86,48 @@ position = Vector2( 568, 544 )
 
 [node name="Table5" parent="Layout/Tables" instance=ExtResource( 4 )]
 position = Vector2( 833, 544 )
+
+[node name="Paths" type="Node2D" parent="Layout"]
+
+[node name="Path2D" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
+curve = SubResource( 6 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D"]
+position = Vector2( 545, 130 )
+rotation = 1.78828
+loop = false
+
+[node name="Path2D2" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
+curve = SubResource( 7 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D2"]
+position = Vector2( 546, 130 )
+rotation = 2.07899
+loop = false
+
+[node name="Path2D3" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
+curve = SubResource( 8 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D3"]
+position = Vector2( 546, 129 )
+rotation = 1.90281
+loop = false
+
+[node name="Path2D4" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
+curve = SubResource( 9 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D4"]
+position = Vector2( 544, 129 )
+rotation = 1.78919
+loop = false
+
+[node name="Path2D5" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
+curve = SubResource( 10 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D5"]
+position = Vector2( 545, 130 )
+rotation = 1.55931
+loop = false
 
 [node name="Tray" type="Node2D" parent="."]
 position = Vector2( 19, 18 )

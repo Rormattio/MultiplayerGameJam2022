@@ -7,8 +7,11 @@ onready var layout = $Layout
 onready var dining_room = $DiningRoom
 onready var waiter = $Layout/Waiter
 onready var tables_nodes = $Layout/Tables
+onready var paths_to_tables = $Layout/Paths
 onready var patrons = $Patrons
 onready var spawn_timer = $SpawnTimer
+
+var TRIGGER_COMMAND_AT_X_FROM_TABLE = 160
 
 var tables = []
 
@@ -19,9 +22,21 @@ func _ready():
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
 	dining_room.tray = tray
 	
+	var used_paths = []
 	for table_node in tables_nodes.get_children():
-		if table_node.is_in_group("Tables"):
-			tables.append(table_node)
+		assert(table_node.is_in_group("Tables"))
+		tables.append(table_node)
+		var found = false
+		for path_node in paths_to_tables.get_children():
+			var curve = path_node.get_curve()
+			if table_node.position.distance_to(curve.get_point_position(curve.get_point_count()-1)) < 100:
+				var path_follow = path_node.get_node("PathFollow2D")
+				table_node.path_from_entrance = path_follow
+				found = true
+				assert(not (path_follow in used_paths))
+				used_paths.append(path_follow)
+				break
+		assert(found)
 
 	spawn_patron()
 	
@@ -52,6 +67,7 @@ func spawn_patron():
 	patron_dummy.sitting_at_table = table
 	patron_dummy.command_avatar.position.x = 960
 	patron_dummy.command_avatar.position.y = 250
+	patron_dummy.path_to_follow = table.path_from_entrance
 	
 	patron_dummy.init()
 	_refresh_layout_visible()
@@ -71,14 +87,14 @@ func _set_layout_visible(set_visible):
 	for table in tables:
 		patron_command_visible = false
 		if (not set_visible):
-			if (table.position.distance_to(waiter.position) < 80):
+			if (table.position.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE):
 				patron_command_visible = true
 		table.taking_commands = patron_command_visible
-		for patron in table.patrons_around:
-			patron.set_avatars_visible(patron_level_visible)
+	for patron in patrons.get_children():
+		patron.set_avatars_visible(patron_level_visible)
 	
 func _on_Patron_clicked(patron):
-	if (patron.get_node("LevelAvatar").global_position.distance_to(waiter.position) < 80) and (dining_room.state == dining_room.State.NOT_VISIBLE):
+	if (patron.sitting_at_table.position.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE) and (dining_room.state == dining_room.State.NOT_VISIBLE):
 		dining_room.pop_up([patron])
 		_set_layout_visible(false)
 	if dining_room.state == dining_room.State.VISIBLE:
