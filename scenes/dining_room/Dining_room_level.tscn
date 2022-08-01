@@ -42,24 +42,32 @@ shape = SubResource( 4 )
 position = Vector2( 652, 727 )
 shape = SubResource( 5 )
 
-[node name="Table" parent="Layout" instance=ExtResource( 4 )]
-position = Vector2( 568, 285 )
-
-[node name="Table2" parent="Layout" instance=ExtResource( 4 )]
-position = Vector2( 833, 288 )
-
-[node name="Table3" parent="Layout" instance=ExtResource( 4 )]
-position = Vector2( 319, 544 )
-
-[node name="Table4" parent="Layout" instance=ExtResource( 4 )]
-position = Vector2( 576, 545 )
-
-[node name="Table5" parent="Layout" instance=ExtResource( 4 )]
-position = Vector2( 832, 544 )
-
 [node name="Waiter" parent="Layout" instance=ExtResource( 2 )]
 position = Vector2( 247, 253 )
+
+[node name="Tables" type="Node2D" parent="Layout"]
+
+[node name="Table" parent="Layout/Tables" instance=ExtResource( 4 )]
+position = Vector2( 568, 285 )
+
+[node name="Table2" parent="Layout/Tables" instance=ExtResource( 4 )]
+position = Vector2( 833, 285 )
+
+[node name="Table3" parent="Layout/Tables" instance=ExtResource( 4 )]
+position = Vector2( 319, 544 )
+
+[node name="Table4" parent="Layout/Tables" instance=ExtResource( 4 )]
+position = Vector2( 568, 544 )
+
+[node name="Table5" parent="Layout/Tables" instance=ExtResource( 4 )]
+position = Vector2( 833, 544 )
 
 [node name="Tray" type="Node2D" parent="."]
 position = Vector2( 19, 18 )
 script = ExtResource( 6 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
