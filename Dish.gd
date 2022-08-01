@@ -1,5 +1,7 @@
 extends Object
 
+class_name Dish
+
 # dish = (container, meal)
 # container = bowl | plate
 # meal = burger | non-burger
@@ -31,7 +33,7 @@ func _randomize_dish_container():
 
 func _randomize_dish_meal_type():
 	return MealType.get(MealType.keys()[randi() % MealType.size()])
-	
+
 func _randomize_burger():
 	assert(meal_type == MealType.BURGER)
 	burger_component_bottom_burger = Global.bottom_burger_ingredients[randi() % Global.bottom_burger_ingredients.size()]
@@ -43,7 +45,7 @@ func _randomize_burger():
 	else:
 		burger_component_top = ""
 	return
-	
+
 func _randomize_non_burger():
 	assert(meal_type == MealType.NON_BURGER)
 	if randf() <= NON_BURGER_COMPONENT_BOTTOM_PROBABILITY:
@@ -83,7 +85,7 @@ func randomize():
 			_randomize_non_burger()
 		if is_valid():
 			break
-			
+
 func make_from_linear_ingredients(_container_type, ingredients):
 	container_type = _container_type
 	assert(ingredients.size() == 4)
@@ -106,14 +108,14 @@ func make_from_linear_ingredients(_container_type, ingredients):
 		non_burger_component_top = ingredients[2]
 		if ingredients[3] != "":
 			return false
-	
+
 	return is_valid()
 
 
 # I can't manage to send Dish through RPC so I serialize it in a dumb way
 func serialize() -> Array:
 	assert(is_valid())
-	
+
 	var result = []
 	result.append(container_type)
 	result.append(meal_type)
@@ -130,7 +132,7 @@ func serialize() -> Array:
 		result.append("")
 	assert(result.size() == 6)
 	return result
-	
+
 func deserialize(stream : Array):
 	assert(stream.size() == 6)
 
