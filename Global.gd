@@ -56,7 +56,9 @@ enum Sfx {
 	FFFT,
 	SHHOO,
 	CLICK,
-	SCHBOING
+	SCHBOING,
+	WHOOO,
+	TRASH
 }
 
 # TODO : Remove
@@ -131,7 +133,7 @@ var ingredient_descs = [
 		null),
 	IngredientDesc.new("ghosts", [],
 		["creature"], [],
-		null),
+		Sfx.WHOOO),
 	IngredientDesc.new("puree_grumpy", ["bottom"],
 		["puree"], [],
 		Sfx.SPLOTCH),
