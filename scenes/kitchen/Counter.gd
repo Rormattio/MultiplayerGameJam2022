@@ -2,7 +2,7 @@ extends Line2D
 
 const DishRenderer = preload("res://DishRenderer.gd")
 
-const MAX_DISH_ON_COUNTER = 6
+const MAX_DISH_ON_COUNTER = 5
 var counter_dishes
 
 func _ready():
