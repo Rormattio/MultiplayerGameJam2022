@@ -193,7 +193,7 @@ func _on_SendDish_Pressed():
 	assert(can_make_a_dish)
 	assert(induced_dish.is_valid())
 
-	$Counter.add_dish_wherever(induced_dish)
+	var dish_idx = $Counter.add_dish_wherever(induced_dish)
 	if $Counter.get_free_slots_count() == 0:
 		$SendDish.disabled = true
 
@@ -201,7 +201,7 @@ func _on_SendDish_Pressed():
 	_refresh_stock()
 
 	var serialized_dish = induced_dish.serialize()
-	Global.cheffe_send_dish(serialized_dish)
+	Global.cheffe_send_dish(serialized_dish, dish_idx)
 
 func _on_ingredient_dish_set(ingredient_name):
 	var idx = dish_ingredients_n
