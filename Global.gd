@@ -131,7 +131,7 @@ var ingredient_descs = [
 		["flag", "french"], [],
 		null),
 	IngredientDesc.new("flag_yellow", ["top", "flag"],
-		["flag", "yellow"], [],
+		["flag", "yellow", "happy"], [],
 		null),
 	IngredientDesc.new("ghosts", [],
 		["creature", "skewer"], [],
