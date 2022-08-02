@@ -32,7 +32,7 @@ _data = {
 
 [sub_resource type="Curve2D" id=8]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 546, 129, 31.498, -25.8284, -31.498, 25.8284, 508, 180, 34.6478, -19.5288, -34.6478, 19.5288, 428, 242, 1.07942, -70.6282, -1.07942, 70.6282, 409, 352, 0, 0, 0, 0, 370, 440, 0, 0, 0, 0, 351, 497 )
+"points": PoolVector2Array( 0, 0, 0, 0, 546, 129, 31.498, -25.8284, -31.498, 25.8284, 508, 180, 29.256, -37.8608, -29.256, 37.8608, 461, 229, 12.5992, -57.9564, -12.5992, 57.9564, 423, 325, 0, 0, 0, 0, 369, 487, 0, 0, 0, 0, 351, 497 )
 }
 
 [sub_resource type="Curve2D" id=9]
@@ -47,7 +47,7 @@ _data = {
 
 [sub_resource type="Curve2D" id=6]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 544, 130, -8.80255, -9.55171, 8.80255, 9.55171, 550, 181, 0, 0, 0, 0, 567, 190, -11.9865, -2.43475, 11.9865, 2.43475, 583, 196, 0.749154, -5.99323, -0.749154, 5.99323, 602, 221, 0.561865, -11.6119, -0.561865, 11.6119, 599, 239 )
+"points": PoolVector2Array( 0, 0, 0, 0, 545, 130, -3.65254, -21.7013, 3.65254, 21.7013, 547, 172, -18.0203, -22.0249, 18.0203, 22.0249, 566, 204, 0, 0, 0, 0, 595, 223, 0, 0, 0, 0, 601, 237 )
 }
 
 [node name="Node" type="Node2D"]
@@ -68,7 +68,7 @@ texture = ExtResource( 7 )
 [node name="Layout" type="Node2D" parent="."]
 
 [node name="Tray" type="Node2D" parent="Layout"]
-position = Vector2( 1164, 193 )
+position = Vector2( 1180, 280 )
 script = ExtResource( 6 )
 
 [node name="wall" type="KinematicBody2D" parent="Layout"]
@@ -158,8 +158,8 @@ loop = false
 curve = SubResource( 6 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D6"]
-position = Vector2( 544, 130 )
-rotation = 1.62146
+position = Vector2( 545, 130 )
+rotation = 1.62515
 loop = false
 
 [node name="SpawnTimer" type="Timer" parent="."]

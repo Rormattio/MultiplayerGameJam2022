@@ -3,6 +3,7 @@ extends Node2D
 var received_dish_scene = preload("res://scenes/dining_room/ReceivedDish.tscn")
 
 var DISTANCE_TO_GRAB_DISH = 80
+var DISHES_DY = 65
 
 var dishes = []
 var dining_room_level
@@ -21,7 +22,7 @@ func add_dish(dish : Array, dish_index: int):
 
 	# Move all dishes one place to the right
 	for d in dishes:
-		d.position.y += 64 + 20
+		d.position.y += DISHES_DY
 
 	received_dish.position = Vector2(0, 0)
 	received_dish.connect("dish_clicked", self, "_on_Dish_clicked")
@@ -37,7 +38,7 @@ func remove_dish(dish):
 	
 	# Move all remaining dishes one place up
 	for i in range(dish_index, dishes.size()):
-		dishes[i].position.y -= 64 + 20
+		dishes[i].position.y -= DISHES_DY
 
 func _on_CheffeDish_Sent(dish, dish_index):
 	print("cheffe sends dish ", dish)
