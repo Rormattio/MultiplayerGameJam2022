@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/tchao.ogg-8880107fb5d7efd7d7d8da3caa44e7ee.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/tchao.ogg"
+dest_files=[ "res://.import/tchao.ogg-8880107fb5d7efd7d7d8da3caa44e7ee.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
