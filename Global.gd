@@ -307,6 +307,11 @@ func _check_ingredient_metadata():
 			is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
+		
+	for desc in ingredient_descs:
+		var count = desc.plain_keywords_fr.size()
+		assert(count >= 2)
+
 
 func make_keyword_list(_seed : int):
 	seed(_seed)
@@ -345,46 +350,7 @@ func make_keyword_list(_seed : int):
 	
 	return result
 
-func _ready():
-	# Build ingredient_names for bw-compat
-	for desc in ingredient_descs:
-		ingredient_names.append(desc.name)
-
-	# Build ingredient_names_to_sfx for bw-compat
-	for desc in ingredient_descs:
-		if desc.sfx != null:
-			ingredient_names_to_sfx[desc.name] = desc.sfx
-
-	# Build bottom_ingredients for bw-compat
-	bottom_ingredients = get_ingredient_names_with_tag("bottom")
-
-	# Build top_ingredients for bw-compat
-	top_ingredients = get_ingredient_names_with_tag("top")
-
-	# Build bottom_burger_ingredients for bw-compat
-	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
-
-	# Build mid_burger_ingredients for bw-compat
-	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
-
-	# Build top_burger_ingredients for bw-compat
-	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
-
-	_check_ingredient_metadata()
-	randomize()
-	
-	""""# Let's make sure we populate the keywords to at least 3 items, with generated specific keywords
-	for desc in ingredient_descs:
-		var count = desc.plain_keywords_fr.size()
-		if count < 3:
-			for i in range(3-count):
-				desc.plain_keywords_fr.append(desc.name + "_plain" + str(i))"""
-	
-	# TODO : We should check that each ingredient is uniquely reachable by a subset of keyword
-	for desc in ingredient_descs:
-		var count = desc.plain_keywords_fr.size()
-		assert(count >= 2)
-				
+func _check_optimal_solutions():
 	for desc in ingredient_descs:
 		for kw in desc.plain_keywords_fr:
 			var count = plain_keywords_occurrences.get(kw, 0)
@@ -451,9 +417,41 @@ func _ready():
 				else:
 					print("ERROR: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword triplet")
 	
+func _ready():
+	# Build ingredient_names for bw-compat
+	for desc in ingredient_descs:
+		ingredient_names.append(desc.name)
+
+	# Build ingredient_names_to_sfx for bw-compat
+	for desc in ingredient_descs:
+		if desc.sfx != null:
+			ingredient_names_to_sfx[desc.name] = desc.sfx
+
+	# Build bottom_ingredients for bw-compat
+	bottom_ingredients = get_ingredient_names_with_tag("bottom")
+
+	# Build top_ingredients for bw-compat
+	top_ingredients = get_ingredient_names_with_tag("top")
+
+	# Build bottom_burger_ingredients for bw-compat
+	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
+
+	# Build mid_burger_ingredients for bw-compat
+	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
+
+	# Build top_burger_ingredients for bw-compat
+	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
+
+	_check_ingredient_metadata()
+	_check_optimal_solutions()
+		
+	randomize()
 	var _seed = randi()
 	var keyword_list = make_keyword_list(_seed)
 	print("keyword_list: ", keyword_list)
+	
+				
+
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
 	var node_instance = instance_node(node, parent)
