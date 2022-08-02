@@ -51,6 +51,10 @@ texture = ExtResource( 7 )
 
 [node name="Layout" type="Node2D" parent="."]
 
+[node name="Tray" type="Node2D" parent="Layout"]
+position = Vector2( 1164, 193 )
+script = ExtResource( 6 )
+
 [node name="wall" type="KinematicBody2D" parent="Layout"]
 
 [node name="wall2" type="CollisionShape2D" parent="Layout/wall"]
@@ -94,7 +98,7 @@ curve = SubResource( 6 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D"]
 position = Vector2( 545, 130 )
-rotation = 1.78828
+rotation = 1.62515
 loop = false
 
 [node name="Path2D2" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
@@ -102,7 +106,7 @@ curve = SubResource( 7 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D2"]
 position = Vector2( 546, 130 )
-rotation = 2.07899
+rotation = 1.08966
 loop = false
 
 [node name="Path2D3" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
@@ -118,7 +122,7 @@ curve = SubResource( 9 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D4"]
 position = Vector2( 544, 129 )
-rotation = 1.78919
+rotation = 1.78115
 loop = false
 
 [node name="Path2D5" type="Path2D" parent="Layout/Paths" groups=["Paths"]]
@@ -126,15 +130,14 @@ curve = SubResource( 10 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Layout/Paths/Path2D5"]
 position = Vector2( 545, 130 )
-rotation = 1.55931
+rotation = 1.55257
 loop = false
-
-[node name="Tray" type="Node2D" parent="."]
-position = Vector2( 19, 18 )
-script = ExtResource( 6 )
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="CarryingDish" type="Node2D" parent="."]
+position = Vector2( 20, 20 )
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]

@@ -2,12 +2,14 @@ extends Node2D
 
 var received_dish_scene = preload("res://scenes/dining_room/ReceivedDish.tscn")
 
+var DISTANCE_TO_GRAB_DISH = 80
+
 var dishes = []
-var selected_dish = null
+var dining_room_level
+var waiter
 
 func _ready():
 	dishes = []
-	selected_dish = null
 
 func add_dish(dish : Array):
 	var received_dish = received_dish_scene.instance()
@@ -15,9 +17,9 @@ func add_dish(dish : Array):
 
 	# Move all dishes one place to the right
 	for d in dishes:
-		d.position.x += 64 + 20
+		d.position.y += 64 + 20
 
-	received_dish.position = self.position
+	received_dish.position = Vector2(0, 0)
 	received_dish.connect("dish_clicked", self, "_on_Dish_clicked")
 	dishes.push_front(received_dish)
 	add_child(received_dish)
@@ -30,25 +32,12 @@ func remove_dish(dish):
 	remove_child(dish)
 
 	for i in range(dish_index, dishes.size()):
-		dishes[i].position.x -= 64 + 20
+		dishes[i].position.y -= 64 + 20
 
-	if selected_dish == dish:
-		dish.set_selected(false)
-		selected_dish = null
-
-func _on_Dish_clicked(dish):
-	if selected_dish == null:
-		selected_dish = dish
-		dish.set_selected(true)
-
-	elif selected_dish == dish:
-		selected_dish.set_selected(false)
-		selected_dish = null
-
-	else:
-		selected_dish.set_selected(false)
-		selected_dish = dish
-		dish.set_selected(true)
-
+func _on_Dish_clicked(received_dish):
+	if (dining_room_level.carrying_dish_node.get_child(0) == null) and (waiter.position.distance_to(received_dish.global_position) < DISTANCE_TO_GRAB_DISH):
+		remove_dish(received_dish)
+		dining_room_level.set_carrying_received_dish(received_dish)
+	
 func _on_Button_pressed():
 	add_dish([Global.rand_array(Global.ingredient_names)])
