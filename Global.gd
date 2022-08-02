@@ -213,6 +213,9 @@ var plain_keywords_synonyms = {
 	"space"    : ["cosmic"],
 	"creature" : ["meat"],
 	"squid"    : ["tentacle"],
+	"bottom"   : ["low"],
+	"top"      : ["high"],
+	"bread"    : ["bun"],
 }
 
 var obscure_keywords_synonyms = {
