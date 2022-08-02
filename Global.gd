@@ -92,7 +92,7 @@ class IngredientDesc:
 
 var ingredient_descs = [
 	IngredientDesc.new("black_forest_hole", [],
-		["black", "space"], [],
+		["black", "space", "fruit"], [],
 		null),
 	IngredientDesc.new("blue_banana", [],
 		["blue", "vegetal", "fruit"], [],
