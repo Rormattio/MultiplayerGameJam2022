@@ -218,6 +218,7 @@ var plain_keywords_synonyms = {
 	"bottom"   : ["low"],
 	"top"      : ["high"],
 	"bread"    : ["bun"],
+	"puree"    : ["mash"]
 }
 
 var obscure_keywords_synonyms = {
