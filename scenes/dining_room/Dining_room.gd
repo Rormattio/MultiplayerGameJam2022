@@ -57,7 +57,7 @@ func pop_down():
 func _process(_delta):
 	pass
 
-func build_word_list():
+func build_word_list_v0():
 	var colors = [
 		["violet", "purple", "pink",],
 		["vermilion", "scarlet", "red",],
@@ -122,6 +122,11 @@ func build_word_list():
 		else:
 			wordlist.add_item("")
 
+func build_word_list():
+	var keyword_list = Global.make_keyword_list()
+	for kw in keyword_list:
+		wordlist.add_item(kw)
+	
 func get_current_order_text() -> String:
 	return order_preview.text.strip_edges()
 
