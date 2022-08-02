@@ -397,6 +397,35 @@ func _ready():
 			
 	print("plain_keywords_occurrences: ", plain_keywords_occurrences)
 	print("plain_keywords_reachability: ", plain_keywords_reachability)
+
+	for desc in ingredient_descs:
+		var plain_keywords = desc.plain_keywords_fr
+		
+		var uniquely_reachable_with_a_single_keyword = false
+		for kw in plain_keywords:
+			assert(plain_keywords_reachability[kw] != [])
+			if plain_keywords_reachability[kw].size() == 1:
+				print("WARNING: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
+				uniquely_reachable_with_a_single_keyword = true
+		
+		if not uniquely_reachable_with_a_single_keyword:
+			var uniquely_reachable_with_two_keywords = false
+			for i in range(plain_keywords.size()):
+				var reachable_by_first_kw = plain_keywords_reachability[plain_keywords[i]]
+				for j in range(i):
+					var reachable_by_second_kw = plain_keywords_reachability[plain_keywords[j]]
+					
+					var reachable_by_pair = []
+					for ingredient in reachable_by_first_kw:
+						if reachable_by_second_kw.has(ingredient):
+							reachable_by_pair.append(ingredient)
+					
+					if reachable_by_pair.size() == 1:
+						uniquely_reachable_with_two_keywords = true
+						#TODO break out of this shit
+		
+			if not uniquely_reachable_with_two_keywords:
+				print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
 	
 	var _seed = randi()
 	var keyword_list = make_keyword_list(_seed)
