@@ -48,13 +48,11 @@ func _ready():
 
 	dish_score_value = 0
 
-	connect("input_event", self, "_on_Patron_input_event")
-
 	$EatTimer.connect("timeout", self, "_on_EatTimer_timeout")
-	
+
 	command_avatar.connect("patron_avatar_command_clicked", self, "_on_any_avatar_clicked")
 	level_avatar.connect("patron_avatar_level_clicked", self, "_on_any_avatar_clicked")
-	
+
 func init():
 	set_state(State.ENTERING)
 	refresh_avatars_visible()
@@ -84,7 +82,7 @@ func set_avatars_visible(_level_avatar_is_visible):
 	level_avatar_is_visible = _level_avatar_is_visible
 	level_avatar.visible = _level_avatar_is_visible
 	level_avatar.input_pickable = _level_avatar_is_visible
-	
+
 	var _command_avatar_is_visible = sitting_at_table.taking_commands
 	assert(not (_level_avatar_is_visible and _command_avatar_is_visible))
 	command_avatar_is_visible = _command_avatar_is_visible and (state > State.ENTERING) and (state < State.LEAVING)
@@ -113,20 +111,20 @@ func set_state(a_state):
 		State.ORDERING:
 			wanted_dish = generate_dish()
 			show_wanted_dish()
-			
+
 		State.WAITING_TO_EAT:
 			pass
-			
+
 		State.EATING:
 			hide_wanted_dish()
 			$EatTimer.start()
 
 		State.SHOW_DISH_SCORE:
 			show_dish_score()
-		
+
 		State.LEAVING:
 			emit_signal("patron_leaves", self)
-		
+
 		State.DELETE:
 			queue_free()
 
@@ -195,13 +193,13 @@ func _decide_how_many_ingredients_for_dish():
 	else:
 		_min = 4
 		_max = 4
-	
+
 	print("_decide_how_many_ingredients_for_dish : ", patron_index, " -> ", _min, ", ", _max)
 	return [_min, _max]
-	
-func generate_dish():
+
+func generate_dish() -> Dish:
 	var random_dish = Dish.new()
-	
+
 	var minmax = _decide_how_many_ingredients_for_dish()
 	random_dish.randomize_with_min_max_ingredients(minmax[0], minmax[1])
 	random_dish.debug_print()
@@ -210,3 +208,5 @@ func generate_dish():
 	# TODO remove childs
 	assert(dish_wish.get_node("Sprite").get_child_count() == 0)
 	dish_wish.get_node("Sprite").add_child(random_dish_node)
+
+	return random_dish
