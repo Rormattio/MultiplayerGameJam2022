@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/wehehe.ogg-b6d1f5765acfcc3923e0d0559ccf8c2f.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/wehehe.ogg"
+dest_files=[ "res://.import/wehehe.ogg-b6d1f5765acfcc3923e0d0559ccf8c2f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
