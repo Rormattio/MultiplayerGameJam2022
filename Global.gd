@@ -152,19 +152,19 @@ var ingredient_descs = [
 		["puree", "worried"], [],
 		Sfx.SPLOTCH),
 	IngredientDesc.new("spaghetti_eyeballs", ["bottom"],
-	["spaghetti", "eyeballs"], [],
+		["spaghetti", "eyeballs", "plain"], [],
 		Sfx.SPLOTCH),
 	IngredientDesc.new("spaghetti_eyeballs_red", ["bottom"],
-	["spaghetti", "eyeballs", "red"], [],
+		["spaghetti", "eyeballs", "red"], [],
 		Sfx.SPLOTCH),
 	IngredientDesc.new("spaghetti_eyeballs_grey", ["bottom"],
-	["spaghetti", "eyeballs", "grey"], [],
+		["spaghetti", "eyeballs", "grey"], [],
 		Sfx.SPLOTCH),
 	IngredientDesc.new("mecha_ham", [],
 		["creature", "mechanical"], [],
 		null),
 	IngredientDesc.new("planet_earth", ["mid_burger"],
-		["planet", "blue", "round", "space"], [],
+		["planet", "blue", "round", "space", "water"], [],
 		Sfx.POP),
 	IngredientDesc.new("planet_eight", ["mid_burger"],
 		["planet", "black", "round", "space"], [],
@@ -405,7 +405,7 @@ func _ready():
 		for kw in plain_keywords:
 			assert(plain_keywords_reachability[kw] != [])
 			if plain_keywords_reachability[kw].size() == 1:
-				print("WARNING: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
+				print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
 				uniquely_reachable_with_a_single_keyword = true
 		
 		if not uniquely_reachable_with_a_single_keyword:
