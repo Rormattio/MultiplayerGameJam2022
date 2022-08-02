@@ -352,19 +352,6 @@ func make_keyword_list(_seed : int):
 
 func _check_optimal_solutions():
 	for desc in ingredient_descs:
-		for kw in desc.plain_keywords_fr:
-			var count = plain_keywords_occurrences.get(kw, 0)
-			count += 1
-			plain_keywords_occurrences[kw] = count
-
-			var reachability = plain_keywords_reachability.get(kw, [])
-			reachability.append(desc.name)
-			plain_keywords_reachability[kw] = reachability
-			
-	print("plain_keywords_occurrences: ", plain_keywords_occurrences)
-	print("plain_keywords_reachability: ", plain_keywords_reachability)
-
-	for desc in ingredient_descs:
 		var plain_keywords = desc.plain_keywords_fr
 		
 		var uniquely_reachable_with_a_single_keyword = false
@@ -443,6 +430,21 @@ func _ready():
 	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
 
 	_check_ingredient_metadata()
+
+	# Compute reachability	
+	for desc in ingredient_descs:
+		for kw in desc.plain_keywords_fr:
+			var count = plain_keywords_occurrences.get(kw, 0)
+			count += 1
+			plain_keywords_occurrences[kw] = count
+
+			var reachability = plain_keywords_reachability.get(kw, [])
+			reachability.append(desc.name)
+			plain_keywords_reachability[kw] = reachability
+			
+	#print("plain_keywords_occurrences: ", plain_keywords_occurrences)
+	#print("plain_keywords_reachability: ", plain_keywords_reachability)
+
 	_check_optimal_solutions()
 		
 	randomize()
