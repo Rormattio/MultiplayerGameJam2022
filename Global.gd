@@ -296,14 +296,14 @@ func make_keyword_list(_seed : int):
 	seed(_seed)
 
 	print("make_keyword_list (seed : ", _seed, ")")
-	var result = []
 	
+	var core_list = []
 	# Initial seeding
 	for desc in Global.ingredient_descs:
 		var ingredient = desc.name
 		
 		var reach_path_count = 0
-		for kw in result:
+		for kw in core_list:
 			var reached_ingredients = Global.plain_keywords_reachability[kw]
 			if reached_ingredients.has(ingredient):
 				reach_path_count += 1
@@ -315,19 +315,28 @@ func make_keyword_list(_seed : int):
 		while true:
 			new_kw = desc.plain_keywords_fr[randi() % desc.plain_keywords_fr.size()]
 
-			if not result.has(new_kw):
+			if not core_list.has(new_kw):
 				break
-		result.append(new_kw)
+		core_list.append(new_kw)
 	
-	print("First keyword list seeding has ", result.size(), " elements")
-	# Completing the list to make it sound
-	while not check_optimal_solutions(result):
-		#TODO : Better solution plz
-		var kw_to_add = plain_keywords_set.duplicate();
-		kw_to_add.sort()
-		for kw in plain_keywords_set:
-			if not result.has(kw):
-				result.append(kw);
+	print("First keyword list seeding has ", core_list.size(), " elements")
+
+	var result = []
+	var smallest_result = null
+	
+	for try in range(100):
+		result = core_list.duplicate()
+		# Completing the list to make it sound
+		while not check_optimal_solutions(result):
+			#TODO : Better solution plz
+			var kw_to_add = plain_keywords_set.duplicate();
+			kw_to_add.shuffle()
+			for kw in kw_to_add:
+				if not result.has(kw):
+					result.append(kw)
+					break
+		if (smallest_result == null) or result.size() < smallest_result.size():
+			smallest_result = result.duplicate()
 	
 	check_optimal_solutions(result, true)
 	# Use synonyms for variety
