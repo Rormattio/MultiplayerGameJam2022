@@ -237,7 +237,7 @@ var plain_keywords_synonyms = {
 	"top"      : ["high"],
 	"bread"    : ["bun"],
 	"puree"    : ["mash"],
-	"spaghetti": ["pasta"],
+	"spaghetti": ["pasta", "noodles"],
 	"fried"    : ["fat"],
 	"eight"    : ["number"]
 }
