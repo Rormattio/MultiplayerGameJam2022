@@ -120,7 +120,7 @@ var ingredient_descs = [
 		["bread", "grey", "top"], [],
 		Sfx.FFFT),
 	IngredientDesc.new("crab", ["mid_burger"],
-		["creature"], [],
+		["creature", "claws"], [],
 		null),
 	IngredientDesc.new("flag_blue", ["top", "flag"],
 		["flag", "blue"], [],
@@ -132,7 +132,7 @@ var ingredient_descs = [
 		["flag", "yellow"], [],
 		null),
 	IngredientDesc.new("ghosts", [],
-		["creature"], [],
+		["creature", "skewer"], [],
 		Sfx.WHOOO),
 	IngredientDesc.new("puree_grumpy", ["bottom"],
 		["puree", "grumpy"], [],
@@ -224,6 +224,7 @@ var obscure_keywords_synonyms = {
 	"green"    : ["viridescent"],
 	"creature" : ["organism"],
 	"squid"    : ["pseudopod"],
+	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
 }
 
 var plain_keywords_occurrences = {}
@@ -350,12 +351,17 @@ func _ready():
 	_check_ingredient_metadata()
 	randomize()
 	
-	# Let's make sure we populate the keywords to at least 3 items, with generated specific keywords
+	""""# Let's make sure we populate the keywords to at least 3 items, with generated specific keywords
 	for desc in ingredient_descs:
 		var count = desc.plain_keywords_fr.size()
 		if count < 3:
 			for i in range(3-count):
-				desc.plain_keywords_fr.append(desc.name + "_plain" + str(i))
+				desc.plain_keywords_fr.append(desc.name + "_plain" + str(i))"""
+	
+	# TODO : We should check that each ingredient is uniquely reachable by a subset of keyword
+	for desc in ingredient_descs:
+		var count = desc.plain_keywords_fr.size()
+		assert(count >= 2)
 				
 	for desc in ingredient_descs:
 		for kw in desc.plain_keywords_fr:
