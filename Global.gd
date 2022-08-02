@@ -304,7 +304,7 @@ func _check_ingredient_metadata():
 		var name = ingredient_names[i]
 		assert(is_ingredient(name))
 		assert(is_bottom_ingredient(name) or is_main_ingredient(name) or is_top_ingredient(name) or
-			   is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
+			is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
 
@@ -408,6 +408,7 @@ func _ready():
 				print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
 				uniquely_reachable_with_a_single_keyword = true
 		
+		# What do you mean, "complexity" ? Never heard about this
 		if not uniquely_reachable_with_a_single_keyword:
 			var uniquely_reachable_with_two_keywords = false
 			for i in range(plain_keywords.size()):
@@ -421,11 +422,34 @@ func _ready():
 							reachable_by_pair.append(ingredient)
 					
 					if reachable_by_pair.size() == 1:
+						assert(desc.name == reachable_by_pair[0])
 						uniquely_reachable_with_two_keywords = true
 						#TODO break out of this shit
 		
+			# Still not caring about this O() bullshit :p
 			if not uniquely_reachable_with_two_keywords:
-				print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
+				var uniquely_reachable_with_three_keywords = false	
+				for i in range(plain_keywords.size()):
+					var reachable_by_first_kw = plain_keywords_reachability[plain_keywords[i]]
+					for j in range(i):
+						var reachable_by_second_kw = plain_keywords_reachability[plain_keywords[j]]
+						for k in range(j):
+							var reachable_by_third_kw = plain_keywords_reachability[plain_keywords[k]]
+							
+							var reachable_by_triplet = []
+							for ingredient in reachable_by_first_kw:
+								if reachable_by_second_kw.has(ingredient) and reachable_by_third_kw.has(ingredient):
+									reachable_by_triplet.append(ingredient)
+							
+							if reachable_by_triplet.size() == 1:
+								assert(desc.name == reachable_by_triplet[0])
+								uniquely_reachable_with_three_keywords = true
+								#TODO break out of this shit
+				
+				if uniquely_reachable_with_three_keywords:
+					print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
+				else:
+					print("ERROR: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword triplet")
 	
 	var _seed = randi()
 	var keyword_list = make_keyword_list(_seed)
