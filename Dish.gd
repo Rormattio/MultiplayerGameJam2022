@@ -40,6 +40,7 @@ func get_element_count():
 		if burger_component_top != "":
 			result += 1
 	else:
+		assert(meal_type == MealType.NON_BURGER)
 		if non_burger_component_bottom != "":
 			result += 1
 		if non_burger_component_main != "":
@@ -95,26 +96,24 @@ func is_valid():
 	return true
 
 func randomize_with_n_ingredients(n):
-	assert(n >= 1)
-	assert(n <= 4)
-
-	while true:
-		randomize()
-		if get_element_count() == n:
-			break
-	
-	assert(get_element_count() == n)
-
-func randomize_with_at_most_n_ingredients(n):
-	assert(n >= 1)
-	assert(n <= 4)
-
-	while true:
-		randomize()
-		if get_element_count() <= n:
-			break
+	randomize_with_min_max_ingredients(n, n)
 	
 	assert(get_element_count() <= n)
+
+func randomize_with_at_most_n_ingredients(n):
+	randomize_with_min_max_ingredients(1, n)
+	
+	assert(get_element_count() <= n)
+
+func randomize_with_min_max_ingredients(_min, _max):
+	assert(_max >= _min)
+	assert(_min >= 1)
+	assert(_max <= 4)
+
+	while true:
+		self.randomize()
+		if (get_element_count() >= _min) and (get_element_count() <= _max):
+			break
 
 func randomize():
 	while true:

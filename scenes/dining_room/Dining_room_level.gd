@@ -14,6 +14,7 @@ onready var carrying_dish_node = $CarryingDish
 
 var TRIGGER_COMMAND_AT_X_FROM_TABLE = 160
 
+var next_patron_index = 0
 var tables = []
 
 # Called when the node enters the scene tree for the first time.
@@ -57,6 +58,8 @@ func spawn_patron():
 	if found_table_idx == -1:
 		return
 	var patron_dummy = Patron.instance()
+	patron_dummy.patron_index = next_patron_index
+	next_patron_index += 1
 	patrons.add_child(patron_dummy)
 	table.patrons_around.append(patron_dummy)
 	
