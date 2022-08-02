@@ -211,6 +211,21 @@ var ingredient_descs = [
 		null),
 ]
 
+var plain_keywords_synonyms = {
+	"space"    : ["cosmic"],
+	"creature" : ["meat"],
+	"squid"    : ["tentacle"],
+	"bottom"   : ["low"],
+	"top"      : ["high"],
+	"bread"    : ["bun"],
+}
+
+var obscure_keywords_synonyms = {
+	"green"    : ["viridescent"],
+	"creature" : ["organism"],
+	"squid"    : ["pseudopod"],
+}
+
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
 
@@ -270,8 +285,10 @@ func _check_ingredient_metadata():
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
 
-func make_keyword_list():
-	print("make_keyword_list")
+func make_keyword_list(_seed : int):
+	seed(_seed)
+
+	print("make_keyword_list (seed : ", _seed, ")")
 	var result = []
 	
 	for desc in Global.ingredient_descs:
@@ -293,6 +310,15 @@ func make_keyword_list():
 			if not result.has(new_kw):
 				break
 		result.append(new_kw)
+	
+	# Use synonyms for variety
+	for i in range(result.size()):
+		var kw = result[i]
+		if plain_keywords_synonyms.has(kw):
+			var alternatives = plain_keywords_synonyms[kw]
+			var choice = randi() % (alternatives.size() + 1)
+			if choice != 0:
+				result[i] = alternatives[choice - 1]
 	
 	return result
 
@@ -344,7 +370,8 @@ func _ready():
 	print("plain_keywords_occurrences: ", plain_keywords_occurrences)
 	print("plain_keywords_reachability: ", plain_keywords_reachability)
 	
-	var keyword_list = make_keyword_list()
+	var _seed = randi()
+	var keyword_list = make_keyword_list(_seed)
 	print("keyword_list: ", keyword_list)
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
