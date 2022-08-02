@@ -18,8 +18,6 @@ var tables = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
-	
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
 	dining_room.tray = tray
 	
@@ -86,10 +84,6 @@ func set_carrying_received_dish(received_dish):
 		carrying_dish_node.add_child(received_dish)
 		received_dish.position = Vector2(0, 0)
 		received_dish.set_state(received_dish.State.CARRIED)
-
-func _on_CheffeDish_Sent(dish):
-	print("cheffe sends dish ", dish)
-	tray.add_dish(dish)
 
 func _refresh_layout_visible():
 	_set_layout_visible(layout.visible)

@@ -167,6 +167,6 @@ wait_time = 5.0
 autostart = true
 
 [node name="CarryingDish" type="Node2D" parent="."]
-position = Vector2( 20, 20 )
+position = Vector2( 40, 45 )
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
