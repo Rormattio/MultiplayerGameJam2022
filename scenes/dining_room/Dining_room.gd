@@ -34,8 +34,6 @@ func _ready():
 	wordlist.max_columns = 3
 	build_word_list()
 
-	$Trash.connect("gui_input", self, "_on_Trash_gui_input")
-
 func _set_visible(_visible):
 	visible = _visible
 	if _visible:
@@ -49,11 +47,11 @@ func pop_up(_patrons):
 	current_order.clear()
 	order_preview.text = ""
 	patrons = _patrons
-	
+
 func pop_down():
 	_set_visible(false)
 	patrons.clear()
-	
+
 func _process(_delta):
 	pass
 
@@ -124,7 +122,7 @@ func build_word_list_v0():
 
 func build_word_list():
 	var _seed = randi()
-	
+
 	var	keyword_list = Global.make_keyword_list(_seed)
 
 	## We should be ok at this point
@@ -132,11 +130,11 @@ func build_word_list():
 	var ok = Global.check_optimal_solutions(keyword_list)
 	if not ok:
 		print("ERROR: build_world_list() was unable to provide a nice word list")
-		 
+
 	for kw in keyword_list:
 		wordlist.add_item(kw)
-		
-	
+
+
 func get_current_order_text() -> String:
 	return order_preview.text.strip_edges()
 
@@ -170,16 +168,6 @@ func _on_ClearOrder_pressed():
 	order_preview.text = ""
 	current_order.clear()
 	send_order.disabled = true
-
-func _on_Trash_clicked():
-	if tray.selected_dish != null:
-		var dish = tray.selected_dish
-		tray.remove_dish(dish)
-		dish.queue_free()
-
-func _on_Trash_gui_input(event: InputEvent):
-	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-		_on_Trash_clicked()
 
 func _on_Close_button_up():
 	emit_signal("close_command_popup")
