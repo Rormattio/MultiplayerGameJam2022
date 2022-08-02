@@ -24,6 +24,7 @@ enum State {
 	DELETE,
 }
 
+var patron_index
 var speed = 200
 var state
 var wanted_dish # Repr
@@ -168,9 +169,41 @@ func show_wanted_dish():
 func hide_wanted_dish():
 	dish_wish.hide()
 
+func _decide_how_many_ingredients_for_dish():
+	# TODO : We shouldn't use patron_index here but the order processing index
+	var seq_len = 3
+	var _min
+	var _max
+	if (patron_index < seq_len):
+		_min = 1
+		_max = 1
+	elif (patron_index < seq_len * 2):
+		_min = 1
+		_max = 2
+	elif (patron_index < seq_len * 3):
+		_min = 2
+		_max = 2
+	elif (patron_index < seq_len * 4):
+		_min = 2
+		_max = 3
+	elif (patron_index < seq_len * 5):
+		_min = 3
+		_max = 3
+	elif (patron_index < seq_len * 6):
+		_min = 3
+		_max = 4
+	else:
+		_min = 4
+		_max = 4
+	
+	print("_decide_how_many_ingredients_for_dish : ", patron_index, " -> ", _min, ", ", _max)
+	return [_min, _max]
+	
 func generate_dish():
 	var random_dish = Dish.new()
-	random_dish.randomize()
+	
+	var minmax = _decide_how_many_ingredients_for_dish()
+	random_dish.randomize_with_min_max_ingredients(minmax[0], minmax[1])
 	random_dish.debug_print()
 	var random_dish_node = DishRenderer.render_dish(random_dish)
 	random_dish_node.scale = Vector2(2, 2)
