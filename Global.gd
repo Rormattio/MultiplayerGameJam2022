@@ -206,7 +206,7 @@ var ingredient_descs = [
 		null),
 ]
 
-var plain_keywords_synonyms = {
+const plain_keywords_synonyms = {
 	"burger"   : ["sandwich"],
 	"space"    : ["cosmic"],
 	"creature" : ["meat"],
@@ -220,13 +220,14 @@ var plain_keywords_synonyms = {
 	"eight"    : ["number"]
 }
 
-var obscure_keywords_synonyms = {
+const obscure_keywords_synonyms = {
 	"green"    : ["viridescent"],
 	"creature" : ["organism"],
 	"squid"    : ["pseudopod"],
 	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
 }
 
+var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
 
@@ -297,6 +298,7 @@ func make_keyword_list(_seed : int):
 	print("make_keyword_list (seed : ", _seed, ")")
 	var result = []
 	
+	# Initial seeding
 	for desc in Global.ingredient_descs:
 		var ingredient = desc.name
 		
@@ -317,6 +319,17 @@ func make_keyword_list(_seed : int):
 				break
 		result.append(new_kw)
 	
+	print("First keyword list seeding has ", result.size(), " elements")
+	# Completing the list to make it sound
+	while not check_optimal_solutions(result):
+		#TODO : Better solution plz
+		var kw_to_add = plain_keywords_set.duplicate();
+		kw_to_add.sort()
+		for kw in plain_keywords_set:
+			if not result.has(kw):
+				result.append(kw);
+	
+	check_optimal_solutions(result, true)
 	# Use synonyms for variety
 	for i in range(result.size()):
 		var kw = result[i]
@@ -336,7 +349,7 @@ func _intersect_2_lists(la, lb):
 			result.append(a)
 	return result
 
-func check_optimal_solutions(authorized_keywords) -> bool:
+func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 	var ok = true
 	for desc in ingredient_descs:
 		var plain_keywords = desc.plain_keywords_fr
@@ -345,7 +358,8 @@ func check_optimal_solutions(authorized_keywords) -> bool:
 		for kw in plain_keywords:
 			assert(plain_keywords_reachability[kw] != [])
 			if authorized_keywords.has(kw) and (plain_keywords_reachability[kw].size() == 1):
-				print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
+				if verbose:
+					print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
 				uniquely_reachable_with_a_single_keyword = true
 		
 		if not uniquely_reachable_with_a_single_keyword:
@@ -389,9 +403,11 @@ func check_optimal_solutions(authorized_keywords) -> bool:
 								#TODO break out of this shit
 				
 				if uniquely_reachable_with_three_keywords:
-					print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
+					if verbose:
+						print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
 				else:
-					print("ERROR: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword triplet")
+					if verbose:
+						print("ERROR: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword triplet")
 					ok = false
 	return ok
 	
@@ -426,7 +442,7 @@ func _ready():
 	_check_ingredient_metadata()
 
 	# Compute reachability	
-	var plain_keywords_set = []
+	plain_keywords_set = []
 	for desc in ingredient_descs:
 		for kw in desc.plain_keywords_fr:
 			if not plain_keywords_set.has(kw):
@@ -444,7 +460,7 @@ func _ready():
 	#print("plain_keywords_occurrences: ", plain_keywords_occurrences)
 	#print("plain_keywords_reachability: ", plain_keywords_reachability)
 
-	var ok = check_optimal_solutions(plain_keywords_set)
+	var ok = check_optimal_solutions(plain_keywords_set, true)
 	assert(ok)
 		
 	randomize()
