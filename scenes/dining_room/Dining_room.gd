@@ -124,9 +124,18 @@ func build_word_list_v0():
 
 func build_word_list():
 	var _seed = randi()
-	var keyword_list = Global.make_keyword_list(_seed)
+	
+	var	keyword_list = Global.make_keyword_list(_seed)
+
+	## We should be ok at this point
+	## If not, we need to work on make_keyword_list
+	var ok = Global.check_optimal_solutions(keyword_list)
+	if not ok:
+		print("ERROR: build_world_list() was unable to provide a nice word list")
+		 
 	for kw in keyword_list:
 		wordlist.add_item(kw)
+		
 	
 func get_current_order_text() -> String:
 	return order_preview.text.strip_edges()
