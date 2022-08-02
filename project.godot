@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Object",
+"class": "Dish",
+"language": "GDScript",
+"path": "res://Dish.gd"
+}, {
 "base": "Reference",
 "class": "Order",
 "language": "GDScript",
 "path": "res://scenes/shared/Order.gd"
 } ]
 _global_script_class_icons={
+"Dish": "",
 "Order": ""
 }
 

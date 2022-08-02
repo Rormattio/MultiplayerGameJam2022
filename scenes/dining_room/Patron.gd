@@ -97,7 +97,7 @@ func serve_dish(dish):
 	dish.scale = Vector2(1.0/4.0, 1.0/4.0)
 	dish.z_index = 100 # to appear above the table
 	# Advance state
-	dish.state = dish.State.SERVED
+	dish.set_state(dish.State.SERVED)
 	set_state(State.EATING)
 
 func set_state(a_state):

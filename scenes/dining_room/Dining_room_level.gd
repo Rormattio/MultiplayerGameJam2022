@@ -2,7 +2,7 @@ extends Node
 
 const Patron = preload("res://scenes/dining_room/Patron.tscn")
 
-onready var tray = $Tray
+onready var tray = $Layout/Tray
 onready var layout = $Layout
 onready var dining_room = $DiningRoom
 onready var waiter = $Layout/Waiter
@@ -10,6 +10,7 @@ onready var tables_nodes = $Layout/Tables
 onready var paths_to_tables = $Layout/Paths
 onready var patrons = $Patrons
 onready var spawn_timer = $SpawnTimer
+onready var carrying_dish_node = $CarryingDish
 
 var TRIGGER_COMMAND_AT_X_FROM_TABLE = 160
 
@@ -37,6 +38,9 @@ func _ready():
 				used_paths.append(path_follow)
 				break
 		assert(found)
+	
+	tray.waiter = waiter
+	tray.dining_room_level = self
 
 	spawn_patron()
 	
@@ -72,6 +76,17 @@ func spawn_patron():
 	patron_dummy.init()
 	_refresh_layout_visible()
 
+func set_carrying_received_dish(received_dish):
+	if received_dish == null:
+		assert(carrying_dish_node.get_child_count() == 1)
+		var carried_dish = carrying_dish_node.get_child(0)
+		carrying_dish_node.remove_child(carried_dish)
+	else:
+		assert(carrying_dish_node.get_child_count() == 0)
+		carrying_dish_node.add_child(received_dish)
+		received_dish.position = Vector2(0, 0)
+		received_dish.set_state(received_dish.State.CARRIED)
+
 func _on_CheffeDish_Sent(dish):
 	print("cheffe sends dish ", dish)
 	tray.add_dish(dish)
@@ -103,9 +118,10 @@ func _on_Patron_clicked(patron):
 				patron.set_state(patron.State.ORDERING)
 				patron.set_state(patron.State.WAITING_TO_EAT)
 			patron.State.WAITING_TO_EAT:
-				if tray.selected_dish != null:
-					var dish = tray.selected_dish
-					tray.remove_dish(dish)
+				if carrying_dish_node.get_child_count() > 0:
+					assert(carrying_dish_node.get_child_count() == 1)
+					var dish = carrying_dish_node.get_child(0)
+					set_carrying_received_dish(null)
 					patron.serve_dish(dish)
 				else:
 					patron.toggle_wanted_dish()
