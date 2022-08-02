@@ -350,6 +350,14 @@ func make_keyword_list(_seed : int):
 	
 	return result
 
+# What do you mean, "complexity" ? Never heard about this
+func _intersect_2_lists(la, lb):
+	var result = []
+	for a in la:
+		if lb.has(a):
+			result.append(a)
+	return result
+
 func _check_optimal_solutions():
 	for desc in ingredient_descs:
 		var plain_keywords = desc.plain_keywords_fr
@@ -361,7 +369,6 @@ func _check_optimal_solutions():
 				print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
 				uniquely_reachable_with_a_single_keyword = true
 		
-		# What do you mean, "complexity" ? Never heard about this
 		if not uniquely_reachable_with_a_single_keyword:
 			var uniquely_reachable_with_two_keywords = false
 			for i in range(plain_keywords.size()):
@@ -369,11 +376,7 @@ func _check_optimal_solutions():
 				for j in range(i):
 					var reachable_by_second_kw = plain_keywords_reachability[plain_keywords[j]]
 					
-					var reachable_by_pair = []
-					for ingredient in reachable_by_first_kw:
-						if reachable_by_second_kw.has(ingredient):
-							reachable_by_pair.append(ingredient)
-					
+					var reachable_by_pair = _intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw)					
 					if reachable_by_pair.size() == 1:
 						assert(desc.name == reachable_by_pair[0])
 						uniquely_reachable_with_two_keywords = true
@@ -389,10 +392,7 @@ func _check_optimal_solutions():
 						for k in range(j):
 							var reachable_by_third_kw = plain_keywords_reachability[plain_keywords[k]]
 							
-							var reachable_by_triplet = []
-							for ingredient in reachable_by_first_kw:
-								if reachable_by_second_kw.has(ingredient) and reachable_by_third_kw.has(ingredient):
-									reachable_by_triplet.append(ingredient)
+							var reachable_by_triplet = _intersect_2_lists(_intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw), reachable_by_third_kw)
 							
 							if reachable_by_triplet.size() == 1:
 								assert(desc.name == reachable_by_triplet[0])
