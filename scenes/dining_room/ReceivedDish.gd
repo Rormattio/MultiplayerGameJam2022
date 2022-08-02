@@ -7,6 +7,7 @@ signal dish_clicked(ReceivedDish)
 
 var state
 var dish
+var dish_index_in_kitchen_counter
 
 enum State {
 	UNSERVED,

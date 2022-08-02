@@ -1,10 +1,14 @@
 extends Node
 
 signal cheffe_dish_sent(dish)
+signal cheffe_dish_trashed(dish_index)
 signal waiter_command_sent(Order)
+signal waiter_dish_taken(dish_index)
 signal patron_dish_score_sent(dish, score)
 
 var DEBUG = true
+
+const MAX_DISH_ON_COUNTER = 6
 
 var id_counter = 0
 
@@ -495,11 +499,23 @@ remote func on_waiter_command(command: Array):
 	order.unserialize(command)
 	emit_signal("waiter_command_sent", order)
 
-func cheffe_send_dish(dish : Array):
-	rpc("on_cheffe_dish", dish)
+func cheffe_send_dish(dish : Array, dish_idx : int):
+	rpc("on_cheffe_dish", dish, dish_idx)
 
-remote func on_cheffe_dish(dish : Array):
-	emit_signal("cheffe_dish_sent", dish)
+remote func on_cheffe_dish(dish : Array, dish_idx : int):
+	emit_signal("cheffe_dish_sent", dish, dish_idx)
+
+func cheffe_trashed_dish(dish_idx : int):
+	rpc("on_cheffe_trashed_dish", dish_idx)
+
+remote func on_cheffe_trashed_dish(dish_idx : int):
+	emit_signal("cheffe_dish_trashed", dish_idx)
+
+func waiter_takes_dish(dish_index : int):
+	rpc("on_waiter_dish", dish_index)
+
+remote func on_waiter_dish(dish_index : int):
+	emit_signal("waiter_dish_taken", dish_index)
 
 func patron_send_dish_score(dish, score):
 	rpc("on_patron_dish_score_sent", dish, score)
