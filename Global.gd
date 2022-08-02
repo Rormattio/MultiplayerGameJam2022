@@ -8,46 +8,24 @@ var DEBUG = true
 
 var id_counter = 0
 
-# TODO : Remove
 var bottom_ingredients = [
 ]
 
 var main_ingredients = [
-	"black_forest_hole",
-	"blue_banana",
-	"crab",
-	"ghosts",
-	"mecha_ham",
-	"planet_earth",
-	"planet_eight",
-	"planet_jupiter",
-	"planet_mars",
-	"planet_neptune",
-	"planet_saturn",
-	"saturn_pane",
-	"springs",
-	"squid_green",
-	"squid_space",
-	"squid_yellow",
 ]
 
-# TODO : Remove
 var top_ingredients = [
 ]
 
-# TODO : Remove
 var bottom_burger_ingredients = [
 ]
 
-# TODO : Remove
 var mid_burger_ingredients = [
 ]
 
-# TODO : Remove
 var top_burger_ingredients = [
 ]
 
-# TODO : Remove
 var ingredient_names = [
 ]
 
@@ -91,10 +69,10 @@ class IngredientDesc:
 		sfx  = s
 
 var ingredient_descs = [
-	IngredientDesc.new("black_forest_hole", [],
+	IngredientDesc.new("black_forest_hole", ["main"],
 		["black", "space", "fruit"], [],
 		null),
-	IngredientDesc.new("blue_banana", [],
+	IngredientDesc.new("blue_banana", ["main"],
 		["blue", "vegetal", "fruit"], [],
 		null),
 	IngredientDesc.new("bread", ["bottom_burger"],
@@ -121,7 +99,7 @@ var ingredient_descs = [
 	IngredientDesc.new("bread_top_grey", ["top_burger"],
 		["bread", "grey", "top", "burger"], [],
 		Sfx.FFFT),
-	IngredientDesc.new("crab", ["mid_burger"],
+	IngredientDesc.new("crab", ["mid_burger", "main"],
 		["creature", "claws"], [],
 		null),
 	IngredientDesc.new("flag_blue", ["top", "flag"],
@@ -133,7 +111,7 @@ var ingredient_descs = [
 	IngredientDesc.new("flag_yellow", ["top", "flag"],
 		["flag", "yellow", "happy"], [],
 		null),
-	IngredientDesc.new("ghosts", [],
+	IngredientDesc.new("ghosts", ["main"],
 		["creature", "skewer"], [],
 		Sfx.WHOOO),
 	IngredientDesc.new("puree_grumpy", ["bottom"],
@@ -160,28 +138,28 @@ var ingredient_descs = [
 	IngredientDesc.new("spaghetti_eyeballs_grey", ["bottom"],
 		["spaghetti", "eyeballs", "grey"], [],
 		Sfx.SPLOTCH),
-	IngredientDesc.new("mecha_ham", [],
+	IngredientDesc.new("mecha_ham", ["main"],
 		["creature", "mechanical"], [],
 		null),
-	IngredientDesc.new("planet_earth", ["mid_burger"],
+	IngredientDesc.new("planet_earth", ["mid_burger", "main"],
 		["planet", "blue", "round", "space", "water"], [],
 		Sfx.POP),
-	IngredientDesc.new("planet_eight", ["mid_burger"],
+	IngredientDesc.new("planet_eight", ["mid_burger", "main"],
 		["planet", "black", "round", "space"], [],
 		Sfx.POP),
-	IngredientDesc.new("planet_jupiter", ["mid_burger"],
+	IngredientDesc.new("planet_jupiter", ["mid_burger", "main"],
 		["planet", "orange", "round", "space", "giant", "gas"], [],
 		Sfx.POP),
-	IngredientDesc.new("planet_mars", ["mid_burger"],
+	IngredientDesc.new("planet_mars", ["mid_burger", "main"],
 		["planet", "red", "round", "space"], [],
 		Sfx.POP),
-	IngredientDesc.new("planet_neptune", ["mid_burger"],
+	IngredientDesc.new("planet_neptune", ["mid_burger", "main"],
 		["planet", "blue", "round", "space", "giant"], [],
 		Sfx.POP),
-	IngredientDesc.new("planet_saturn", ["mid_burger"],
+	IngredientDesc.new("planet_saturn", ["mid_burger", "main"],
 		["planet", "rings", "round", "space", "giant", "gas"], [],
 		Sfx.POP),
-	IngredientDesc.new("saturn_pane", [],
+	IngredientDesc.new("saturn_pane", ["main"],
 		["planet", "rings", "fried", "space", "giant"], [],
 		Sfx.FFFT),
 	IngredientDesc.new("smoke_green", ["top"],
@@ -199,16 +177,16 @@ var ingredient_descs = [
 	IngredientDesc.new("smoke_purple", ["top"],
 		["smoke", "purple", "gas"], [],
 		Sfx.SHHOO),
-	IngredientDesc.new("springs", [],
+	IngredientDesc.new("springs", ["main"],
 		["vegetal", "spiral"], [],
 		Sfx.SCHBOING),
-	IngredientDesc.new("squid_green", [],
+	IngredientDesc.new("squid_green", ["main"],
 		["squid", "green", "creature"], [],
 		Sfx.TENTACLE),
-	IngredientDesc.new("squid_space", [],
+	IngredientDesc.new("squid_space", ["main"],
 		["squid", "space", "creature"], [],
 		Sfx.TENTACLE),
-	IngredientDesc.new("squid_yellow", [],
+	IngredientDesc.new("squid_yellow", ["main"],
 		["squid", "yellow", "creature"], [],
 		Sfx.TENTACLE),
 	IngredientDesc.new("stars_blue", ["top"],
@@ -429,6 +407,9 @@ func _ready():
 
 	# Build bottom_ingredients for bw-compat
 	bottom_ingredients = get_ingredient_names_with_tag("bottom")
+
+	# Build main_ingredients for bw-compat
+	main_ingredients = get_ingredient_names_with_tag("main")
 
 	# Build top_ingredients for bw-compat
 	top_ingredients = get_ingredient_names_with_tag("top")
