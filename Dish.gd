@@ -28,6 +28,26 @@ const NON_BURGER_COMPONENT_BOTTOM_PROBABILITY = 0.5
 const NON_BURGER_COMPONENT_MAIN_PROBABILITY = 0.8
 const NON_BURGER_COMPONENT_TOP_PROBABILITY = 0.5
 
+func get_element_count():
+	var result = 0
+	if meal_type == MealType.BURGER:
+		if burger_component_bottom_burger != "":
+			result += 1
+		if burger_component_mid_burger != "":
+			result += 1
+		if burger_component_top_burger != "":
+			result += 1
+		if burger_component_top != "":
+			result += 1
+	else:
+		if non_burger_component_bottom != "":
+			result += 1
+		if non_burger_component_main != "":
+			result += 1
+		if non_burger_component_top != "":
+			result += 1
+	return result
+
 func _randomize_dish_container():
 	return ContainerType.get(ContainerType.keys()[randi() % ContainerType.size()])
 
@@ -73,6 +93,28 @@ func is_valid():
 	if (meal_type == MealType.NON_BURGER) and (non_burger_component_top != "") and Global.ingredient_has_tag(non_burger_component_top, "flag"):
 		return false # The flag doesn't fit in non-burgers :)
 	return true
+
+func randomize_with_n_ingredients(n):
+	assert(n >= 1)
+	assert(n <= 4)
+
+	while true:
+		randomize()
+		if get_element_count() == n:
+			break
+	
+	assert(get_element_count() == n)
+
+func randomize_with_at_most_n_ingredients(n):
+	assert(n >= 1)
+	assert(n <= 4)
+
+	while true:
+		randomize()
+		if get_element_count() <= n:
+			break
+	
+	assert(get_element_count() <= n)
 
 func randomize():
 	while true:
