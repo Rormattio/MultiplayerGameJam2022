@@ -123,7 +123,8 @@ func build_word_list_v0():
 			wordlist.add_item("")
 
 func build_word_list():
-	var keyword_list = Global.make_keyword_list()
+	var _seed = randi()
+	var keyword_list = Global.make_keyword_list(_seed)
 	for kw in keyword_list:
 		wordlist.add_item(kw)
 	
