@@ -9,12 +9,14 @@ func _ready():
 	counter_dishes = []
 	for i in range(MAX_DISH_ON_COUNTER):
 		counter_dishes.append(null)
+	
+	Global.connect("waiter_dish_taken", self, "_on_waiter_dish_taken")
 
 func add_dish_wherever(dish):
 	for i in range(counter_dishes.size()):
 		if counter_dishes[i] == null:
 			add_dish_at(dish, i)
-			return
+			return i
 
 	assert(false)
 
@@ -54,3 +56,7 @@ func get_free_slots_count() -> int:
 
 func _on_Dish_pressed(idx: int):
 	remove_dish_at(idx)
+	Global.cheffe_trashed_dish(idx)
+
+func _on_waiter_dish_taken(dish_index : int):
+	remove_dish_at(dish_index)
