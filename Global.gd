@@ -358,22 +358,27 @@ func _intersect_2_lists(la, lb):
 			result.append(a)
 	return result
 
-func _check_optimal_solutions():
+func check_optimal_solutions(authorized_keywords) -> bool:
+	var ok = true
 	for desc in ingredient_descs:
 		var plain_keywords = desc.plain_keywords_fr
 		
 		var uniquely_reachable_with_a_single_keyword = false
 		for kw in plain_keywords:
 			assert(plain_keywords_reachability[kw] != [])
-			if plain_keywords_reachability[kw].size() == 1:
+			if authorized_keywords.has(kw) and (plain_keywords_reachability[kw].size() == 1):
 				print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
 				uniquely_reachable_with_a_single_keyword = true
 		
 		if not uniquely_reachable_with_a_single_keyword:
 			var uniquely_reachable_with_two_keywords = false
 			for i in range(plain_keywords.size()):
+				if not authorized_keywords.has(plain_keywords[i]):
+					continue
 				var reachable_by_first_kw = plain_keywords_reachability[plain_keywords[i]]
 				for j in range(i):
+					if not authorized_keywords.has(plain_keywords[j]):
+						continue
 					var reachable_by_second_kw = plain_keywords_reachability[plain_keywords[j]]
 					
 					var reachable_by_pair = _intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw)					
@@ -386,10 +391,16 @@ func _check_optimal_solutions():
 			if not uniquely_reachable_with_two_keywords:
 				var uniquely_reachable_with_three_keywords = false	
 				for i in range(plain_keywords.size()):
+					if not authorized_keywords.has(plain_keywords[i]):
+						continue
 					var reachable_by_first_kw = plain_keywords_reachability[plain_keywords[i]]
 					for j in range(i):
+						if not authorized_keywords.has(plain_keywords[j]):
+							continue
 						var reachable_by_second_kw = plain_keywords_reachability[plain_keywords[j]]
 						for k in range(j):
+							if not authorized_keywords.has(plain_keywords[k]):
+								continue
 							var reachable_by_third_kw = plain_keywords_reachability[plain_keywords[k]]
 							
 							var reachable_by_triplet = _intersect_2_lists(_intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw), reachable_by_third_kw)
@@ -403,6 +414,8 @@ func _check_optimal_solutions():
 					print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
 				else:
 					print("ERROR: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword triplet")
+					ok = false
+	return ok
 	
 func _ready():
 	# Build ingredient_names for bw-compat
@@ -432,8 +445,12 @@ func _ready():
 	_check_ingredient_metadata()
 
 	# Compute reachability	
+	var plain_keywords_set = []
 	for desc in ingredient_descs:
 		for kw in desc.plain_keywords_fr:
+			if not plain_keywords_set.has(kw):
+				plain_keywords_set.append(kw)
+			
 			var count = plain_keywords_occurrences.get(kw, 0)
 			count += 1
 			plain_keywords_occurrences[kw] = count
@@ -441,19 +458,18 @@ func _ready():
 			var reachability = plain_keywords_reachability.get(kw, [])
 			reachability.append(desc.name)
 			plain_keywords_reachability[kw] = reachability
-			
+	
+	plain_keywords_set.sort()		
 	#print("plain_keywords_occurrences: ", plain_keywords_occurrences)
 	#print("plain_keywords_reachability: ", plain_keywords_reachability)
 
-	_check_optimal_solutions()
+	var ok = check_optimal_solutions(plain_keywords_set)
+	assert(ok)
 		
 	randomize()
 	var _seed = randi()
 	var keyword_list = make_keyword_list(_seed)
 	print("keyword_list: ", keyword_list)
-	
-				
-
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
 	var node_instance = instance_node(node, parent)
