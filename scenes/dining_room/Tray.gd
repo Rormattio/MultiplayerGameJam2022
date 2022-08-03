@@ -58,4 +58,4 @@ func _on_Dish_clicked(received_dish):
 		Global.waiter_takes_dish(received_dish.dish_index_in_kitchen_counter)
 
 #func _on_Button_pressed():
-#	add_dish([Global.rand_array(Global.ingredient_names)])
+#	add_dish([Global.rand_array(Ingredients.ingredient_names)])

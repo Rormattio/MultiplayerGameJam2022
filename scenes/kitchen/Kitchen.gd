@@ -55,7 +55,7 @@ func _ready():
 	dish_container.scale.x = 3
 	dish_container.scale.y = 3
 
-	for ingredient_name in Global.ingredient_names:
+	for ingredient_name in Ingredients.ingredient_names:
 		var ingredient_stock = ingredient_stock_scene.instance()
 		ingredient_stock.connect("ingredient_dish_set", self, "_on_ingredient_dish_set")
 		ingredient_stocks[ingredient_name] = ingredient_stock
@@ -249,8 +249,8 @@ func _on_ingredient_dish_set(ingredient_name):
 	idx += 1
 	dish_ingredients_n += 1
 
-	if Global.ingredient_names_to_sfx.has(ingredient_name):
-		AudioSfx.play(Global.ingredient_names_to_sfx[ingredient_name])
+	if Ingredients.ingredient_names_to_sfx.has(ingredient_name):
+		AudioSfx.play(Ingredients.ingredient_names_to_sfx[ingredient_name])
 
 	_refresh_stock()
 	return true

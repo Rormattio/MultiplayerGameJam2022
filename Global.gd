@@ -30,9 +30,6 @@ var mid_burger_ingredients = [
 var top_burger_ingredients = [
 ]
 
-var ingredient_names = [
-]
-
 # TODO : Remove
 var ingredient_names_to_sfx = {
 }
@@ -71,7 +68,7 @@ func is_top_burger_ingredient(name):
 func _check_ingredient_metadata():
 	var ingredient_count = Ingredients.get_ingredient_count()
 	for i in range(ingredient_count):
-		var name = ingredient_names[i]
+		var name = Ingredients.ingredient_names[i]
 		assert(is_ingredient(name))
 		assert(is_bottom_ingredient(name) or is_main_ingredient(name) or is_top_ingredient(name) or
 			is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
@@ -212,10 +209,8 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 	return ok
 	
 func _ready():
-	# Build ingredient_names for bw-compat
-	for desc in Ingredients.ingredient_descs:
-		ingredient_names.append(desc.name)
-
+	Ingredients._ready()
+	
 	# Build ingredient_names_to_sfx for bw-compat
 	for desc in Ingredients.ingredient_descs:
 		if desc.sfx != null:
