@@ -194,6 +194,9 @@ const obscure_keywords_synonyms = {
 	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
 }
 
+func get_ingredient_count():
+	return Ingredients.ingredient_descs.size()
+
 func get_ingredient_desc(name):
 	for desc in Ingredients.ingredient_descs:
 		if desc.name == name:
@@ -202,3 +205,10 @@ func get_ingredient_desc(name):
 
 func ingredient_has_tag(name, flag):
 	return get_ingredient_desc(name).has_tag(flag)
+
+func get_ingredient_names_with_tag(tag):
+	var result = []
+	for desc in Ingredients.ingredient_descs:
+		if desc.has_tag(tag):
+			result.append(desc.name)
+	return result
