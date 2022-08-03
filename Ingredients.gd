@@ -235,7 +235,7 @@ func get_ingredient_names_with_tag(tag):
 	return result
 
 func is_ingredient(name):
-	return Ingredients.get_ingredient_desc(name) != null
+	return get_ingredient_desc(name) != null
 
 func is_bottom_ingredient(name):
 	assert(is_ingredient(name))
