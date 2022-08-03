@@ -84,7 +84,7 @@ func _is_possible_next_ingredient_0(ingredient_desc):
 func _is_possible_next_ingredient_1(ingredient_desc):
 	assert(ingredient_desc != null);
 
-	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+	var is_burger = (dish_ingredients[0] != "") and Ingredients.is_bottom_burger_ingredient(dish_ingredients[0])
 	if is_burger:
 		return ingredient_desc.has_tag("mid_burger")
 	else:
@@ -93,7 +93,7 @@ func _is_possible_next_ingredient_1(ingredient_desc):
 func _is_possible_next_ingredient_2(ingredient_desc):
 	assert(ingredient_desc != null);
 
-	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+	var is_burger = (dish_ingredients[0] != "") and Ingredients.is_bottom_burger_ingredient(dish_ingredients[0])
 	if is_burger:
 		return (ingredient_desc != null) and ingredient_desc.has_tag("top_burger")
 	else:
@@ -102,7 +102,7 @@ func _is_possible_next_ingredient_2(ingredient_desc):
 func _is_possible_next_ingredient_3(ingredient_desc):
 	assert(ingredient_desc != null);
 
-	var is_burger = (dish_ingredients[0] != "") and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+	var is_burger = (dish_ingredients[0] != "") and Ingredients.is_bottom_burger_ingredient(dish_ingredients[0])
 	if is_burger:
 		return ingredient_desc.has_tag("top")
 	else:
@@ -212,18 +212,18 @@ func _on_ingredient_dish_set(ingredient_name):
 		var padding_needed
 		match dish_ingredients_n:
 			0:
-				if Global.is_main_ingredient(ingredient_name):
+				if Ingredients.is_main_ingredient(ingredient_name):
 					padding_needed = 1
-				elif Global.is_top_ingredient(ingredient_name):
+				elif Ingredients.is_top_ingredient(ingredient_name):
 					padding_needed = 2
 				else:
 					padding_needed = 0
 			1:
-				var is_burger = dish_ingredients[0] != "" and Global.is_bottom_burger_ingredient(dish_ingredients[0])
+				var is_burger = dish_ingredients[0] != "" and Ingredients.is_bottom_burger_ingredient(dish_ingredients[0])
 				if is_burger:
 					padding_needed = 0
 				else:
-					if Global.is_top_ingredient(ingredient_name):
+					if Ingredients.is_top_ingredient(ingredient_name):
 						padding_needed = 1
 					else:
 						padding_needed = 0
@@ -249,7 +249,7 @@ func _on_ingredient_dish_set(ingredient_name):
 	idx += 1
 	dish_ingredients_n += 1
 
-	var sfx = Ingredients.get_ingredient_desc("ingredient_name").sfx
+	var sfx = Ingredients.get_ingredient_desc(ingredient_name).sfx
 	if sfx != null:
 		AudioSfx.play(sfx)
 

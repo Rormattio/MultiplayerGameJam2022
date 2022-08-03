@@ -57,12 +57,12 @@ func _randomize_dish_meal_type():
 
 func _randomize_burger():
 	assert(meal_type == MealType.BURGER)
-	burger_component_bottom_burger = Global.bottom_burger_ingredients[randi() % Global.bottom_burger_ingredients.size()]
-	burger_component_mid_burger = Global.mid_burger_ingredients[randi() % Global.mid_burger_ingredients.size()]
-	burger_component_top_burger = Global.top_burger_ingredients[randi() % Global.top_burger_ingredients.size()]
+	burger_component_bottom_burger = Ingredients.bottom_burger_ingredients[randi() % Ingredients.bottom_burger_ingredients.size()]
+	burger_component_mid_burger = Ingredients.mid_burger_ingredients[randi() % Ingredients.mid_burger_ingredients.size()]
+	burger_component_top_burger = Ingredients.top_burger_ingredients[randi() % Ingredients.top_burger_ingredients.size()]
 
 	if randf() <= BURGER_COMPONENT_TOP_PROBABILITY:
-		burger_component_top = Global.top_ingredients[randi() % Global.top_ingredients.size()]
+		burger_component_top = Ingredients.top_ingredients[randi() % Ingredients.top_ingredients.size()]
 	else:
 		burger_component_top = ""
 	return
@@ -70,17 +70,17 @@ func _randomize_burger():
 func _randomize_non_burger():
 	assert(meal_type == MealType.NON_BURGER)
 	if randf() <= NON_BURGER_COMPONENT_BOTTOM_PROBABILITY:
-		non_burger_component_bottom = Global.bottom_ingredients[randi() % Global.bottom_ingredients.size()]
+		non_burger_component_bottom = Ingredients.bottom_ingredients[randi() % Ingredients.bottom_ingredients.size()]
 	else:
 		non_burger_component_bottom = ""
 
 	if randf() <= NON_BURGER_COMPONENT_MAIN_PROBABILITY:
-		non_burger_component_main = Global.main_ingredients[randi() % Global.main_ingredients.size()]
+		non_burger_component_main = Ingredients.main_ingredients[randi() % Ingredients.main_ingredients.size()]
 	else:
 		non_burger_component_main = ""
 
 	if randf() <= NON_BURGER_COMPONENT_TOP_PROBABILITY:
-		non_burger_component_top = Global.top_ingredients[randi() % Global.top_ingredients.size()]
+		non_burger_component_top = Ingredients.top_ingredients[randi() % Ingredients.top_ingredients.size()]
 	else:
 		non_burger_component_top = ""
 	return
@@ -133,7 +133,7 @@ func make_from_linear_ingredients(_container_type, ingredients):
 
 	if ingredients[0] == "":
 		meal_type = MealType.NON_BURGER
-	elif Global.is_bottom_burger_ingredient(ingredients[0]):
+	elif Ingredients.is_bottom_burger_ingredient(ingredients[0]):
 		meal_type = MealType.BURGER
 	else:
 		meal_type = MealType.NON_BURGER
