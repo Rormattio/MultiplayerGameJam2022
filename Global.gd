@@ -41,16 +41,6 @@ var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
 
-func get_ingredient_names_with_tag(tag):
-	var result = []
-	for desc in Ingredients.ingredient_descs:
-		if desc.has_tag(tag):
-			result.append(desc.name)
-	return result
-
-func get_ingredient_count():
-	return Ingredients.ingredient_descs.size()
-
 func is_ingredient(name):
 	return Ingredients.get_ingredient_desc(name) != null
 
@@ -79,7 +69,7 @@ func is_top_burger_ingredient(name):
 	return top_burger_ingredients.has(name)
 
 func _check_ingredient_metadata():
-	var ingredient_count = get_ingredient_count()
+	var ingredient_count = Ingredients.get_ingredient_count()
 	for i in range(ingredient_count):
 		var name = ingredient_names[i]
 		assert(is_ingredient(name))
@@ -231,23 +221,13 @@ func _ready():
 		if desc.sfx != null:
 			ingredient_names_to_sfx[desc.name] = desc.sfx
 
-	# Build bottom_ingredients for bw-compat
-	bottom_ingredients = get_ingredient_names_with_tag("bottom")
-
-	# Build main_ingredients for bw-compat
-	main_ingredients = get_ingredient_names_with_tag("main")
-
-	# Build top_ingredients for bw-compat
-	top_ingredients = get_ingredient_names_with_tag("top")
-
-	# Build bottom_burger_ingredients for bw-compat
-	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
-
-	# Build mid_burger_ingredients for bw-compat
-	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
-
-	# Build top_burger_ingredients for bw-compat
-	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
+	# Build ingredient lists for bw-compat
+	bottom_ingredients = Ingredients.get_ingredient_names_with_tag("bottom")
+	main_ingredients = Ingredients.get_ingredient_names_with_tag("main")
+	top_ingredients = Ingredients.get_ingredient_names_with_tag("top")
+	bottom_burger_ingredients = Ingredients.get_ingredient_names_with_tag("bottom_burger")
+	mid_burger_ingredients = Ingredients.get_ingredient_names_with_tag("mid_burger")
+	top_burger_ingredients = Ingredients.get_ingredient_names_with_tag("top_burger")
 
 	_check_ingredient_metadata()
 
