@@ -3,7 +3,7 @@ extends Reference
 class_name Order
 
 var id
-var text
+var text # space-separated clues
 
 func init(a_text: String):
 	self.id = Global.gen_id()

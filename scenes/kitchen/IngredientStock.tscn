@@ -13,9 +13,14 @@ margin_left = -32.0
 margin_top = -32.0
 margin_right = 32.0
 margin_bottom = 32.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
+[node name="Clues" type="RichTextLabel" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+input_pass_on_modal_close_click = false
+
+[connection signal="focus_entered" from="Button" to="." method="_on_Button_focus_entered"]
+[connection signal="focus_exited" from="Button" to="." method="_on_Button_focus_exited"]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="toggled" from="Button" to="." method="_on_Button_toggled"]
