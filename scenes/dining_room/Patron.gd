@@ -131,7 +131,9 @@ func set_state(a_state):
 	state = a_state
 	refresh_avatars_visible()
 
-func compute_dish_score(wanted_dish, dish):
+func compute_dish_score(wanted_dish : Dish, dish : Dish):
+	assert(wanted_dish != null)
+	assert(dish != null)
 	var diffs = Dish.compute_difference(wanted_dish, dish)
 	var score = diffs[0] + diffs[1] + diffs[2] + diffs[3]
 	return score
@@ -146,6 +148,8 @@ func hide_dish_score():
 func _on_EatTimer_timeout():
 	var dish = dish_position.get_child(0)
 
+	assert(wanted_dish != null)
+	assert(dish != null)
 	dish_score_value = compute_dish_score(wanted_dish, dish)
 	Global.patron_send_dish_score(dish.dish, dish_score_value)
 
