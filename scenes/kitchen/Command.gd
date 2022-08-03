@@ -1,6 +1,7 @@
 extends Node2D
 
 signal close_command(id)
+signal send_dish_pressed(command)
 
 var order
 
@@ -14,6 +15,8 @@ func _ready():
 #func _process(delta):
 #	pass
 
-
 func _on_Button_button_up():
 	emit_signal("close_command", name)
+
+func _on_SendDish_button_up():
+	emit_signal("send_dish_pressed", self)

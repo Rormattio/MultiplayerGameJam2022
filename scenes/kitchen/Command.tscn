@@ -43,4 +43,13 @@ mouse_filter = 2
 custom_fonts/normal_font = ExtResource( 1 )
 text = "X"
 
+[node name="SendDish" type="Button" parent="."]
+margin_left = 5.0
+margin_top = 89.0
+margin_right = 92.0
+margin_bottom = 116.0
+custom_fonts/font = ExtResource( 1 )
+text = "Send dish"
+
 [connection signal="button_up" from="Close/Button" to="." method="_on_Button_button_up"]
+[connection signal="button_up" from="SendDish" to="." method="_on_SendDish_button_up"]
