@@ -249,8 +249,9 @@ func _on_ingredient_dish_set(ingredient_name):
 	idx += 1
 	dish_ingredients_n += 1
 
-	if Ingredients.ingredient_names_to_sfx.has(ingredient_name):
-		AudioSfx.play(Ingredients.ingredient_names_to_sfx[ingredient_name])
+	var sfx = Ingredients.get_ingredient_desc("ingredient_name").sfx
+	if sfx != null:
+		AudioSfx.play(sfx)
 
 	_refresh_stock()
 	return true
