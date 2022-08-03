@@ -21,4 +21,4 @@ func _physics_process(_delta):
 
 func _on_CommandAvatar_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-		emit_signal("patron_avatar_command_clicked")
+		emit_signal("patron_avatar_command_clicked", patron)

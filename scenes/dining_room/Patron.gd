@@ -40,6 +40,7 @@ var path_offset = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	command_avatar.patron = self
+	level_avatar.patron = self
 	level_avatar_is_visible = false
 	command_avatar_is_visible = false
 
@@ -50,9 +51,6 @@ func _ready():
 	dish_score_value = 0
 
 	$EatTimer.connect("timeout", self, "_on_EatTimer_timeout")
-
-	command_avatar.connect("patron_avatar_command_clicked", self, "_on_any_avatar_clicked")
-	level_avatar.connect("patron_avatar_level_clicked", self, "_on_any_avatar_clicked")
 
 func init():
 	set_state(State.ENTERING)
@@ -157,9 +155,6 @@ func _on_EatTimer_timeout():
 	command_avatar.rotation = 0
 	received_dish.queue_free()
 	set_state(State.SHOW_DISH_SCORE)
-
-func _on_any_avatar_clicked():
-	emit_signal("patron_clicked", self)
 
 func toggle_wanted_dish():
 	if dish_wish.visible:
