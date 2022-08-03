@@ -172,3 +172,24 @@ var ingredient_descs = [
 		["stars", "yellow", "space"], [],
 		null),
 ]
+
+const plain_keywords_synonyms = {
+	"burger"   : ["sandwich"],
+	"space"    : ["cosmic"],
+	"creature" : ["meat"],
+	"squid"    : ["tentacle"],
+	"bottom"   : ["low"],
+	"top"      : ["high"],
+	"bread"    : ["bun"],
+	"puree"    : ["mash"],
+	"spaghetti": ["pasta", "noodles"],
+	"fried"    : ["fat"],
+	"eight"    : ["number"]
+}
+
+const obscure_keywords_synonyms = {
+	"green"    : ["viridescent"],
+	"creature" : ["organism"],
+	"squid"    : ["pseudopod"],
+	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
+}
