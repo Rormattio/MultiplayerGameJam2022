@@ -192,6 +192,32 @@ func deserialize(stream : Array):
 		assert(stream[5] == "")
 	assert(is_valid())
 
+static func _compute_ingredient_difference(ing0, ing1):
+	assert(ing0 != "");
+	assert(ing1 != "");
+	
+	var desc0 = Ingredients.get_ingredient_desc(ing0)
+	var desc1 = Ingredients.get_ingredient_desc(ing1)
+	assert(desc0 != null)
+	assert(desc1 != null)
+
+	if desc0 == desc1:
+		return 2
+	else:
+		return 0
+	
+# return a [ing0, ing1, ing2, ing3] array
+# ing can be 0 (very different), 1 (different but...) or 2 (equal)
+static func compute_difference(dish0 : Dish, dish1 : Dish):
+	var linear_dish0 = dish0.serialize();
+	var linear_dish1 = dish1.serialize();
+	
+	var result = []
+	for i in range(4):
+		var ing_diff = _compute_ingredient_difference(linear_dish0[i + 2], linear_dish1[i + 2])
+		result.append(ing_diff)
+	return result;
+	
 func debug_print():
 	print("Container: ", ContainerType.keys()[container_type])
 	print("Meal: ", MealType.keys()[meal_type])
