@@ -193,13 +193,27 @@ const obscure_keywords_synonyms = {
 	"squid"    : ["pseudopod"],
 	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
 }
-var ingredient_names = [
-]
+var ingredient_names = []
+
+var bottom_ingredients = []
+var main_ingredients = []
+var top_ingredients = []
+var bottom_burger_ingredients = []
+var mid_burger_ingredients = []
+var top_burger_ingredients = []
 
 func _ready():
 	# Build ingredient_names for bw-compat
 	for desc in ingredient_descs:
 		ingredient_names.append(desc.name)
+
+	# Build ingredient lists for bw-compat
+	bottom_ingredients = get_ingredient_names_with_tag("bottom")
+	main_ingredients = get_ingredient_names_with_tag("main")
+	top_ingredients = get_ingredient_names_with_tag("top")
+	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
+	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
+	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
 
 func get_ingredient_count():
 	return ingredient_descs.size()
@@ -219,3 +233,44 @@ func get_ingredient_names_with_tag(tag):
 		if desc.has_tag(tag):
 			result.append(desc.name)
 	return result
+
+func is_ingredient(name):
+	return Ingredients.get_ingredient_desc(name) != null
+
+func is_bottom_ingredient(name):
+	assert(is_ingredient(name))
+	return bottom_ingredients.has(name)
+
+func is_main_ingredient(name):
+	assert(is_ingredient(name))
+	return main_ingredients.has(name)
+
+func is_top_ingredient(name):
+	assert(is_ingredient(name))
+	return top_ingredients.has(name)
+
+func is_bottom_burger_ingredient(name):
+	assert(is_ingredient(name))
+	return bottom_burger_ingredients.has(name)
+
+func is_mid_burger_ingredient(name):
+	assert(is_ingredient(name))
+	return mid_burger_ingredients.has(name)
+
+func is_top_burger_ingredient(name):
+	assert(is_ingredient(name))
+	return top_burger_ingredients.has(name)
+
+func _check_ingredient_metadata():
+	var ingredient_count = get_ingredient_count()
+	for i in range(ingredient_count):
+		var name = ingredient_names[i]
+		assert(is_ingredient(name))
+		assert(is_bottom_ingredient(name) or is_main_ingredient(name) or is_top_ingredient(name) or
+			is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
+		var png_name = "res://assets/food/" + name + ".png"
+		assert(load(png_name) != null)
+		
+	for desc in ingredient_descs:
+		var count = desc.plain_keywords_fr.size()
+		assert(count >= 2)
