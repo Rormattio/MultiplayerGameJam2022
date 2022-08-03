@@ -202,10 +202,10 @@ func _ready():
 		ingredient_names.append(desc.name)
 
 func get_ingredient_count():
-	return Ingredients.ingredient_descs.size()
+	return ingredient_descs.size()
 
 func get_ingredient_desc(name):
-	for desc in Ingredients.ingredient_descs:
+	for desc in ingredient_descs:
 		if desc.name == name:
 			return desc
 	return null
