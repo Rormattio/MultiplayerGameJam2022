@@ -132,8 +132,9 @@ func set_state(a_state):
 	refresh_avatars_visible()
 
 func compute_dish_score(wanted_dish, dish):
-	# TODO
-	return 5
+	var diffs = Dish.compute_difference(wanted_dish, dish)
+	var score = diffs[0] + diffs[1] + diffs[2] + diffs[3]
+	return score
 
 func show_dish_score():
 	dish_score.get_node("Label").text = str(dish_score_value)
