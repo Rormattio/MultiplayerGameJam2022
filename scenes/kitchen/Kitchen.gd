@@ -6,7 +6,6 @@ var command_scene = preload("res://scenes/kitchen/Command.tscn")
 const Dish = preload("res://Dish.gd")
 const DishRenderer = preload("res://DishRenderer.gd")
 
-onready var send_dish = $SendDish
 onready var change_dish = $ChangeDish
 
 onready var dish_back = $Dish/DishBack # z index 0
@@ -31,7 +30,6 @@ var dish_ingredients_n = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	send_dish.connect("pressed", self, "_on_SendDish_Pressed")
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
 
@@ -157,6 +155,7 @@ func _on_WaiterCommand_Sent(order: Order):
 	command.order = order
 	commands_container.add_child(command)
 	command.connect("close_command", self, "_on_close_command")
+	command.connect("send_dish_pressed", self, "_on_SendDish_Pressed")
 	command.name = str(command_counter)
 	var word_items = command.get_node("Words")
 	for word in words:
@@ -179,7 +178,7 @@ func _on_close_command(name):
 	active_commands.remove(command_idx)
 	command.queue_free() # find and delete by name
 
-func _on_SendDish_Pressed():
+func _on_SendDish_Pressed(command):
 	AudioSfx.play(Ingredients.Sfx.CLICK)
 
 	var container_type
@@ -194,14 +193,13 @@ func _on_SendDish_Pressed():
 	assert(induced_dish.is_valid())
 
 	var dish_idx = $Counter.add_dish_wherever(induced_dish)
-	if $Counter.get_free_slots_count() == 0:
-		$SendDish.disabled = true
 
 	_clear_dish()
 	_refresh_stock()
 
 	var serialized_dish = induced_dish.serialize()
-	Global.cheffe_send_dish(serialized_dish, dish_idx)
+	Global.cheffe_send_dish(serialized_dish, dish_idx, command.order.serialize())
+	_on_close_command(command.name)
 
 func _on_ingredient_dish_set(ingredient_name):
 	var idx = dish_ingredients_n

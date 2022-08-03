@@ -1,6 +1,7 @@
 extends Node2D
 
 const ReceivedDish = preload("ReceivedDish.gd")
+const Order = preload("res://scenes/shared/Order.gd")
 
 var received_dish_scene = preload("res://scenes/dining_room/ReceivedDish.tscn")
 
@@ -17,10 +18,13 @@ func _ready():
 	
 	dishes = []
 
-func add_dish(dish : Array, dish_index: int):
+func add_dish(dish : Array, dish_index: int, order_serialized):
 	var received_dish = received_dish_scene.instance()
 	received_dish.build(dish)
 	received_dish.dish_index_in_kitchen_counter = dish_index
+	var order = Order.new()
+	order.unserialize(order_serialized)
+	received_dish.order = order
 
 	# Move all dishes one place to the right
 	for d in dishes:
@@ -42,9 +46,9 @@ func remove_dish(dish : ReceivedDish):
 	for i in range(dish_index, dishes.size()):
 		dishes[i].position.y -= DISHES_DY
 
-func _on_CheffeDish_Sent(dish, dish_index):
-	print("cheffe sends dish ", dish)
-	add_dish(dish, dish_index)
+func _on_CheffeDish_Sent(dish, dish_index, order_serialized):
+	print("cheffe sends dish ", dish , " for command ", order_serialized)
+	add_dish(dish, dish_index, order_serialized)
 
 func _on_CheffeDish_Trashed(dish_index_in_kitchen_counter):
 	for dish in dishes:
