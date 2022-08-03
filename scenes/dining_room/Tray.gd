@@ -1,5 +1,7 @@
 extends Node2D
 
+const ReceivedDish = preload("ReceivedDish.gd")
+
 var received_dish_scene = preload("res://scenes/dining_room/ReceivedDish.tscn")
 
 var DISTANCE_TO_GRAB_DISH = 80
@@ -29,7 +31,7 @@ func add_dish(dish : Array, dish_index: int):
 	dishes.push_front(received_dish)
 	add_child(received_dish)
 
-func remove_dish(dish):
+func remove_dish(dish : ReceivedDish):
 	var dish_index = dishes.find(dish)
 	assert(dish_index > -1)
 	dish = dishes[dish_index]

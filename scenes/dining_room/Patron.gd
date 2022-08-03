@@ -2,6 +2,7 @@ extends Node
 
 const Dish = preload("res://Dish.gd")
 const DishRenderer = preload("res://DishRenderer.gd")
+const ReceivedDish = preload("ReceivedDish.gd")
 
 
 signal patron_clicked(patron)
@@ -146,15 +147,15 @@ func hide_dish_score():
 	dish_score.hide()
 
 func _on_EatTimer_timeout():
-	var dish = dish_position.get_child(0)
+	var received_dish = dish_position.get_child(0) as ReceivedDish
 
 	assert(wanted_dish != null)
-	assert(dish != null)
-	dish_score_value = compute_dish_score(wanted_dish, dish)
-	Global.patron_send_dish_score(dish.dish, dish_score_value)
+	assert(received_dish != null)
+	dish_score_value = compute_dish_score(wanted_dish, received_dish.dish)
+	Global.patron_send_dish_score(received_dish.dish, dish_score_value)
 
 	command_avatar.rotation = 0
-	dish.queue_free()
+	received_dish.queue_free()
 	set_state(State.SHOW_DISH_SCORE)
 
 func _on_any_avatar_clicked():
