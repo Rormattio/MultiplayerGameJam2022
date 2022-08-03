@@ -215,7 +215,7 @@ func ingredient_has_tag(name, flag):
 
 func get_ingredient_names_with_tag(tag):
 	var result = []
-	for desc in Ingredients.ingredient_descs:
+	for desc in ingredient_descs:
 		if desc.has_tag(tag):
 			result.append(desc.name)
 	return result

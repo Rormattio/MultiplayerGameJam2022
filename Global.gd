@@ -30,10 +30,6 @@ var mid_burger_ingredients = [
 var top_burger_ingredients = [
 ]
 
-# TODO : Remove
-var ingredient_names_to_sfx = {
-}
-
 var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
@@ -211,11 +207,6 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 func _ready():
 	Ingredients._ready()
 	
-	# Build ingredient_names_to_sfx for bw-compat
-	for desc in Ingredients.ingredient_descs:
-		if desc.sfx != null:
-			ingredient_names_to_sfx[desc.name] = desc.sfx
-
 	# Build ingredient lists for bw-compat
 	bottom_ingredients = Ingredients.get_ingredient_names_with_tag("bottom")
 	main_ingredients = Ingredients.get_ingredient_names_with_tag("main")
