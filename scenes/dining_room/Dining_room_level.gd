@@ -63,7 +63,8 @@ func spawn_patron():
 	patrons.add_child(patron_dummy)
 	table.patrons_around.append(patron_dummy)
 	
-	patron_dummy.connect("patron_clicked", self, "_on_Patron_clicked")
+	patron_dummy.command_avatar.connect("patron_avatar_command_clicked", self, "_on_patron_avatar_command_clicked")
+	patron_dummy.level_avatar.connect("patron_avatar_level_clicked", self, "_on_patron_avatar_level_clicked")
 	patron_dummy.level_avatar.position.x = 546
 	patron_dummy.level_avatar.position.y = 130
 	patron_dummy.connect("patron_leaves", self, "_on_patron_leaves")
@@ -105,26 +106,29 @@ func _set_layout_visible(set_visible):
 	for patron in patrons.get_children():
 		patron.set_avatars_visible(patron_level_visible)
 	
-func _on_Patron_clicked(patron):
-	if (patron.sitting_at_table.position.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE) and (dining_room.state == dining_room.State.NOT_VISIBLE):
+func _on_patron_avatar_level_clicked(patron):
+	assert(dining_room.state == dining_room.State.NOT_VISIBLE)
+	if (patron.sitting_at_table.position.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE):
 		dining_room.pop_up([patron])
 		_set_layout_visible(false)
-	if dining_room.state == dining_room.State.VISIBLE:
-		match patron.state:
-			patron.State.WAITING_TO_ORDER:
-				patron.set_state(patron.State.ORDERING)
-				patron.set_state(patron.State.WAITING_TO_EAT)
-			patron.State.WAITING_TO_EAT:
-				if carrying_dish_node.get_child_count() > 0:
-					assert(carrying_dish_node.get_child_count() == 1)
-					var dish = carrying_dish_node.get_child(0)
-					set_carrying_received_dish(null)
-					patron.serve_dish(dish)
-				else:
-					patron.toggle_wanted_dish()
-			patron.State.SHOW_DISH_SCORE:
-				patron.hide_dish_score()
-				patron.set_state(patron.State.LEAVING)
+
+func _on_patron_avatar_command_clicked(patron):
+	assert(dining_room.state == dining_room.State.VISIBLE)
+	match patron.state:
+		patron.State.WAITING_TO_ORDER:
+			patron.set_state(patron.State.ORDERING)
+			patron.set_state(patron.State.WAITING_TO_EAT)
+		patron.State.WAITING_TO_EAT:
+			if carrying_dish_node.get_child_count() > 0:
+				assert(carrying_dish_node.get_child_count() == 1)
+				var dish = carrying_dish_node.get_child(0)
+				set_carrying_received_dish(null)
+				patron.serve_dish(dish)
+			else:
+				patron.toggle_wanted_dish()
+		patron.State.SHOW_DISH_SCORE:
+			patron.hide_dish_score()
+			patron.set_state(patron.State.LEAVING)
 
 func _on_patron_leaves(patron):
 	patron.sitting_at_table.patrons_around.erase(patron)
