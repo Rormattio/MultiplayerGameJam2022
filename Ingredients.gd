@@ -193,6 +193,13 @@ const obscure_keywords_synonyms = {
 	"squid"    : ["pseudopod"],
 	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
 }
+var ingredient_names = [
+]
+
+func _ready():
+	# Build ingredient_names for bw-compat
+	for desc in ingredient_descs:
+		ingredient_names.append(desc.name)
 
 func get_ingredient_count():
 	return Ingredients.ingredient_descs.size()
