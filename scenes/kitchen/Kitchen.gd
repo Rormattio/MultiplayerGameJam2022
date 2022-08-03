@@ -138,7 +138,7 @@ func _refresh_stock():
 	var dx = 64
 	var w = dx*4
 	var dy = 64
-	for ingredient_desc in Global.ingredient_descs:
+	for ingredient_desc in Ingredients.ingredient_descs:
 		var ingredient_name = ingredient_desc.name
 		var ingredient_stock = ingredient_stocks[ingredient_name]
 		ingredient_stock.set_enabled(_is_possible_next_ingredient(ingredient_desc))
@@ -180,7 +180,7 @@ func _on_close_command(name):
 	command.queue_free() # find and delete by name
 
 func _on_SendDish_Pressed():
-	AudioSfx.play(Global.Sfx.CLICK)
+	AudioSfx.play(Ingredients.Sfx.CLICK)
 
 	var container_type
 	if current_container_type == Dish.ContainerType.PLATE:
@@ -268,7 +268,7 @@ func _set_bowl():
 		change_dish.icon = load("res://assets/food/plate.png")
 
 func _on_ChangeDish_pressed():
-	AudioSfx.play(Global.Sfx.CLICK)
+	AudioSfx.play(Ingredients.Sfx.CLICK)
 	if (current_container_type == Dish.ContainerType.PLATE):
 		_set_bowl()
 	else:
@@ -292,7 +292,7 @@ func _clear_dish():
 	dish_ingredients_n = 0
 
 func _on_Trash_pressed():
-	AudioSfx.play(Global.Sfx.CLICK)
+	AudioSfx.play(Ingredients.Sfx.CLICK)
 	_clear_dish()
 	_refresh_stock()
 

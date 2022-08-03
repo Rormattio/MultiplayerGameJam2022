@@ -5,24 +5,24 @@ func _ready():
 
 func play(sfx):
 	match sfx:
-		Global.Sfx.SPLOTCH:
+		Ingredients.Sfx.SPLOTCH:
 			$splotch.pitch_scale = rand_range(0.9, 1.1)
 			$splotch.play()
-		Global.Sfx.POP:
+		Ingredients.Sfx.POP:
 			$pop.pitch_scale = rand_range(0.9, 1.1)
 			$pop.play()
-		Global.Sfx.TENTACLE:
+		Ingredients.Sfx.TENTACLE:
 			$tentacle.pitch_scale = rand_range(0.9, 1.1)
 			$tentacle.play()
-		Global.Sfx.FFFT:
+		Ingredients.Sfx.FFFT:
 			$ffft.pitch_scale = rand_range(0.9, 1.1)
 			$ffft.play()
-		Global.Sfx.SHHOO:
+		Ingredients.Sfx.SHHOO:
 			$shhoo.pitch_scale = rand_range(0.9, 1.1)
 			$shhoo.play()
-		Global.Sfx.CLICK:
+		Ingredients.Sfx.CLICK:
 			$click.play()
-		Global.Sfx.SCHBOING:
+		Ingredients.Sfx.SCHBOING:
 			$shhoo.pitch_scale = rand_range(0.9, 1.1)
 			$schboing.play()
 		_: assert(false)
