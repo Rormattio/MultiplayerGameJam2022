@@ -41,15 +41,6 @@ var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
 
-func get_ingredient_desc(name):
-	for desc in Ingredients.ingredient_descs:
-		if desc.name == name:
-			return desc
-	return null
-
-func ingredient_has_tag(name, flag):
-	return get_ingredient_desc(name).has_tag(flag)
-
 func get_ingredient_names_with_tag(tag):
 	var result = []
 	for desc in Ingredients.ingredient_descs:
@@ -61,7 +52,7 @@ func get_ingredient_count():
 	return Ingredients.ingredient_descs.size()
 
 func is_ingredient(name):
-	return get_ingredient_desc(name) != null
+	return Ingredients.get_ingredient_desc(name) != null
 
 func is_bottom_ingredient(name):
 	assert(is_ingredient(name))
