@@ -37,27 +37,6 @@ var ingredient_names = [
 var ingredient_names_to_sfx = {
 }
 
-const plain_keywords_synonyms = {
-	"burger"   : ["sandwich"],
-	"space"    : ["cosmic"],
-	"creature" : ["meat"],
-	"squid"    : ["tentacle"],
-	"bottom"   : ["low"],
-	"top"      : ["high"],
-	"bread"    : ["bun"],
-	"puree"    : ["mash"],
-	"spaghetti": ["pasta", "noodles"],
-	"fried"    : ["fat"],
-	"eight"    : ["number"]
-}
-
-const obscure_keywords_synonyms = {
-	"green"    : ["viridescent"],
-	"creature" : ["organism"],
-	"squid"    : ["pseudopod"],
-	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
-}
-
 var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
@@ -173,8 +152,8 @@ func make_keyword_list(_seed : int):
 	# Use synonyms for variety
 	for i in range(result.size()):
 		var kw = result[i]
-		if plain_keywords_synonyms.has(kw):
-			var alternatives = plain_keywords_synonyms[kw]
+		if Ingredients.plain_keywords_synonyms.has(kw):
+			var alternatives = Ingredients.plain_keywords_synonyms[kw]
 			var choice = randi() % (alternatives.size() + 1)
 			if choice != 0:
 				result[i] = alternatives[choice - 1]
