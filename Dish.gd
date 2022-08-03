@@ -91,7 +91,7 @@ func is_valid():
 		return false # The lower part is not visible
 	if (container_type == ContainerType.BOWL) and (meal_type == MealType.NON_BURGER) and (non_burger_component_bottom != ""):
 		return false # The lower part is not visible
-	if (meal_type == MealType.NON_BURGER) and (non_burger_component_top != "") and Global.ingredient_has_tag(non_burger_component_top, "flag"):
+	if (meal_type == MealType.NON_BURGER) and (non_burger_component_top != "") and Ingredients.ingredient_has_tag(non_burger_component_top, "flag"):
 		return false # The flag doesn't fit in non-burgers :)
 	return true
 

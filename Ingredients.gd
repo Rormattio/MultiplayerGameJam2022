@@ -193,3 +193,12 @@ const obscure_keywords_synonyms = {
 	"squid"    : ["pseudopod"],
 	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
 }
+
+func get_ingredient_desc(name):
+	for desc in Ingredients.ingredient_descs:
+		if desc.name == name:
+			return desc
+	return null
+
+func ingredient_has_tag(name, flag):
+	return get_ingredient_desc(name).has_tag(flag)
