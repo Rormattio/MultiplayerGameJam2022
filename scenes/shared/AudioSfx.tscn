@@ -33,3 +33,5 @@ stream = ExtResource( 7 )
 
 [node name="schboing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+
+[node name="bg_music_player" type="AudioStreamPlayer" parent="."]
