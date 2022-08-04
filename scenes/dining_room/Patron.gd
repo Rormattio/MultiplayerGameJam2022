@@ -5,7 +5,6 @@ const DishRenderer = preload("res://DishRenderer.gd")
 const ReceivedDish = preload("ReceivedDish.gd")
 
 
-signal patron_clicked(patron)
 signal patron_leaves(patron)
 
 onready var dish_wish = $CommandAvatar/DishWish
