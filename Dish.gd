@@ -198,14 +198,17 @@ static func _compute_ingredient_difference(ing0, ing1):
 	if (ing0 == "") or (ing1 == ""):
 		return 0
 		
-	var desc0 = Ingredients.get_ingredient_desc(ing0)
-	var desc1 = Ingredients.get_ingredient_desc(ing1)
+	var desc0 : Ingredients.IngredientDesc = Ingredients.get_ingredient_desc(ing0)
+	var desc1 : Ingredients.IngredientDesc = Ingredients.get_ingredient_desc(ing1)
 	assert(desc0 != null)
 	assert(desc1 != null)
-	assert (desc0 != desc1)
+	assert(desc0 != desc1)
 
-	# TODO : Similarity
-	return 0
+	var common_tags = Global.intersect_2_lists(desc0.tags, desc1.tags)
+	if common_tags.empty():
+		return 0
+	else:
+		return 1
 	
 # return a [ing0, ing1, ing2, ing3] array
 # ing can be 0 (very different), 1 (different but...) or 2 (equal)
