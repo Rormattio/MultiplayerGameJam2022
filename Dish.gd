@@ -193,11 +193,14 @@ func deserialize(stream : Array):
 	assert(is_valid())
 
 static func _compute_ingredient_difference(ing0, ing1):
+	printraw("_compute_ingredient_difference(", ing0, ing1, ") -> ")
 	if (ing0 == ing1):
+		print("same (2)")
 		return 2
 	if (ing0 == "") or (ing1 == ""):
+		print("different (0)")
 		return 0
-		
+
 	var desc0 : Ingredients.IngredientDesc = Ingredients.get_ingredient_desc(ing0)
 	var desc1 : Ingredients.IngredientDesc = Ingredients.get_ingredient_desc(ing1)
 	assert(desc0 != null)
@@ -205,11 +208,17 @@ static func _compute_ingredient_difference(ing0, ing1):
 	assert(desc0 != desc1)
 
 	var common_tags = Global.intersect_2_lists(desc0.tags, desc1.tags)
-	if common_tags.empty():
-		return 0
-	else:
+	if not common_tags.empty():
+		print("same tag (1)")
 		return 1
-	
+
+	var common_plain_keywords = Global.intersect_2_lists(desc0.plain_keywords_fr, desc1.plain_keywords_fr)
+	if not common_plain_keywords.empty():
+		print("same keyword (1)")
+		return 1
+
+	return 0
+
 # return a [ing0, ing1, ing2, ing3] array
 # ing can be 0 (very different), 1 (different but...) or 2 (equal)
 static func compute_difference(dish0 : Dish, dish1 : Dish):
