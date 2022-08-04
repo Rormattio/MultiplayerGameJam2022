@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blue_banana.png-edb0204ed6202430770e21aad00ed899.stex"
+path="res://.import/hand_3.png-28b05897679e0fa8eac69764f33bafc7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/food/blue_banana.png"
-dest_files=[ "res://.import/blue_banana.png-edb0204ed6202430770e21aad00ed899.stex" ]
+source_file="res://assets/misc/hand_3.png"
+dest_files=[ "res://.import/hand_3.png-28b05897679e0fa8eac69764f33bafc7.stex" ]
 
 [params]
 
