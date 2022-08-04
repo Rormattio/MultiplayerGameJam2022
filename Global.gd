@@ -75,12 +75,15 @@ func make_keyword_list(_seed : int):
 	return result
 
 # What do you mean, "complexity" ? Never heard about this
-func _intersect_2_lists(la, lb):
+func intersect_2_lists(la, lb):
 	var result = []
 	for a in la:
 		if lb.has(a):
 			result.append(a)
 	return result
+
+func intersect_3_lists(la, lb, lc):
+	return intersect_2_lists(intersect_2_lists(la, lb), lc)
 
 func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 	var ok = true
@@ -106,7 +109,7 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 						continue
 					var reachable_by_second_kw = plain_keywords_reachability[plain_keywords[j]]
 					
-					var reachable_by_pair = _intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw)					
+					var reachable_by_pair = intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw)					
 					if reachable_by_pair.size() == 1:
 						assert(desc.name == reachable_by_pair[0])
 						uniquely_reachable_with_two_keywords = true
@@ -128,7 +131,7 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 								continue
 							var reachable_by_third_kw = plain_keywords_reachability[plain_keywords[k]]
 							
-							var reachable_by_triplet = _intersect_2_lists(_intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw), reachable_by_third_kw)
+							var reachable_by_triplet = intersect_3_lists(reachable_by_first_kw, reachable_by_second_kw, reachable_by_third_kw)
 							
 							if reachable_by_triplet.size() == 1:
 								assert(desc.name == reachable_by_triplet[0])
