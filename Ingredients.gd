@@ -32,7 +32,7 @@ class IngredientDesc:
 		name = n
 		tags = t
 		plain_keywords_fr = pk
-		obscure_keywords_fr = pk
+		obscure_keywords_fr = ok
 		sfx  = s
 
 var ingredient_descs = [
