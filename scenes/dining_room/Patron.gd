@@ -64,6 +64,7 @@ func _process(delta):
 			var new_position = path_to_follow.get_position()
 			if level_avatar.position == new_position:
 				set_state(State.WAITING_TO_ORDER)
+				set_state(State.ORDERING) # we directly switch to ORDERING so that the wished dish is already visible
 				path_offset -= speed*delta
 			level_avatar.position = new_position
 		State.LEAVING:
