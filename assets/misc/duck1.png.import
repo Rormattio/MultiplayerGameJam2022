@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/duck2.png-bfb145982886d010ad2e950485384044.stex"
+path="res://.import/duck1.png-1edf022f388fc4a65b8cdd4b9665d71b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/duck2.png"
-dest_files=[ "res://.import/duck2.png-bfb145982886d010ad2e950485384044.stex" ]
+source_file="res://assets/misc/duck1.png"
+dest_files=[ "res://.import/duck1.png-1edf022f388fc4a65b8cdd4b9665d71b.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

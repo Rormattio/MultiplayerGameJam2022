@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bertmo.png-be671fa97210a30c440a3a9d51c03d1c.stex"
+path="res://.import/fmdkdd0.png-041aafb39e9614c8b619c1a509516dbb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/misc/bertmo.png"
-dest_files=[ "res://.import/bertmo.png-be671fa97210a30c440a3a9d51c03d1c.stex" ]
+source_file="res://assets/misc/fmdkdd0.png"
+dest_files=[ "res://.import/fmdkdd0.png-041aafb39e9614c8b619c1a509516dbb.stex" ]
 
 [params]
 
@@ -20,8 +20,8 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
-flags/mipmaps=false
+flags/filter=true
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true
