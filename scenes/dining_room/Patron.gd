@@ -24,6 +24,7 @@ enum State {
 	EATING,
 	SHOW_DISH_SCORE, # state in zoomed-in view
 	LEAVING,
+	LEAVING_BEHIND_WINDOW,
 	DELETE,
 }
 
@@ -43,6 +44,9 @@ var PATRON_HAS_ANIM = {
 	"fmdkdd": false,
 	"fromage_chaud": false,
 }
+
+const BEHIND_WINDOW_TINT = Color("#1a2b3b")
+const IN_ROOM_TINT = Color("#ffffff")
 
 var patron_index
 var speed = 200
@@ -106,7 +110,7 @@ func _physics_process(delta):
 	match state:
 		State.ENTERING_BEHIND_WINDOW:
 			level_avatar.position.x += 2
-			if level_avatar.position.x == 550:
+			if level_avatar.position.x >= 550:
 				set_state(State.ENTERING)
 
 		State.ENTERING:
@@ -119,13 +123,21 @@ func _physics_process(delta):
 				set_state(State.WAITING_TO_EAT)
 				path_offset -= speed*delta
 			level_avatar.position = new_position
+
 		State.LEAVING:
 			path_offset -= speed*delta
 			path_to_follow.set_offset(path_offset)
 			var new_position = path_to_follow.get_position()
-			if level_avatar.position == new_position:
-				set_state(State.DELETE)
+			var reached_path_end = level_avatar.position == new_position
 			level_avatar.position = new_position
+			if reached_path_end:
+				set_state(State.LEAVING_BEHIND_WINDOW)
+
+		State.LEAVING_BEHIND_WINDOW:
+			level_avatar.position.x += 2
+			if level_avatar.position.x >= 1400:
+				set_state(State.DELETE)
+
 
 func refresh_avatars_visible():
 	set_avatars_visible(level_avatar_is_visible)
@@ -159,11 +171,11 @@ func set_state(a_state):
 	match a_state:
 		State.ENTERING_BEHIND_WINDOW:
 			level_avatar.z_index = -1
-			level_avatar.modulate = Color("#1a2b3b")
+			level_avatar.modulate = BEHIND_WINDOW_TINT
 
 		State.ENTERING:
 			level_avatar.z_index = 0
-			level_avatar.modulate = Color("#ffffff")
+			level_avatar.modulate = IN_ROOM_TINT
 			pass
 
 		State.WAITING_TO_ORDER:
@@ -185,6 +197,11 @@ func set_state(a_state):
 
 		State.LEAVING:
 			emit_signal("patron_leaves", self)
+
+		State.LEAVING_BEHIND_WINDOW:
+			level_avatar.position.y = 100
+			level_avatar.z_index = -1
+			level_avatar.modulate = BEHIND_WINDOW_TINT
 
 		State.DELETE:
 			queue_free()
