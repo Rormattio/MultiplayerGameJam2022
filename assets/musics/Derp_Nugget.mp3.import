@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Derp_Nugget.mp3-20c279f3fc48e4388f4c39cb90a24889.mp3str"
+
+[deps]
+
+source_file="res://assets/musics/Derp_Nugget.mp3"
+dest_files=[ "res://.import/Derp_Nugget.mp3-20c279f3fc48e4388f4c39cb90a24889.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
