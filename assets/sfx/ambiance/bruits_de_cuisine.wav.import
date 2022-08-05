@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bruits_de_cuisine.wav-ac6936d910a5c43d520c37132c564cf3.sample"
+
+[deps]
+
+source_file="res://assets/sfx/ambiance/bruits_de_cuisine.wav"
+dest_files=[ "res://.import/bruits_de_cuisine.wav-ac6936d910a5c43d520c37132c564cf3.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

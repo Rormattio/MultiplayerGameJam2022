@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scenes/kitchen/Kitchen.gd" type="Script" id=1]
 [ext_resource path="res://assets/food/bowl.png" type="Texture" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://assets/misc/hand_7.png" type="Texture" id=20]
 [ext_resource path="res://assets/misc/hand_9.png" type="Texture" id=21]
 [ext_resource path="res://assets/misc/hand_12.png" type="Texture" id=22]
+[ext_resource path="res://scenes/shared/AudioSfx.tscn" type="PackedScene" id=23]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.376471, 0.0862745, 0.0862745, 1 )
@@ -126,6 +127,8 @@ position = Vector2( 640, 360 )
 scale = Vector2( 2, 2 )
 z_index = 6
 texture = ExtResource( 13 )
+
+[node name="AudioSfx" parent="." instance=ExtResource( 23 )]
 
 [connection signal="pressed" from="ChangeDish" to="." method="_on_ChangeDish_pressed"]
 [connection signal="pressed" from="Trash" to="." method="_on_Trash_pressed"]

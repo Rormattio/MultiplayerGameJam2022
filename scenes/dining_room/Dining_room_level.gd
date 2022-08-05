@@ -50,6 +50,8 @@ func _ready():
 
 	spawn_patron()
 	
+	audio_sfx.play_ambience()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
