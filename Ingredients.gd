@@ -212,6 +212,8 @@ var top_ingredients = []
 var bottom_burger_ingredients = []
 var mid_burger_ingredients = []
 var top_burger_ingredients = []
+var base_soup_ingredients = []
+var top_soup_ingredients = []
 
 func _ready():
 	# Build ingredient_names for bw-compat
@@ -225,6 +227,8 @@ func _ready():
 	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
 	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
 	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
+	base_soup_ingredients = get_ingredient_names_with_tag("bottom_soup")
+	top_soup_ingredients = get_ingredient_names_with_tag("top_soup")
 
 	for desc in ingredient_descs:
 		var png_name = "res://assets/food/" + desc.name + ".png"

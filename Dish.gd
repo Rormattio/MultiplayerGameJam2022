@@ -9,7 +9,7 @@ class_name Dish
 # burger = (bottom-burger, mid-burger, top-burger, top | _)
 
 enum ContainerType { BOWL, PLATE }
-enum MealType { BURGER, NON_BURGER }
+enum MealType { BURGER, NON_BURGER, SOUP }
 
 var container_type
 var meal_type
@@ -23,14 +23,23 @@ var non_burger_component_bottom
 var non_burger_component_main
 var non_burger_component_top
 
+var soup_component_base
+var soup_component_top
+
 const BURGER_COMPONENT_TOP_PROBABILITY = 0.5
+const SOUP_COMPONENT_TOP_PROBABILITY = 0.5
 const NON_BURGER_COMPONENT_BOTTOM_PROBABILITY = 0.5
 const NON_BURGER_COMPONENT_MAIN_PROBABILITY = 0.8
 const NON_BURGER_COMPONENT_TOP_PROBABILITY = 0.5
 
 func get_element_count():
 	var result = 0
-	if meal_type == MealType.BURGER:
+	if meal_type == MealType.SOUP:
+		if soup_component_base != "":
+			result += 1
+		if soup_component_top != "":
+			result += 1
+	elif meal_type == MealType.BURGER:
 		if burger_component_bottom_burger != "":
 			result += 1
 		if burger_component_mid_burger != "":
@@ -65,6 +74,15 @@ func _randomize_burger():
 		burger_component_top = Ingredients.top_ingredients[randi() % Ingredients.top_ingredients.size()]
 	else:
 		burger_component_top = ""
+	return
+
+func _randomize_soup():
+	assert(meal_type == MealType.SOUP)
+	soup_component_base = Ingredients.base_soup_ingredients[randi() % Ingredients.base_soup_ingredients.size()]
+	if randf() <= SOUP_COMPONENT_TOP_PROBABILITY:
+		soup_component_top = Ingredients.top_soup_ingredients[randi() % Ingredients.top_soup_ingredients.size()]
+	else:
+		soup_component_top = ""
 	return
 
 func _randomize_non_burger():
@@ -121,6 +139,8 @@ func randomize():
 		meal_type = _randomize_dish_meal_type();
 		if meal_type == MealType.BURGER:
 			_randomize_burger()
+		elif meal_type == MealType.SOUP and false:
+			_randomize_soup()
 		else:
 			assert(meal_type == MealType.NON_BURGER)
 			_randomize_non_burger()
@@ -135,6 +155,8 @@ func make_from_linear_ingredients(_container_type, ingredients):
 		meal_type = MealType.NON_BURGER
 	elif Ingredients.is_bottom_burger_ingredient(ingredients[0]):
 		meal_type = MealType.BURGER
+	elif Ingredients.is_soup_base_ingredient(ingredients[0]):
+		meal_type = MealType.SOUP
 	else:
 		meal_type = MealType.NON_BURGER
 
@@ -143,7 +165,15 @@ func make_from_linear_ingredients(_container_type, ingredients):
 		burger_component_mid_burger = ingredients[1]
 		burger_component_top_burger = ingredients[2]
 		burger_component_top = ingredients[3]
+	elif meal_type == MealType.SOUP:
+		soup_component_base = ingredients[0]
+		soup_component_top = ingredients[1]
+		if ingredients[2] != "":
+			return false
+		if ingredients[3] != "":
+			return false
 	else:
+		assert(meal_type == MealType.NON_BURGER)
 		non_burger_component_bottom = ingredients[0]
 		non_burger_component_main = ingredients[1]
 		non_burger_component_top = ingredients[2]
@@ -166,7 +196,13 @@ func serialize() -> Array:
 		result.append(burger_component_mid_burger)
 		result.append(burger_component_top_burger)
 		result.append(burger_component_top)
+	elif meal_type == MealType.SOUP:
+		result.append(soup_component_base)
+		result.append(soup_component_top)
+		result.append("")
+		result.append("")
 	else:
+		assert(meal_type == MealType.NON_BURGER)
 		result.append(non_burger_component_bottom)
 		result.append(non_burger_component_main)
 		result.append(non_burger_component_top)
@@ -185,7 +221,13 @@ func deserialize(stream : Array):
 		burger_component_mid_burger = stream[3]
 		burger_component_top_burger = stream[4]
 		burger_component_top = stream[5]
+	elif meal_type == MealType.SOUP:
+		soup_component_base = stream[2]
+		soup_component_top = stream[3]
+		assert(stream[4] == "")
+		assert(stream[5] == "")
 	else:
+		assert(meal_type == MealType.BURGER)
 		non_burger_component_bottom = stream[2]
 		non_burger_component_main = stream[3]
 		non_burger_component_top = stream[4]
@@ -239,6 +281,9 @@ func debug_print():
 		print("Burger mid: ", burger_component_mid_burger)
 		print("Burger top: ", burger_component_top_burger)
 		print("Top: ", burger_component_top)
+	elif meal_type == MealType.SOUP:
+		print("Soup base: ", soup_component_base)
+		print("Soup top: ", soup_component_top)
 	else:
 		assert(meal_type == MealType.NON_BURGER)
 		print("Bottom: ", non_burger_component_bottom)
