@@ -73,7 +73,7 @@ var ingredient_descs = [
 		["bread", "grey", "top", "burger"], [],
 		Sfx.FFFT),
 	IngredientDesc.new("crab", ["mid_burger", "main"],
-		["creature", "claws"], [],
+		["creature", "claws", "red"], [],
 		null),
 	IngredientDesc.new("crab_kaki", ["mid_burger", "main"],
 		["creature", "claws", "kaki"], [],
