@@ -57,3 +57,36 @@ static func render_dish(dish : Dish) -> Node2D:
 
 	return root
 	
+static func render_ingredients(dish : Dish) -> Node2D:
+	assert(dish != null)
+	var root = Node2D.new()
+	
+	var ingredients = []
+	if dish.meal_type == Dish.MealType.BURGER:
+		if dish.burger_component_bottom_burger != "":
+			ingredients.append(dish.burger_component_bottom_burger)
+		if dish.burger_component_mid_burger != "":
+			ingredients.append(dish.burger_component_mid_burger)
+		if dish.burger_component_top_burger != "":
+			ingredients.append(dish.burger_component_top_burger)
+		if dish.burger_component_top != "":
+			ingredients.append(dish.burger_component_top)
+	else:
+		if dish.non_burger_component_bottom != "":
+			ingredients.append(dish.non_burger_component_bottom)
+		if dish.non_burger_component_main != "":
+			ingredients.append(dish.non_burger_component_main)
+		if dish.non_burger_component_top != "":
+			ingredients.append(dish.non_burger_component_top)
+	
+	var current_pos = Vector2(0, 0)
+	for ingredient in ingredients:
+		var desc = Ingredients.get_ingredient_desc(ingredient)
+		var sprite = Sprite.new()
+		sprite.z_index = 1
+		sprite.texture = _load_food_texture(ingredient)
+		sprite.position = current_pos
+		current_pos.x += 80
+		root.add_child(sprite)
+
+	return root
