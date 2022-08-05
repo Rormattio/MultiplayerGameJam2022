@@ -74,8 +74,8 @@ func spawn_patron():
 
 	patron_dummy.command_avatar.connect("patron_avatar_command_clicked", self, "_on_patron_avatar_command_clicked")
 	patron_dummy.level_avatar.connect("patron_avatar_level_clicked", self, "_on_patron_avatar_level_clicked")
-	patron_dummy.level_avatar.position.x = 546
-	patron_dummy.level_avatar.position.y = 130
+	patron_dummy.level_avatar.position.x = -100
+	patron_dummy.level_avatar.position.y = 100
 	patron_dummy.connect("patron_leaves", self, "_on_patron_leaves")
 	# TODO: set the command_avatar.position positions correctly relative to the table as given in patron_dummy.destination
 	patron_dummy.destination = table.position + Vector2(32, -55)
