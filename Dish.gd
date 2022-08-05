@@ -231,7 +231,7 @@ func deserialize(stream : Array):
 		assert(stream[4] == "")
 		assert(stream[5] == "")
 	else:
-		assert(meal_type == MealType.BURGER)
+		assert(meal_type == MealType.NON_BURGER)
 		non_burger_component_bottom = stream[2]
 		non_burger_component_main = stream[3]
 		non_burger_component_top = stream[4]

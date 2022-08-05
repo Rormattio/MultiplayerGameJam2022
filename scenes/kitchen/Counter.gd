@@ -2,10 +2,16 @@ extends Line2D
 
 const DishRenderer = preload("res://DishRenderer.gd")
 
+onready var waiter_hands = $WaiterHands
+
 const MAX_DISH_ON_COUNTER = 5
 var counter_dishes
+var node_pos
+
+var removing_dish_idx
 
 func _ready():
+	waiter_hands.visible = false
 	counter_dishes = []
 	for i in range(MAX_DISH_ON_COUNTER):
 		counter_dishes.append(null)
@@ -24,7 +30,7 @@ func add_dish_at(dish, idx: int):
 	assert(idx < MAX_DISH_ON_COUNTER)
 
 	var dish_node = DishRenderer.render_dish(dish)
-	var node_pos = lerp(self.points[0], self.points[1],
+	node_pos = lerp(self.points[0], self.points[1],
 		(idx as float) / (MAX_DISH_ON_COUNTER - 1))
 
 	counter_dishes[idx] = dish_node
@@ -59,4 +65,20 @@ func _on_Dish_pressed(idx: int):
 	Global.cheffe_trashed_dish(idx)
 
 func _on_waiter_dish_taken(dish_index : int):
-	remove_dish_at(dish_index)
+	removing_dish_idx = dish_index
+	waiter_hands.position = node_pos
+	waiter_hands.visible = true
+	waiter_hands.frame = 0
+	waiter_hands.play()
+
+func _on_WaiterHands_animation_finished():
+	waiter_hands.stop()
+	waiter_hands.visible = false
+	remove_dish_at(removing_dish_idx)
+
+func _on_WaiterHands_frame_changed():
+	var node = counter_dishes[removing_dish_idx]
+	if waiter_hands.frame >= 8:
+		node.position.x -= 9*waiter_hands.scale.x
+	elif waiter_hands.frame >= 10:
+		node.position.x -= 8*waiter_hands.scale.x
