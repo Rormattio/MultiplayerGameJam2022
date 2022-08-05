@@ -11,6 +11,7 @@ onready var paths_to_tables = $Layout/Paths
 onready var patrons = $Patrons
 onready var spawn_timer = $SpawnTimer
 onready var carrying_dish_node = $CarryingDish
+onready var audio_sfx = $AudioSfx
 
 var TRIGGER_COMMAND_AT_X_FROM_TABLE
 
@@ -147,3 +148,6 @@ func on_close_command_popup():
 
 func _on_SpawnTimer_timeout():
 	spawn_patron()
+
+func _on_Jukebox_button_up():
+	audio_sfx.toggle_music()
