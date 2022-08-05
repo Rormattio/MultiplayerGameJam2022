@@ -333,12 +333,15 @@ func _on_Randomize_pressed():
 	_set_dish(new_dish)
 	_refresh_stock()
 
-func _on_PatronDishScore_Sent(received_dish_node, score, order_serialized):
-	print("dish=", received_dish_node, " score=", score, " order=", order_serialized)
-	# TODO: wip. I do not know how to dead with a ref to a remote object. I guess we need to receive a serialized received_dish.
-#	var dish = received_dish_node.dish
-#	var order = Order.new()
-#	order.unserialize(order_serialized)
-#	var clues = order.text.split(" ")
-#	for ingredient_name in dish:
-#		ingredient_stocks[ingredient_name].score_feedback(clues, score)
+func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized):
+	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
+	var ingredients = []
+	for idx in range(2, len(received_dish_serialized)):
+		ingredients.push_back(received_dish_serialized[idx])
+	var order = Order.new()
+	order.unserialize(order_serialized)
+	var clues = order.text.split(" ")
+	for ingredient_name in ingredients:
+		if ingredient_name != "":
+			ingredient_stocks[ingredient_name].score_feedback(clues, score)
+

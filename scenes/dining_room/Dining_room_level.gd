@@ -12,7 +12,7 @@ onready var patrons = $Patrons
 onready var spawn_timer = $SpawnTimer
 onready var carrying_dish_node = $CarryingDish
 
-var TRIGGER_COMMAND_AT_X_FROM_TABLE = 160
+var TRIGGER_COMMAND_AT_X_FROM_TABLE
 
 var next_patron_index = 0
 var tables = []
@@ -21,7 +21,13 @@ var tables = []
 func _ready():
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
 	dining_room.tray = tray
-	
+
+	if Global.DEBUG:
+		TRIGGER_COMMAND_AT_X_FROM_TABLE = 2000
+	else:
+		TRIGGER_COMMAND_AT_X_FROM_TABLE = 160
+
+
 	var used_paths = []
 	for table_node in tables_nodes.get_children():
 		assert(table_node.is_in_group("Tables"))

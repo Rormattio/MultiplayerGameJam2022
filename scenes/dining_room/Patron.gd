@@ -64,6 +64,7 @@ func _process(delta):
 			if level_avatar.position == new_position:
 				set_state(State.WAITING_TO_ORDER)
 				set_state(State.ORDERING) # we directly switch to ORDERING so that the wished dish is already visible
+				set_state(State.WAITING_TO_EAT)
 				path_offset -= speed*delta
 			level_avatar.position = new_position
 		State.LEAVING:
@@ -105,6 +106,9 @@ func set_state(a_state):
 		print("Patron.set_state ", State.keys()[a_state])
 	match a_state:
 		State.ENTERING:
+			pass
+
+		State.WAITING_TO_ORDER:
 			pass
 
 		State.ORDERING:
@@ -150,7 +154,7 @@ func _on_EatTimer_timeout():
 	assert(wanted_dish != null)
 	assert(received_dish != null)
 	dish_score_value = compute_dish_score(wanted_dish, received_dish.dish)
-	Global.patron_send_dish_score(received_dish.dish, dish_score_value, received_dish.order.serialize())
+	Global.patron_send_dish_score(received_dish.dish.serialize(), dish_score_value, received_dish.order.serialize())
 
 	command_avatar.rotation = 0
 	received_dish.queue_free()
