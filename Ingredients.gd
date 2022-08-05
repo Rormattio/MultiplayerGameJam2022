@@ -74,6 +74,12 @@ var ingredient_descs = [
 	IngredientDesc.new("bread_top_grey", ["top_burger"],
 		["bread", "grey", "top", "burger"], [],
 		Sfx.FFFT),
+	IngredientDesc.new("brochette_eyes", ["main"],
+		["eyeballs", "skewer", "white"], [], 
+		Sfx.POP),
+	IngredientDesc.new("brochette_eyes_pink", ["main"],
+		["eyeballs", "skewer", "pink"], [], 
+		Sfx.POP),
 	IngredientDesc.new("crab", ["mid_burger", "main"],
 		["creature", "claws", "red"], [],
 		null),
@@ -90,7 +96,10 @@ var ingredient_descs = [
 		["flag", "yellow", "happy"], [],
 		null),
 	IngredientDesc.new("ghosts", ["main"],
-		["creature", "skewer"], [],
+		["ghost", "skewer"], [],
+		Sfx.WHOOO),
+	IngredientDesc.new("ghost_robot", ["main"],
+		["ghost", "mechanical"], [],
 		Sfx.WHOOO),
 	IngredientDesc.new("puree_grumpy", ["bottom"],
 		["puree", "grumpy"], [],
@@ -188,6 +197,7 @@ const plain_keywords_synonyms = {
 	"burger"   : ["sandwich"],
 	"space"    : ["cosmic"],
 	"creature" : ["meat"],
+	"ghost"    : ["ectoplasm"],
 	"squid"    : ["tentacle"],
 	"bottom"   : ["low"],
 	"top"      : ["high"],
@@ -202,7 +212,7 @@ const obscure_keywords_synonyms = {
 	"green"    : ["viridescent"],
 	"creature" : ["organism"],
 	"squid"    : ["pseudopod"],
-	"ghosts"   : ["blinky", "pinky", "inky", "clyde"]
+	"ghost"   : ["blinky", "pinky", "inky", "clyde"]
 }
 var ingredient_names = []
 
