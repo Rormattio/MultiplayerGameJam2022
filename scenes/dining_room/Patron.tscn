@@ -1,18 +1,12 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/dining_room/Patron.gd" type="Script" id=1]
+[ext_resource path="res://assets/misc/wish-bg.png" type="Texture" id=2]
 [ext_resource path="res://assets/food/black_forest_hole.png" type="Texture" id=3]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
 [ext_resource path="res://scenes/dining_room/PatronAvatarCommand.gd" type="Script" id=5]
 [ext_resource path="res://scenes/dining_room/PatronAvatarLevel.gd" type="Script" id=6]
 [ext_resource path="res://assets/misc/green_hint.png" type="Texture" id=7]
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.803922, 0.803922, 0.768627, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 30
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.780392, 0.784314, 0.415686, 1 )
@@ -46,14 +40,12 @@ script = ExtResource( 5 )
 position = Vector2( 0, -8 )
 scale = Vector2( 3, 3 )
 
-[node name="Background" type="Panel" parent="CommandAvatar/DishWish"]
-margin_top = -48.0
-margin_right = 32.0
-margin_bottom = -16.0
-custom_styles/panel = SubResource( 4 )
+[node name="Background" type="Sprite" parent="CommandAvatar/DishWish"]
+position = Vector2( 38.6667, -42.6667 )
+texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="CommandAvatar/DishWish"]
-position = Vector2( 16, -32 )
+position = Vector2( 38.6667, -42.6667 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 
