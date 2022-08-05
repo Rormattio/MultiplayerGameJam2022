@@ -139,8 +139,12 @@ func randomize():
 		meal_type = _randomize_dish_meal_type();
 		if meal_type == MealType.BURGER:
 			_randomize_burger()
-		elif meal_type == MealType.SOUP and false:
-			_randomize_soup()
+		elif meal_type == MealType.SOUP:
+			if false:
+				_randomize_soup()
+			else:
+				meal_type = MealType.NON_BURGER
+				_randomize_non_burger()
 		else:
 			assert(meal_type == MealType.NON_BURGER)
 			_randomize_non_burger()
