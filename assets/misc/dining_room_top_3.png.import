@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grass.png-a207bda4a53e32c7645a41ec6d1c234e.stex"
+path="res://.import/dining_room_top_3.png-01d1cde06453ec3e97775270cffbddc7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/grass.png"
-dest_files=[ "res://.import/grass.png-a207bda4a53e32c7645a41ec6d1c234e.stex" ]
+source_file="res://assets/misc/dining_room_top_3.png"
+dest_files=[ "res://.import/dining_room_top_3.png-01d1cde06453ec3e97775270cffbddc7.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true
