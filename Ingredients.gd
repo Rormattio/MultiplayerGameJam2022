@@ -291,6 +291,14 @@ func is_top_burger_ingredient(name):
 	assert(is_ingredient(name))
 	return top_burger_ingredients.has(name)
 
+func is_soup_base_ingredient(name):
+	assert(is_ingredient(name))
+	return base_soup_ingredients.has(name)
+
+func is_soup_top_ingredient(name):
+	assert(is_ingredient(name))
+	return top_soup_ingredients.has(name)
+
 func _check_ingredient_metadata():
 	var ingredient_count = get_ingredient_count()
 	for i in range(ingredient_count):
