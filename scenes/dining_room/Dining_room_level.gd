@@ -44,14 +44,14 @@ func _ready():
 				used_paths.append(path_follow)
 				break
 		assert(found)
-	
+
 	tray.waiter = waiter
 	tray.dining_room_level = self
 
 	spawn_patron()
-	
+
 	audio_sfx.play_ambience()
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -71,7 +71,7 @@ func spawn_patron():
 	next_patron_index += 1
 	patrons.add_child(patron_dummy)
 	table.patrons_around.append(patron_dummy)
-	
+
 	patron_dummy.command_avatar.connect("patron_avatar_command_clicked", self, "_on_patron_avatar_command_clicked")
 	patron_dummy.level_avatar.connect("patron_avatar_level_clicked", self, "_on_patron_avatar_level_clicked")
 	patron_dummy.level_avatar.position.x = 546
@@ -83,7 +83,7 @@ func spawn_patron():
 	patron_dummy.command_avatar.position.x = 960
 	patron_dummy.command_avatar.position.y = 250
 	patron_dummy.path_to_follow = table.path_from_entrance
-	
+
 	patron_dummy.init()
 	_refresh_layout_visible()
 
@@ -109,12 +109,13 @@ func _set_layout_visible(set_visible):
 	for table in tables:
 		patron_command_visible = false
 		if (not set_visible):
-			if (table.position.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE):
+			assert(dining_room.patrons.size() > 0)
+			if dining_room.patrons[0] in table.patrons_around:
 				patron_command_visible = true
 		table.taking_commands = patron_command_visible
 	for patron in patrons.get_children():
 		patron.set_avatars_visible(patron_level_visible)
-	
+
 func _on_patron_avatar_level_clicked(patron):
 	assert(dining_room.state == dining_room.State.NOT_VISIBLE)
 	if (patron.sitting_at_table.position.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE):
