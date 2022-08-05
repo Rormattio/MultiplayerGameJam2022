@@ -20,8 +20,8 @@ radius = 5.66666
 height = 16.6667
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 5.0
-height = 16.0
+radius = 16.0
+height = 14.0
 
 [node name="Patron" type="Node"]
 script = ExtResource( 1 )
@@ -99,7 +99,6 @@ input_pickable = true
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelAvatar"]
-position = Vector2( 0, -1 )
 shape = SubResource( 3 )
 
 [connection signal="input_event" from="CommandAvatar" to="CommandAvatar" method="_on_CommandAvatar_input_event"]
