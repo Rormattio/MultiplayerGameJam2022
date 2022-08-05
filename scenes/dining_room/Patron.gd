@@ -3,7 +3,9 @@ extends Node
 const Dish = preload("res://Dish.gd")
 const DishRenderer = preload("res://DishRenderer.gd")
 const ReceivedDish = preload("ReceivedDish.gd")
-
+const red_hint_sprite = preload("res://assets/misc/red_hint.png")
+const green_hint_sprite = preload("res://assets/misc/green_hint.png")
+const orange_hint_sprite = preload("res://assets/misc/orange_hint.png")
 
 signal patron_leaves(patron)
 
@@ -28,13 +30,14 @@ var patron_index
 var speed = 200
 var state
 var wanted_dish # Repr
-var dish_score_value
 var destination
 var level_avatar_is_visible
 var command_avatar_is_visible
 var sitting_at_table
 var path_to_follow
 var path_offset = 0.0
+var dish_score_value
+var ingredient_diffs
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -139,11 +142,23 @@ func compute_dish_score(wanted_dish : Dish, dish : Dish):
 	assert(dish != null)
 	var diffs = Dish.compute_difference(wanted_dish, dish)
 	var score = diffs[0] + diffs[1] + diffs[2] + diffs[3]
-	return score
+	return [score, diffs]
 
 func show_dish_score():
 	dish_score.get_node("Label").text = str(dish_score_value)
 	dish_score.show()
+	show_wanted_dish()
+	for idx in range(4):
+		var sprite = dish_score.get_node("Feedbacks/feedback_" + str(idx))
+		match ingredient_diffs[idx]:
+			0:
+				sprite.texture = red_hint_sprite
+			1:
+				sprite.texture = orange_hint_sprite
+			2:
+				sprite.texture = green_hint_sprite
+			_:
+				assert(false)
 
 func hide_dish_score():
 	dish_score.hide()
@@ -153,7 +168,9 @@ func _on_EatTimer_timeout():
 
 	assert(wanted_dish != null)
 	assert(received_dish != null)
-	dish_score_value = compute_dish_score(wanted_dish, received_dish.dish)
+	var res = compute_dish_score(wanted_dish, received_dish.dish)
+	dish_score_value = res[0]
+	ingredient_diffs = res[1]
 	Global.patron_send_dish_score(received_dish.dish.serialize(), dish_score_value, received_dish.order.serialize())
 
 	command_avatar.rotation = 0
