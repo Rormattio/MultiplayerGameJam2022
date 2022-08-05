@@ -4,9 +4,10 @@ const Dish = preload("Dish.gd")
 
 static func _load_food_texture(ingredient):
 	assert(ingredient != "")
-	var result = load("res://assets/food/" + ingredient + ".png")
-	assert(result != null)
-	return result
+	var desc = Ingredients.get_ingredient_desc(ingredient)
+	assert(desc != null)
+	assert(desc.png)
+	return desc.png
 
 static func _add_sprite(root, ingredient, z_index):
 	assert(root != null)
