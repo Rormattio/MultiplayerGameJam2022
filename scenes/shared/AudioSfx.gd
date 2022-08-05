@@ -1,6 +1,7 @@
 extends Node
 
 var available_host_fs_musics = []
+var ambiance_players = []
 
 func play_host_music(path):
 	$bg_music_player.stop()
@@ -19,7 +20,7 @@ func play_host_music(path):
 			$bg_music_player.stream = mp3
 		file.close()
 		$bg_music_player.play()
-		$bg_music_player.volume_db = -10
+		$bg_music_player.volume_db = - 20
 	
 func toggle_music():
 	if $bg_music_player.playing:
@@ -30,7 +31,18 @@ func toggle_music():
 func _ready():
 	##play_host_music("D:/perso/zik/OI! - PUNK - HXC - METAL/BULLDOZER - Bulldozer/06 - Il était une tranche de foie dans l'ouest.ogg")
 	##play_host_music("D:/perso/zik/PSYCHO - ROCKAB - SWING/QUAKES - Psyops/06 beer & cigarettes.mp3")
-	pass
+	var ambiance_tracks = [
+		"res://assets/sfx/ambiance/bruits_de_cuisine.wav"
+	]
+	for idx in range(4):
+		ambiance_tracks.push_back("res://assets/sfx/ambiance/ambiance" + str(idx) + ".wav")
+		
+	for track in ambiance_tracks:
+		var node = AudioStreamPlayer.new()
+		var stream = load(track)
+		node.stream = stream
+		add_child(node)
+		ambiance_players.append(node)
 
 func play(sfx):
 	match sfx:
@@ -55,3 +67,14 @@ func play(sfx):
 			$shhoo.pitch_scale = rand_range(0.9, 1.1)
 			$schboing.play()
 		_: assert(false)
+
+func play_ambience():
+	for player in ambiance_players:
+		player.play()
+		player.volume_db = - 20
+		player.connect("finished", self, "_on_sound_finished")
+
+func _on_sound_finished():
+	for player in ambiance_players:
+		if not player.playing:
+			player.play()

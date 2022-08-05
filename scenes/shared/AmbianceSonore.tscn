@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+const AudioSfx = preload(\"res://scenes/shared/AudioSfx.tscn\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[node name="Node" type="Node"]
+script = SubResource( 1 )

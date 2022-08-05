@@ -15,6 +15,7 @@ onready var dish_front = $Dish/DishFront # z index 2
 onready var current_container_type = Dish.ContainerType.PLATE
 
 onready var commands_container = $CommandsContainer
+onready var audio_sfx = $AudioSfx
 
 var cheffe
 
@@ -63,6 +64,8 @@ func _ready():
 		ingredient_stock.get_node("Sprite").set_texture(ingredient_sprite)
 
 	_refresh_stock()
+	
+	audio_sfx.play_ambience()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
