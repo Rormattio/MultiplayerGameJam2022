@@ -16,6 +16,7 @@ onready var command_avatar = $CommandAvatar
 onready var level_avatar = $LevelAvatar
 
 enum State {
+	ENTERING_BEHIND_WINDOW,
 	ENTERING,
 	WAITING_TO_ORDER,
 	ORDERING, # state in zoomed-in view
@@ -72,9 +73,9 @@ func _ready():
 	$EatTimer.connect("timeout", self, "_on_EatTimer_timeout")
 
 func init():
-	set_state(State.ENTERING)
+	set_state(State.ENTERING_BEHIND_WINDOW)
 	refresh_avatars_visible()
-	
+
 	var sprite_idx = patron_index % len(PATRON_SPRITE_NAMES)
 	var patron_sprite_name = PATRON_SPRITE_NAMES[sprite_idx]
 	var animated_sprite
@@ -101,8 +102,13 @@ func init():
 			animated_sprite.frames.add_frame(animation_name, sprite)
 		animated_sprite.play("walk")
 
-func _process(delta):
+func _physics_process(delta):
 	match state:
+		State.ENTERING_BEHIND_WINDOW:
+			level_avatar.position.x += 2
+			if level_avatar.position.x == 550:
+				set_state(State.ENTERING)
+
 		State.ENTERING:
 			path_offset += speed*delta
 			path_to_follow.set_offset(path_offset)
@@ -151,7 +157,13 @@ func set_state(a_state):
 	else:
 		print("Patron.set_state ", State.keys()[a_state])
 	match a_state:
+		State.ENTERING_BEHIND_WINDOW:
+			level_avatar.z_index = -1
+			level_avatar.modulate = Color("#1a2b3b")
+
 		State.ENTERING:
+			level_avatar.z_index = 0
+			level_avatar.modulate = Color("#ffffff")
 			pass
 
 		State.WAITING_TO_ORDER:
