@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/kitchen/IngredientStock.gd" type="Script" id=1]
+[ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=2]
 
 [node name="IngredientStock" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,13 +15,18 @@ margin_top = -32.0
 margin_right = 32.0
 margin_bottom = 32.0
 
-[node name="Clues" type="RichTextLabel" parent="."]
+[node name="Overlay" type="Node2D" parent="."]
 visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-input_pass_on_modal_close_click = false
+z_index = 1
 
-[connection signal="focus_entered" from="Button" to="." method="_on_Button_focus_entered"]
-[connection signal="focus_exited" from="Button" to="." method="_on_Button_focus_exited"]
+[node name="Clues" type="RichTextLabel" parent="Overlay"]
+margin_right = 800.0
+margin_bottom = 800.0
+input_pass_on_modal_close_click = false
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode_enabled = true
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_Button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_Button_mouse_exited"]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="toggled" from="Button" to="." method="_on_Button_toggled"]

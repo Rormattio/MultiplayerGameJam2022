@@ -5,7 +5,7 @@ const Order = preload("res://scenes/shared/Order.gd")
 
 var received_dish_scene = preload("res://scenes/dining_room/ReceivedDish.tscn")
 
-var DISTANCE_TO_GRAB_DISH = 80
+var DISTANCE_TO_GRAB_DISH
 var DISHES_DY = 65
 
 var dishes = []
@@ -16,6 +16,11 @@ func _ready():
 	Global.connect("cheffe_dish_sent", self, "_on_CheffeDish_Sent")
 	Global.connect("cheffe_dish_trashed", self, "_on_CheffeDish_Trashed")
 	
+	if Global.DEBUG:
+		DISTANCE_TO_GRAB_DISH = 2000
+	else:
+		DISTANCE_TO_GRAB_DISH = 80
+
 	dishes = []
 
 func add_dish(dish : Array, dish_index: int, order_serialized):
