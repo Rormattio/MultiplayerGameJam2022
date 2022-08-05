@@ -311,6 +311,9 @@ func _set_dish(new_dish : Dish):
 		_on_ingredient_dish_set(new_dish.burger_component_mid_burger)
 		_on_ingredient_dish_set(new_dish.burger_component_top_burger)
 		_on_ingredient_dish_set(new_dish.burger_component_top)
+	elif (new_dish.meal_type == Dish.MealType.SOUP):
+		_on_ingredient_dish_set(new_dish.soup_base)
+		_on_ingredient_dish_set(new_dish.soup_top)
 	else:
 		assert(new_dish.meal_type == Dish.MealType.NON_BURGER)
 		_on_ingredient_dish_set(new_dish.non_burger_component_bottom)

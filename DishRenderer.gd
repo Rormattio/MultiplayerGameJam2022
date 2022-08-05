@@ -71,6 +71,11 @@ static func render_ingredients(dish : Dish) -> Node2D:
 			ingredients.append(dish.burger_component_top_burger)
 		if dish.burger_component_top != "":
 			ingredients.append(dish.burger_component_top)
+	elif dish.meal_type == Dish.MealType.SOUP:
+		if dish.soup_component_base != "":
+			ingredients.append(dish.soup_component_base)
+		if dish.soup_component_top != "":
+			ingredients.append(dish.soup_component_top)
 	else:
 		if dish.non_burger_component_bottom != "":
 			ingredients.append(dish.non_burger_component_bottom)
