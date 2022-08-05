@@ -19,6 +19,13 @@ func play_host_music(path):
 			$bg_music_player.stream = mp3
 		file.close()
 		$bg_music_player.play()
+		$bg_music_player.volume_db = -10
+	
+func toggle_music():
+	if $bg_music_player.playing:
+		$bg_music_player.stop()
+	else:
+		play_host_music("./assets/musics/Derp_Nugget.mp3")
 	
 func _ready():
 	##play_host_music("D:/perso/zik/OI! - PUNK - HXC - METAL/BULLDOZER - Bulldozer/06 - Il était une tranche de foie dans l'ouest.ogg")
