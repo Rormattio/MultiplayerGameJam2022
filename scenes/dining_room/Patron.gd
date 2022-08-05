@@ -26,6 +26,23 @@ enum State {
 	DELETE,
 }
 
+var PATRON_SPRITE_NAMES = [
+	"frog",
+	"duck",
+	"auronron",
+	"bertmo",
+	"fmdkdd",
+	"fromage_chaud",
+]
+var PATRON_HAS_ANIM = {
+	"frog": true,
+	"duck": true,
+	"auronron": false,
+	"bertmo": false,
+	"fmdkdd": false,
+	"fromage_chaud": false,
+}
+
 var patron_index
 var speed = 200
 var state
@@ -57,6 +74,32 @@ func _ready():
 func init():
 	set_state(State.ENTERING)
 	refresh_avatars_visible()
+	
+	var sprite_idx = patron_index % len(PATRON_SPRITE_NAMES)
+	var patron_sprite_name = PATRON_SPRITE_NAMES[sprite_idx]
+	var animated_sprite
+	var animation_name = "walk"
+	var avatars = [level_avatar, command_avatar]
+	for avatar_idx in range(len(avatars)):
+		var avatar = avatars[avatar_idx]
+		animated_sprite = AnimatedSprite.new()
+		if avatar_idx == 1:
+			animated_sprite.scale.x = 3
+			animated_sprite.scale.y = 3
+		avatar.add_child(animated_sprite)
+		animated_sprite.frames = SpriteFrames.new()
+		animated_sprite.frames.clear_all()
+		animated_sprite.frames.add_animation(animation_name)
+		var animation_size
+		if PATRON_HAS_ANIM[patron_sprite_name]:
+			animation_size = 4
+		else:
+			animation_size = 1
+		for frame_idx in range(animation_size):
+			var sprite = load("res://assets/misc/" + patron_sprite_name + str(frame_idx) + ".png")
+			assert(sprite != null)
+			animated_sprite.frames.add_frame(animation_name, sprite)
+		animated_sprite.play("walk")
 
 func _process(delta):
 	match state:

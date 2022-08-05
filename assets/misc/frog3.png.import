@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frog3.png-001b841ccf864f8b82384a72ac066a85.stex"
+path="res://.import/frog3.png-ee24a01ef7f8e1d7e99bb21402b7f89d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/frog3.png"
-dest_files=[ "res://.import/frog3.png-001b841ccf864f8b82384a72ac066a85.stex" ]
+source_file="res://assets/misc/frog3.png"
+dest_files=[ "res://.import/frog3.png-ee24a01ef7f8e1d7e99bb21402b7f89d.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

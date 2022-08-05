@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frog0.png-51cc05cd12fc29adf8f5028aeb07d856.stex"
+path="res://.import/fromage_chaud0.png-dcde1ebaaabb9a1c7521a90cc9986976.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/frog0.png"
-dest_files=[ "res://.import/frog0.png-51cc05cd12fc29adf8f5028aeb07d856.stex" ]
+source_file="res://assets/misc/fromage_chaud0.png"
+dest_files=[ "res://.import/fromage_chaud0.png-dcde1ebaaabb9a1c7521a90cc9986976.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=false
+flags/mipmaps=true
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/dining_room/Patron.gd" type="Script" id=1]
-[ext_resource path="res://assets/dummy/client.png" type="Texture" id=2]
 [ext_resource path="res://assets/food/black_forest_hole.png" type="Texture" id=3]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
 [ext_resource path="res://scenes/dining_room/PatronAvatarCommand.gd" type="Script" id=5]
@@ -21,14 +20,6 @@ corner_radius_top_left = 20
 corner_radius_top_right = 10
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 5
-
-[sub_resource type="SpriteFrames" id=2]
-animations = [ {
-"frames": [ ExtResource( 2 ) ],
-"loop": true,
-"name": "walk",
-"speed": 5.0
-} ]
 
 [sub_resource type="CapsuleShape2D" id=6]
 radius = 5.66666
@@ -107,13 +98,6 @@ texture = ExtResource( 7 )
 [node name="DishPosition" type="Node2D" parent="CommandAvatar"]
 position = Vector2( 0, 8 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="CommandAvatar"]
-pause_mode = 1
-scale = Vector2( 3, 3 )
-frames = SubResource( 2 )
-animation = "walk"
-speed_scale = 2.0
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CommandAvatar"]
 position = Vector2( 0.333332, 0 )
 shape = SubResource( 6 )
@@ -121,12 +105,6 @@ shape = SubResource( 6 )
 [node name="LevelAvatar" type="KinematicBody2D" parent="."]
 input_pickable = true
 script = ExtResource( 6 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="LevelAvatar"]
-pause_mode = 1
-frames = SubResource( 2 )
-animation = "walk"
-speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelAvatar"]
 position = Vector2( 0, -1 )
