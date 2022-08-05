@@ -18,6 +18,8 @@ class IngredientDesc:
 	var plain_keywords_fr
 	var obscure_keywords_fr
 	var sfx
+	
+	var png
 
 	func has_tag(tag):
 		return tags.has(tag)
@@ -224,6 +226,11 @@ func _ready():
 	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
 	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
 
+	for desc in ingredient_descs:
+		var png_name = "res://assets/food/" + desc.name + ".png"
+		desc.png = load(png_name)
+		assert(desc.png != null)
+		
 func get_ingredient_count():
 	return ingredient_descs.size()
 
