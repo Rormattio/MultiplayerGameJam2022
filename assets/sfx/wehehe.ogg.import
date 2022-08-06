@@ -11,5 +11,5 @@ dest_files=[ "res://.import/wehehe.ogg-b6d1f5765acfcc3923e0d0559ccf8c2f.oggstr" 
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
