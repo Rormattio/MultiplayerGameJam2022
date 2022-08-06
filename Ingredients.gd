@@ -131,7 +131,7 @@ var ingredient_descs = [
 		["planet", "blue", "round", "space", "water"], [],
 		Sfx.POP),
 	IngredientDesc.new("planet_eight", ["mid_burger", "main"],
-		["planet", "black", "round", "space"], [],
+		["planet", "black", "round", "space", "eight"], [],
 		Sfx.POP),
 	IngredientDesc.new("planet_jupiter", ["mid_burger", "main"],
 		["planet", "orange", "round", "space", "giant", "gas"], [],
