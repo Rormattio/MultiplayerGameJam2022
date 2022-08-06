@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/misc/game_title.png" type="Texture" id=4]
+[ext_resource path="res://assets/misc/peep.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -16,7 +17,7 @@
 [node name="Network_setup" type="Node" parent="."]
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Network_setup"]
+[node name="TitleSprite" type="Sprite" parent="Network_setup"]
 position = Vector2( 649, 368 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 4 )
@@ -28,9 +29,9 @@ anchor_bottom = 1.0
 [node name="Create_server" type="Button" parent="Network_setup/Multiplayer_configure"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -540.0
+margin_left = -576.0
 margin_top = 382.0
-margin_right = -140.0
+margin_right = -176.0
 margin_bottom = 472.0
 rect_pivot_offset = Vector2( 46, 213 )
 custom_fonts/font = ExtResource( 2 )
@@ -52,9 +53,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 134.0
+margin_left = 176.0
 margin_top = 22.0
-margin_right = 494.0
+margin_right = 536.0
 margin_bottom = 112.0
 custom_fonts/font = ExtResource( 2 )
 text = "Join game"
@@ -64,9 +65,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 156.0
+margin_left = 200.0
 margin_top = 131.0
-margin_right = 476.0
+margin_right = 520.0
 margin_bottom = 183.0
 align = 1
 placeholder_text = "server address"
@@ -75,10 +76,10 @@ placeholder_text = "server address"
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 218.0
-margin_top = -520.0
-margin_right = -841.0
-margin_bottom = -478.0
+margin_left = 1016.0
+margin_top = -144.0
+margin_right = -43.0
+margin_bottom = -102.0
 custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/read_only = SubResource( 1 )
@@ -87,29 +88,21 @@ custom_styles/normal = SubResource( 3 )
 text = "192.12.12.12"
 editable = false
 
-[node name="or" type="Label" parent="Network_setup/Multiplayer_configure"]
-margin_left = 595.0
-margin_top = 411.0
-margin_right = 673.0
-margin_bottom = 495.0
-rect_pivot_offset = Vector2( -296, -48 )
-custom_fonts/font = ExtResource( 2 )
-text = "Or"
-
 [node name="local_ip_address_label" type="Label" parent="Network_setup/Multiplayer_configure"]
-margin_left = 48.0
-margin_top = 200.0
-margin_right = 210.0
-margin_bottom = 242.0
+margin_left = 848.0
+margin_top = 576.0
+margin_right = 1010.0
+margin_bottom = 618.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 3 )
 text = "Your local ip:"
 valign = 1
 
 [node name="external_ip_address_label" type="Label" parent="Network_setup/Multiplayer_configure"]
-margin_top = 248.0
-margin_right = 210.0
-margin_bottom = 290.0
+margin_left = 800.0
+margin_top = 608.0
+margin_right = 1010.0
+margin_bottom = 650.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 3 )
 text = "Your external ip:"
@@ -119,10 +112,10 @@ valign = 1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 218.0
-margin_top = -472.0
-margin_right = -832.0
-margin_bottom = -430.0
+margin_left = 1016.0
+margin_top = -112.0
+margin_right = -34.0
+margin_bottom = -70.0
 custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/read_only = SubResource( 1 )
@@ -132,12 +125,68 @@ text = "192.12.12.12"
 editable = false
 
 [node name="connection_status" type="Label" parent="Network_setup"]
-margin_left = 8.0
-margin_top = 688.0
-margin_right = 149.0
-margin_bottom = 709.0
+margin_left = 21.0
+margin_top = 682.0
+margin_right = 231.0
+margin_bottom = 703.0
 custom_fonts/font = ExtResource( 3 )
 text = "Player connected"
+
+[node name="Lobby" type="Control" parent="Network_setup"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ChooseCheffe" type="Button" parent="Network_setup/Lobby"]
+margin_left = 168.0
+margin_top = 200.0
+margin_right = 272.0
+margin_bottom = 240.0
+text = "Cheffe"
+
+[node name="ChooseWaiter" type="Button" parent="Network_setup/Lobby"]
+margin_left = 995.0
+margin_top = 217.0
+margin_right = 1099.0
+margin_bottom = 257.0
+text = "Waiter"
+
+[node name="MyRole" type="Sprite" parent="Network_setup/Lobby"]
+position = Vector2( 192, 288 )
+texture = ExtResource( 5 )
+
+[node name="TheirRole" type="Sprite" parent="Network_setup/Lobby"]
+position = Vector2( 231, 288 )
+texture = ExtResource( 5 )
+
+[node name="Cancel" type="Button" parent="Network_setup/Lobby"]
+margin_left = 96.0
+margin_top = 570.0
+margin_right = 309.0
+margin_bottom = 606.0
+text = "Go back to title"
+
+[node name="GameStartTimer" type="Timer" parent="Network_setup/Lobby"]
+one_shot = true
+
+[node name="FadeToBlack" type="ColorRect" parent="Network_setup/Lobby"]
+margin_right = 1280.0
+margin_bottom = 720.0
+color = Color( 0.12549, 0.113725, 0.113725, 0.72549 )
+
+[node name="CountdownLabel" type="Label" parent="Network_setup/Lobby"]
+margin_left = 344.0
+margin_top = 352.0
+margin_right = 944.0
+margin_bottom = 392.0
+custom_fonts/font = ExtResource( 2 )
+text = "Game starting in 3..2..1.."
+
+[node name="StartGame" type="Button" parent="Network_setup/Lobby"]
+margin_left = 930.0
+margin_top = 548.0
+margin_right = 1110.0
+margin_bottom = 609.0
+text = "Start game"
 
 [connection signal="pressed" from="Network_setup/Multiplayer_configure/Create_server" to="Network_setup" method="_on_Create_server_pressed"]
 [connection signal="pressed" from="Network_setup/Multiplayer_configure/create_server_and_client" to="Network_setup" method="_on_Create_server_and_client_pressed"]
