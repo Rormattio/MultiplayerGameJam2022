@@ -405,3 +405,7 @@ func toggle_history():
 
 func _on_ButtonHistory_button_up():
 	toggle_history()
+
+func _on_CloseHistory_button_up():
+	assert(state == State.SHOWING_HISTORY)
+	toggle_history()
