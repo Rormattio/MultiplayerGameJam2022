@@ -39,6 +39,12 @@ margin_top = -7.0
 margin_right = 1292.0
 margin_bottom = 99.0
 
+[node name="Control4" type="Control" parent="Background"]
+margin_left = 1148.0
+margin_top = -8.0
+margin_right = 1293.0
+margin_bottom = 787.0
+
 [node name="WordsBg" type="Sprite" parent="."]
 position = Vector2( 424, 248 )
 texture = ExtResource( 6 )
