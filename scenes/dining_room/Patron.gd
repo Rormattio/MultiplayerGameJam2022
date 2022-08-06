@@ -7,6 +7,7 @@ const ReceivedDish = preload("ReceivedDish.gd")
 signal patron_leaves(patron)
 signal patron_enters_room()
 signal patron_exits_room()
+signal patron_state_changed(patron)
 
 onready var dish_wish = $CommandAvatar/DishWish
 onready var dish_score = $CommandAvatar/DishScore
@@ -169,6 +170,7 @@ func set_state(a_state):
 		print("Patron.set_state ", State.keys()[state], " -> ", State.keys()[a_state])
 	else:
 		print("Patron.set_state ", State.keys()[a_state])
+	assert(state != a_state)
 	match a_state:
 		State.ENTERING_BEHIND_WINDOW:
 			level_avatar.z_index = -1
@@ -199,6 +201,7 @@ func set_state(a_state):
 			show_dish_score()
 
 		State.LEAVING:
+			hide_dish_score()
 			level_avatar.animated_sprite.play("walk")
 			emit_signal("patron_leaves", self)
 
@@ -212,6 +215,7 @@ func set_state(a_state):
 			queue_free()
 
 	state = a_state
+	emit_signal("patron_state_changed", self)
 	refresh_avatars_visible()
 
 func compute_dish_score(wanted_dish : Dish, dish : Dish):
