@@ -4,7 +4,7 @@ signal cheffe_dish_sent(dish, dish_idx, order_serialized)
 signal cheffe_dish_trashed(dish_index)
 signal waiter_command_sent(Order)
 signal waiter_dish_taken(dish_index)
-signal patron_dish_score_sent(dish_serialized, score, order_serialized)
+signal patron_dish_score_sent(dish_serialized, score, order_serialized, hints)
 
 var DEBUG = true
 
@@ -215,11 +215,11 @@ func waiter_takes_dish(dish_index : int):
 remote func on_waiter_dish(dish_index : int):
 	emit_signal("waiter_dish_taken", dish_index)
 
-func patron_send_dish_score(dish_serialized, score, order_serialized):
-	rpc("on_patron_dish_score_sent", dish_serialized, score, order_serialized)
+func patron_send_dish_score(dish_serialized, score, order_serialized, hints):
+	rpc("on_patron_dish_score_sent", dish_serialized, score, order_serialized, hints)
  
-remote func on_patron_dish_score_sent(dish_serialized, score, order_serialized):
-	emit_signal("patron_dish_score_sent", dish_serialized, score, order_serialized)
+remote func on_patron_dish_score_sent(dish_serialized, score, order_serialized, hints):
+	emit_signal("patron_dish_score_sent", dish_serialized, score, order_serialized, hints)
 
 func rand_array(array : Array):
 	return array[randi() % array.size()]

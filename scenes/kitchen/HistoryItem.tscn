@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://scenes/kitchen/Command.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/shared/DishScore.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/kitchen/HistoryItem.gd" type="Script" id=3]
 
 [node name="Node2D" type="Node2D"]
-
-[node name="Command" parent="." instance=ExtResource( 1 )]
+script = ExtResource( 3 )
 
 [node name="DishPos" type="Node2D" parent="."]
 position = Vector2( 180, 60 )
+
+[node name="DishScore" parent="." instance=ExtResource( 2 )]
+position = Vector2( 189, 178 )
+
+[node name="CommandPos" type="Node2D" parent="."]

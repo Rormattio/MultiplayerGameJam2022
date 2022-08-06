@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/misc/green_hint.png" type="Texture" id=2]
+[ext_resource path="res://scenes/shared/DishScore.gd" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.780392, 0.784314, 0.415686, 1 )
@@ -12,6 +13,7 @@ corner_radius_bottom_left = 5
 
 [node name="DishScore" type="Node2D"]
 position = Vector2( 0, -8 )
+script = ExtResource( 3 )
 
 [node name="Background" type="Panel" parent="."]
 margin_left = 78.0
