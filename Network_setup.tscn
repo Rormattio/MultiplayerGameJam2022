@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/misc/game_title.png" type="Texture" id=4]
+[ext_resource path="res://custom_theme.tres" type="Theme" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -33,6 +34,7 @@ margin_top = 382.0
 margin_right = -140.0
 margin_bottom = 472.0
 rect_pivot_offset = Vector2( 46, 213 )
+theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 2 )
 text = "Create game"
 
@@ -56,6 +58,7 @@ margin_left = 134.0
 margin_top = 22.0
 margin_right = 494.0
 margin_bottom = 112.0
+theme = ExtResource( 5 )
 custom_fonts/font = ExtResource( 2 )
 text = "Join game"
 
