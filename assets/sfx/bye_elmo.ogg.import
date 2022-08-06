@@ -11,5 +11,5 @@ dest_files=[ "res://.import/bye_elmo.ogg-9a7699c6a700a39df7b41950b6cff1e4.oggstr
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
