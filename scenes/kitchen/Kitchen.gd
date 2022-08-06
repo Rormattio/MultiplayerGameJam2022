@@ -41,7 +41,8 @@ var state = State.COOKING
 func _ready():
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
-
+	$History.visible = false
+	
 	if not Global.DEBUG:
 		$Randomize.queue_free()
 
