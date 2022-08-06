@@ -211,12 +211,13 @@ func _on_SendDish_Pressed(command):
 
 	var dish_idx = $Counter.add_dish_wherever(induced_dish)
 
-	_clear_dish()
-	_refresh_stock()
+	if dish_idx > -1:
+		_clear_dish()
+		_refresh_stock()
 
-	var serialized_dish = induced_dish.serialize()
-	Global.cheffe_send_dish(serialized_dish, dish_idx, command.order.serialize())
-	_on_close_command(command.name)
+		var serialized_dish = induced_dish.serialize()
+		Global.cheffe_send_dish(serialized_dish, dish_idx, command.order.serialize())
+		_on_close_command(command.name)
 
 func _on_ingredient_dish_set(ingredient_name):
 	var idx = dish_ingredients_n
