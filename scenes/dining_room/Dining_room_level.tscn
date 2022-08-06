@@ -12,7 +12,7 @@
 [ext_resource path="res://assets/misc/dining_room_top_3.png" type="Texture" id=10]
 [ext_resource path="res://assets/misc/dining_room_top_2.png" type="Texture" id=11]
 [ext_resource path="res://assets/misc/dining_room_door.png" type="Texture" id=12]
-[ext_resource path="res://scenes/shared/DishScore.tres" type="StyleBox" id=13]
+[ext_resource path="res://scenes/shared/TotalScore.tscn" type="PackedScene" id=13]
 
 [sub_resource type="SpriteFrames" id=14]
 animations = [ {
@@ -97,9 +97,6 @@ one_shot = true
 
 [node name="background1" type="AnimatedSprite" parent="."]
 frames = SubResource( 14 )
-
-frame = 1
-
 speed_scale = 0.8
 playing = true
 offset = Vector2( 640, 360 )
@@ -242,19 +239,8 @@ margin_top = 39.0
 margin_right = 252.0
 margin_bottom = 145.0
 
-[node name="Panel" type="Panel" parent="."]
-margin_left = 13.0
-margin_top = 684.0
-margin_right = 79.0
-margin_bottom = 725.0
-custom_styles/panel = ExtResource( 13 )
-
-[node name="Label" type="Label" parent="Panel"]
-margin_left = 12.0
-margin_top = 14.0
-margin_right = 52.0
-margin_bottom = 28.0
-text = "0$"
+[node name="Score" parent="." instance=ExtResource( 13 )]
+position = Vector2( 20, 647 )
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="button_up" from="Jukebox" to="." method="_on_Jukebox_button_up"]

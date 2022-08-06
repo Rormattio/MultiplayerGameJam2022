@@ -256,7 +256,8 @@ func _on_EatTimer_timeout():
 	dish_score_value = res[0]
 	ingredient_diffs = res[1]
 	Global.patron_send_dish_score(received_dish.dish.serialize(), dish_score_value, received_dish.order.serialize(), ingredient_diffs)
-
+	Global.send_score(dish_score)
+	
 	command_avatar.rotation = 0
 	received_dish.queue_free()
 	set_state(State.SHOW_DISH_SCORE)
