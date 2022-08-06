@@ -57,7 +57,7 @@ static func render_dish(dish : Dish) -> Node2D:
 
 	return root
 	
-static func render_ingredients(dish : Dish) -> Node2D:
+static func render_ingredients(dish : Dish, spacing : int) -> Node2D:
 	assert(dish != null)
 	var root = Node2D.new()
 	
@@ -84,6 +84,8 @@ static func render_ingredients(dish : Dish) -> Node2D:
 		if dish.non_burger_component_top != "":
 			ingredients.append(dish.non_burger_component_top)
 	
+	assert(not ingredients.empty())
+	
 	var current_pos = Vector2(0, 0)
 	for ingredient in ingredients:
 		var desc = Ingredients.get_ingredient_desc(ingredient)
@@ -91,7 +93,7 @@ static func render_ingredients(dish : Dish) -> Node2D:
 		sprite.z_index = 1
 		sprite.texture = _load_food_texture(ingredient)
 		sprite.position = current_pos
-		current_pos.x += 80
+		current_pos.x += spacing
 		root.add_child(sprite)
 
 	return root

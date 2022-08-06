@@ -299,8 +299,13 @@ func generate_dish() -> Dish:
 	random_dish.debug_print()
 	var random_dish_node = DishRenderer.render_dish(random_dish)
 	random_dish_node.scale = Vector2(2, 2)
-	# TODO remove childs
+	# TODO remove childs if necessary
 	assert(dish_wish.get_node("Sprite").get_child_count() == 0)
 	dish_wish.get_node("Sprite").add_child(random_dish_node)
+	
+	var ingredients_node = DishRenderer.render_ingredients(random_dish, 72)
+	#ingredients_node.scale = Vector2(2, 2)
+	assert(dish_wish.get_node("Ingredients").get_child_count() == 0)
+	dish_wish.get_node("Ingredients").add_child(ingredients_node)
 
 	return random_dish
