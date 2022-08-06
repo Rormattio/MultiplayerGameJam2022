@@ -191,36 +191,86 @@ func _on_ChooseCheffe_pressed():
 	chosen_role = PlayerRole.CHEFFE
 	Global.lobby_send_role(chosen_role)
 
-	$Lobby/MyRole.position.x = 190
+	$Lobby/MyRole.rect_position.x = 312
 	$Lobby/MyRole.show()
 
-	check_if_game_can_start()
+	update_role_feedback()
 
 func _on_ChooseWaiter_pressed():
 	chosen_role = PlayerRole.WAITER
 	Global.lobby_send_role(chosen_role)
 
-	$Lobby/MyRole.position.x = 1000
+	$Lobby/MyRole.rect_position.x = 864
 	$Lobby/MyRole.show()
 
-	check_if_game_can_start()
+	update_role_feedback()
 
 func _on_LobbyRole_sent(role):
 	other_role = role
 
 	match role:
 		PlayerRole.CHEFFE:
-			$Lobby/TheirRole.position.x = 190 + 40
+			$Lobby/TheirRole.rect_position.x = 312
 		PlayerRole.WAITER:
-			$Lobby/TheirRole.position.x = 1000 + 40
+			$Lobby/TheirRole.rect_position.x = 864
 		_: assert(false)
 
 	$Lobby/TheirRole.show()
 
-	check_if_game_can_start()
+	update_role_feedback()
 
 func _on_LobbyCancel_pressed():
 	exit_lobby()
+
+const ROLE_MISMATCH_COLOR = Color("#ff0000")
+const ROLE_OK_COLOR = Color("#00ff00")
+const ROLE_UNASSIGNED_COLOR = Color("#393935")
+
+func update_role_feedback():
+	match [chosen_role, other_role]:
+		[PlayerRole.CHEFFE, PlayerRole.CHEFFE]:
+			$Lobby/CheffeDescBgBorder.color = ROLE_MISMATCH_COLOR
+			$Lobby/MyRole.add_color_override("font_color", ROLE_MISMATCH_COLOR)
+			$Lobby/TheirRole.add_color_override("font_color", ROLE_MISMATCH_COLOR)
+			$Lobby/WaiterDescBgBorder.color = ROLE_UNASSIGNED_COLOR
+
+		[PlayerRole.WAITER, PlayerRole.WAITER]:
+			$Lobby/WaiterDescBgBorder.color = ROLE_MISMATCH_COLOR
+			$Lobby/MyRole.add_color_override("font_color", ROLE_MISMATCH_COLOR)
+			$Lobby/TheirRole.add_color_override("font_color", ROLE_MISMATCH_COLOR)
+			$Lobby/CheffeDescBgBorder.color = ROLE_UNASSIGNED_COLOR
+
+		[PlayerRole.CHEFFE, PlayerRole.WAITER]:
+			$Lobby/CheffeDescBgBorder.color = ROLE_OK_COLOR
+			$Lobby/MyRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/TheirRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/WaiterDescBgBorder.color = ROLE_OK_COLOR
+
+		[PlayerRole.WAITER, PlayerRole.CHEFFE]:
+			$Lobby/CheffeDescBgBorder.color = ROLE_OK_COLOR
+			$Lobby/MyRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/TheirRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/WaiterDescBgBorder.color = ROLE_OK_COLOR
+
+		[PlayerRole.CHEFFE, null]:
+			$Lobby/CheffeDescBgBorder.color = ROLE_OK_COLOR
+			$Lobby/MyRole.add_color_override("font_color", ROLE_OK_COLOR)
+
+		[PlayerRole.WAITER, null]:
+			$Lobby/WaiterDescBgBorder.color = ROLE_OK_COLOR
+			$Lobby/MyRole.add_color_override("font_color", ROLE_OK_COLOR)
+
+		[null, PlayerRole.CHEFFE]:
+			$Lobby/CheffeDescBgBorder.color = ROLE_OK_COLOR
+			$Lobby/TheirRole.add_color_override("font_color", ROLE_OK_COLOR)
+
+		[null, PlayerRole.WAITER]:
+			$Lobby/WaiterDescBgBorder.color = ROLE_OK_COLOR
+			$Lobby/TheirRole.add_color_override("font_color", ROLE_OK_COLOR)
+
+		[null, null]: assert(false)
+
+	check_if_game_can_start()
 
 func check_if_game_can_start():
 	var can_start = (chosen_role != null and other_role != null and chosen_role != other_role)
