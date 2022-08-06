@@ -165,6 +165,7 @@ margin_left = 96.0
 margin_top = 570.0
 margin_right = 309.0
 margin_bottom = 606.0
+theme = ExtResource( 6 )
 text = "Go back to title"
 
 [node name="GameStartTimer" type="Timer" parent="Network_setup/Lobby"]
@@ -200,6 +201,7 @@ margin_bottom = 703.0
 text = "Player connected"
 
 [node name="DisconnectedPopup" type="Control" parent="Network_setup"]
+visible = false
 margin_left = 480.0
 margin_top = 256.0
 margin_right = 768.0
