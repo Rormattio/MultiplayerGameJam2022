@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=6 format=2]
+[gd_resource type="Theme" load_steps=8 format=2]
 
 [sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.435294, 0.392157, 0.247059, 1 )
@@ -40,6 +40,12 @@ border_color = Color( 0.682353, 0.607843, 0.211765, 1 )
 corner_detail = 1
 anti_aliasing = false
 
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0.894118, 0.776471, 0.145098, 1 )
+corner_detail = 1
+
 [resource]
 Button/colors/font_color = Color( 0.203922, 0.192157, 0.14902, 1 )
 Button/colors/font_color_disabled = Color( 0.25098, 0.239216, 0.2, 1 )
@@ -51,3 +57,6 @@ Button/styles/focus = SubResource( 13 )
 Button/styles/hover = SubResource( 11 )
 Button/styles/normal = SubResource( 9 )
 Button/styles/pressed = SubResource( 12 )
+LineEdit/colors/font_color = Color( 0.215686, 0.203922, 0.14902, 1 )
+LineEdit/styles/focus = SubResource( 16 )
+LineEdit/styles/normal = SubResource( 15 )
