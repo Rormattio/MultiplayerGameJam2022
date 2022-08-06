@@ -15,8 +15,8 @@ onready var audio_sfx = $AudioSfx
 
 var TRIGGER_COMMAND_AT_X_FROM_TABLE
 
-var next_patron_index = 0
 var tables = []
+var patron_random_pool = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -66,9 +66,15 @@ func spawn_patron():
 			break
 	if found_table_idx == -1:
 		return
+
 	var patron_dummy = Patron.instance()
-	patron_dummy.patron_index = next_patron_index
-	next_patron_index += 1
+
+	if patron_random_pool.size() == 0:
+		for i in range(patron_dummy.PATRON_SPRITE_NAMES.size()):
+			patron_random_pool.append(i)
+		patron_random_pool.shuffle()
+	var random_patron_index = patron_random_pool.pop_back()
+	patron_dummy.patron_index = random_patron_index
 	patrons.add_child(patron_dummy)
 	table.patrons_around.append(patron_dummy)
 
