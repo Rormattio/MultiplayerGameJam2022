@@ -80,8 +80,8 @@ func spawn_patron():
 	# TODO: set the command_avatar.position positions correctly relative to the table as given in patron_dummy.destination
 	patron_dummy.destination = table.position + Vector2(32, -55)
 	patron_dummy.sitting_at_table = table
-	patron_dummy.command_avatar.position.x = 960
-	patron_dummy.command_avatar.position.y = 250
+	patron_dummy.command_avatar.position.x = 780
+	patron_dummy.command_avatar.position.y = 300
 	patron_dummy.path_to_follow = table.path_from_entrance
 
 	patron_dummy.init()
