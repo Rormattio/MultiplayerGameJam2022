@@ -78,9 +78,9 @@ func _randomize_burger():
 
 func _randomize_soup():
 	assert(meal_type == MealType.SOUP)
-	soup_component_base = Ingredients.base_soup_ingredients[randi() % Ingredients.base_soup_ingredients.size()]
+	soup_component_base = Ingredients.get_random_ingredient_with_tag("soup_base")
 	if randf() <= SOUP_COMPONENT_TOP_PROBABILITY:
-		soup_component_top = Ingredients.top_soup_ingredients[randi() % Ingredients.top_soup_ingredients.size()]
+		soup_component_top = Ingredients.get_random_ingredient_with_tag("soup_top")
 	else:
 		soup_component_top = ""
 	return
@@ -111,6 +111,7 @@ func is_valid():
 		return false # The lower part is not visible
 	if (meal_type == MealType.NON_BURGER) and (non_burger_component_top != "") and Ingredients.ingredient_has_tag(non_burger_component_top, "flag"):
 		return false # The flag doesn't fit in non-burgers :)
+	#TODO Prevent soups in plates
 	return true
 
 func randomize_with_n_ingredients(n):
@@ -140,11 +141,7 @@ func randomize():
 		if meal_type == MealType.BURGER:
 			_randomize_burger()
 		elif meal_type == MealType.SOUP:
-			if false:
-				_randomize_soup()
-			else:
-				meal_type = MealType.NON_BURGER
-				_randomize_non_burger()
+			_randomize_soup()
 		else:
 			assert(meal_type == MealType.NON_BURGER)
 			_randomize_non_burger()

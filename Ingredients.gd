@@ -277,6 +277,14 @@ func get_ingredient_names_with_tag(tag):
 			result.append(desc.name)
 	return result
 
+func get_random_ingredient_with_tag(tag):
+	var ingredients_with_tag = get_ingredient_names_with_tag(tag)
+	assert(ingredients_with_tag != null)
+	if ingredients_with_tag.empty():
+		return ""
+	else:
+		return ingredients_with_tag[randi() % ingredients_with_tag.size()]
+		
 func is_ingredient(name):
 	return get_ingredient_desc(name) != null
 
