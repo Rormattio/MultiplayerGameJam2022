@@ -23,6 +23,8 @@ var patron_random_pool = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
+	dining_room.connect("serve_dish_pressed", self, "_on_serve_dish")
+	
 	dining_room.tray = tray
 
 	door_close_timer.connect("timeout", self, "close_door")
@@ -53,7 +55,7 @@ func _ready():
 	tray.dining_room_level = self
 
 	spawn_patron()
-
+	
 	audio_sfx.play_ambience()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -94,7 +96,8 @@ func spawn_patron():
 	patron_dummy.command_avatar.position.y = 300
 	patron_dummy.path_to_follow = table.path_from_entrance
 	patron_dummy.connect("patron_enters_room", self, "open_door")
-	patron_dummy.connect("patron_exits_room", self, "open_door")
+	patron_dummy.connect("patron_exits_room", self, "close_door")
+	patron_dummy.connect("patron_state_changed", self, "_on_patron_state_changed")
 
 	patron_dummy.init()
 	_refresh_layout_visible()
@@ -123,7 +126,7 @@ func _set_layout_visible(set_visible):
 	if not set_visible:
 		assert(dining_room.table.patrons_around.size() > 0) # how did we get here if there was no patron to click on ?!
 	if not set_visible:
-		dining_room.update_can_send_command()
+		dining_room.update_waiter_actions()
 	for patron in patrons.get_children():
 		patron.set_avatars_visible(patron_level_visible)
 
@@ -136,23 +139,18 @@ func _on_patron_avatar_level_clicked(patron):
 func _on_patron_avatar_command_clicked(patron):
 	assert(dining_room.state == dining_room.State.VISIBLE)
 	match patron.state:
-		patron.State.WAITING_TO_ORDER:
-			patron.set_state(patron.State.ORDERING)
 		patron.State.WAITING_TO_EAT:
-			if carrying_dish_node.get_child_count() > 0:
-				assert(carrying_dish_node.get_child_count() == 1)
-				var dish = carrying_dish_node.get_child(0)
-				set_carrying_received_dish(null)
-				patron.serve_dish(dish)
-			else:
-				patron.toggle_wanted_dish()
-		patron.State.SHOW_DISH_SCORE:
-			patron.hide_dish_score()
-			patron.set_state(patron.State.LEAVING)
+			patron.toggle_wanted_dish()
+
+func _on_serve_dish(patron):
+	assert(carrying_dish_node.get_child_count() == 1)
+	var dish = carrying_dish_node.get_child(0)
+	set_carrying_received_dish(null)
+	patron.serve_dish(dish)
 
 func _on_patron_leaves(patron):
 	patron.sitting_at_table.patrons_around.erase(patron)
-	# TODO: score ?
+	# TODO: score the score ?
 
 func on_close_command_popup():
 	assert(dining_room.state == dining_room.State.VISIBLE)
@@ -171,3 +169,7 @@ func open_door():
 
 func close_door():
 	door.show()
+
+func _on_patron_state_changed(patron):
+	if dining_room.state == dining_room.State.VISIBLE:
+		dining_room.update_waiter_actions()

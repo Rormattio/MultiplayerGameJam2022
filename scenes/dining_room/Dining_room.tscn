@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/dining_room/Dining_room.gd" type="Script" id=1]
 [ext_resource path="res://mi91.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/misc/pad.png" type="Texture" id=5]
 [ext_resource path="res://assets/misc/words-bg.png" type="Texture" id=6]
+[ext_resource path="res://assets/misc/wish-bg.png" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 2 )
@@ -100,3 +101,39 @@ text = "Send order"
 position = Vector2( 960, 416 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
+
+[node name="DialogueGiveDish" type="Node2D" parent="."]
+position = Vector2( 949, 620 )
+
+[node name="Bubble" type="Sprite" parent="DialogueGiveDish"]
+scale = Vector2( -3, 3 )
+texture = ExtResource( 7 )
+
+[node name="GiveDish" type="Button" parent="DialogueGiveDish"]
+margin_left = -56.0
+margin_top = 9.0
+margin_right = 58.0
+margin_bottom = 31.0
+custom_fonts/font = ExtResource( 4 )
+text = "Give Dish"
+
+[node name="DishPos" type="Node2D" parent="DialogueGiveDish"]
+position = Vector2( 0, -32 )
+
+[node name="DialogueFarewell" type="Node2D" parent="."]
+position = Vector2( 949, 620 )
+
+[node name="Bubble" type="Sprite" parent="DialogueFarewell"]
+rotation = 3.14159
+scale = Vector2( 3, -3 )
+texture = ExtResource( 7 )
+
+[node name="Farewell" type="Button" parent="DialogueFarewell"]
+margin_left = -70.0
+margin_top = -15.0
+margin_right = 72.0
+margin_bottom = 7.0
+text = "Come again!"
+
+[connection signal="button_up" from="DialogueGiveDish/GiveDish" to="." method="_on_GiveDish_button_up"]
+[connection signal="button_up" from="DialogueFarewell/Farewell" to="." method="_on_Farewell_button_up"]

@@ -1,6 +1,7 @@
 extends Node2D
 
 signal close_command_popup()
+signal serve_dish_pressed(patron)
 
 const Order = preload("res://scenes/shared/Order.gd")
 
@@ -180,7 +181,9 @@ func _on_Background_gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		emit_signal("close_command_popup")
 
-func update_can_send_command():
+func update_waiter_actions():
+	
+	# can waiter take an order ?
 	var can_send_command = false
 	for patron in table.patrons_around:
 		if (patron.state == patron.State.WAITING_TO_ORDER) or (patron.state == patron.State.ORDERING):
@@ -188,3 +191,27 @@ func update_can_send_command():
 #	$Command_GUI/WordList.disabled = not can_send_command # NOTE: item_list has no disabled, so we interrupt their event instead 
 	$Command_GUI/ClearOrder.disabled = not can_send_command
 	$Command_GUI/SendOrder.disabled = not can_send_command
+	
+	# can waiter give a dish
+	var can_give_dish = false
+	for patron in table.patrons_around:
+		if (patron.state == patron.State.WAITING_TO_EAT):
+			can_give_dish = true
+	$DialogueGiveDish.visible = can_give_dish
+
+	# can waiter give a dish
+	var can_farewell = false
+	for patron in table.patrons_around:
+		if (patron.state == patron.State.SHOW_DISH_SCORE):
+			can_farewell = true
+	$DialogueFarewell.visible = can_farewell
+
+func _on_Farewell_button_up():
+	assert(len(table.patrons_around) == 1)
+	var patron = table.patrons_around[0]
+	patron.set_state(patron.State.LEAVING)
+
+func _on_GiveDish_button_up():
+	assert(len(table.patrons_around) == 1)
+	var patron = table.patrons_around[0]
+	emit_signal("serve_dish_pressed", patron)
