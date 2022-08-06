@@ -66,6 +66,8 @@ func play(sfx):
 		Ingredients.Sfx.SCHBOING:
 			$shhoo.pitch_scale = rand_range(0.9, 1.1)
 			$schboing.play()
+		Ingredients.Sfx.WHOOO:
+			$whooo.play()
 		_: assert(false)
 
 func play_ambience():
