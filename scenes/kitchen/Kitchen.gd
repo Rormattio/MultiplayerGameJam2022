@@ -2,7 +2,6 @@ extends Node2D
 
 var cheffe_scene = preload("res://scenes/kitchen/Cheffe.tscn")
 var ingredient_stock_scene = preload("res://scenes/kitchen/IngredientStock.tscn")
-var command_scene = preload("res://scenes/kitchen/Command.tscn")
 const Dish = preload("res://Dish.gd")
 const DishRenderer = preload("res://DishRenderer.gd")
 
@@ -28,6 +27,15 @@ var max_ingredients = 4
 
 var dish_ingredients
 var dish_ingredients_n = 0
+
+var history_items = []
+const HISTORY_ITEMS_MAX_SIZE = 10
+
+enum State {
+	COOKING,
+	SHOWING_HISTORY,
+}
+var state = State.COOKING
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -164,16 +172,15 @@ func _refresh_stock():
 func _on_WaiterCommand_Sent(order: Order):
 	print("waiter command ", order)
 	var words = order.text.split(" ")
-	var command = command_scene.instance()
-	command.order = order
+	var command = Command.instance_command_scene(Command.Type.ACTIVE_COMMAND, order)
 	commands_container.add_child(command)
 	command.connect("close_command", self, "_on_close_command")
 	command.connect("send_dish_pressed", self, "_on_SendDish_Pressed")
-	command.name = str(command_counter)
 	var word_items = command.get_node("Words")
 	for word in words:
 		word_items.add_item(word)
 	command.position.x = (word_items.rect_size.x + 10)*len(active_commands)
+	command.name = str(command_counter)
 	active_commands.append(command)
 	command_counter += 1
 
@@ -349,7 +356,7 @@ func _on_Randomize_pressed():
 	_set_dish(new_dish)
 	_refresh_stock()
 
-func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized):
+func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized, hints):
 	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
 	var ingredients = []
 	for idx in range(2, len(received_dish_serialized)):
@@ -357,7 +364,34 @@ func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized)
 	var order = Order.new()
 	order.unserialize(order_serialized)
 	var clues = order.text.split(" ")
+	
+	# create feedbacks on IngredientStock
 	for ingredient_name in ingredients:
 		if ingredient_name != "":
 			ingredient_stocks[ingredient_name].score_feedback(clues, score)
+	
+	# add to history
+	var history_item : HistoryItem = HistoryItem.instance_history_item_scene(order, received_dish_serialized, hints, score)
+	$History.add_child(history_item)
+	var y = 0
+	if len(history_items) > 0:
+		y = history_items[-1].position.y + 80
+	history_item.position.y = y
+	
+	history_items.append(history_item)
+	if len(history_items) > HISTORY_ITEMS_MAX_SIZE:
+		history_items.pop_front()
+		for _history_item in history_items:
+			_history_item.position.y -= 80
 
+func toggle_history():
+	match state:
+		State.COOKING:
+			state = State.SHOWING_HISTORY
+			$History.visible = true
+		State.SHOWING_HISTORY:
+			state = State.COOKING
+			$History.visible = false
+
+func _on_ButtonHistory_button_up():
+	toggle_history()

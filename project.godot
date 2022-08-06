@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Command",
+"language": "GDScript",
+"path": "res://scenes/kitchen/Command.gd"
+}, {
 "base": "Object",
 "class": "Dish",
 "language": "GDScript",
 "path": "res://Dish.gd"
+}, {
+"base": "Node2D",
+"class": "HistoryItem",
+"language": "GDScript",
+"path": "res://scenes/kitchen/HistoryItem.gd"
 }, {
 "base": "Reference",
 "class": "Order",
@@ -20,7 +30,9 @@ _global_script_classes=[ {
 "path": "res://scenes/shared/Order.gd"
 } ]
 _global_script_class_icons={
+"Command": "",
 "Dish": "",
+"HistoryItem": "",
 "Order": ""
 }
 
