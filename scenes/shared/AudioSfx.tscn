@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/sfx/splotch.ogg" type="AudioStream" id=1]
 [ext_resource path="res://scenes/shared/AudioSfx.gd" type="Script" id=2]
@@ -10,10 +10,6 @@
 [ext_resource path="res://assets/sfx/schboing.ogg" type="AudioStream" id=8]
 [ext_resource path="res://assets/sfx/whooo.ogg" type="AudioStream" id=9]
 [ext_resource path="res://assets/sfx/trash.ogg" type="AudioStream" id=10]
-[ext_resource path="res://assets/sfx/bye_elmo.ogg" type="AudioStream" id=11]
-[ext_resource path="res://assets/sfx/ohayo.ogg" type="AudioStream" id=12]
-[ext_resource path="res://assets/sfx/tchao.ogg" type="AudioStream" id=13]
-[ext_resource path="res://assets/sfx/hello_elmo.ogg" type="AudioStream" id=14]
 
 [node name="AudioSfx" type="Node"]
 script = ExtResource( 2 )
@@ -47,17 +43,3 @@ stream = ExtResource( 7 )
 stream = ExtResource( 8 )
 
 [node name="bg_music_player" type="AudioStreamPlayer" parent="."]
-
-[node name="ohayo" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 12 )
-volume_db = -20.0
-
-[node name="tchao" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 13 )
-volume_db = -20.0
-
-[node name="hello_elmo" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 14 )
-
-[node name="bye_elmo" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 11 )
