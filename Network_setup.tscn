@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/misc/game_title.png" type="Texture" id=4]
 [ext_resource path="res://assets/misc/peep.png" type="Texture" id=5]
+[ext_resource path="res://red_button.tres" type="Theme" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -124,7 +125,16 @@ custom_styles/normal = SubResource( 3 )
 text = "192.12.12.12"
 editable = false
 
+[node name="QuitToDesktop" type="Button" parent="Network_setup/Multiplayer_configure"]
+margin_left = 960.0
+margin_top = 32.0
+margin_right = 1176.0
+margin_bottom = 80.0
+theme = ExtResource( 6 )
+text = "Quit to desktop"
+
 [node name="Lobby" type="Control" parent="Network_setup"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
