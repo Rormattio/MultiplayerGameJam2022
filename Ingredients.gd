@@ -192,16 +192,22 @@ var ingredient_descs = [
 		null),
 	IngredientDesc.new("soup_water", ["soup_base"],
 		["blue", "water", "soup"], [],
-		null),
+		Sfx.SPLOTCH),
 	IngredientDesc.new("soup_lava", ["soup_base"],
 		["red", "soup"], [],
-		null),
+		Sfx.SPLOTCH),
 	IngredientDesc.new("parasol_yellow", ["soup_top"],
 		["parasol", "yellow"], [],
 		null),
 	IngredientDesc.new("parasol_pink", ["soup_top"],
 		["parasol", "pink"], [],
 		null),
+	IngredientDesc.new("sharks", ["soup_top"],
+		["creature", "shark"], [],
+		null),
+	IngredientDesc.new("island", ["soup_top"],
+		["island", "vegetal"], [],
+		null)
 ]
 
 const plain_keywords_synonyms = {
