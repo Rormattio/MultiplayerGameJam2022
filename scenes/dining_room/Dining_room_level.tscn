@@ -106,11 +106,11 @@ visible = false
 
 [node name="Patrons" type="Node2D" parent="."]
 
-[node name="Layout" type="Node2D" parent="."]
-
-[node name="Tray" type="Node2D" parent="Layout"]
+[node name="Tray" type="Node2D" parent="."]
 position = Vector2( 1180, 280 )
 script = ExtResource( 6 )
+
+[node name="Layout" type="Node2D" parent="."]
 
 [node name="wall" type="KinematicBody2D" parent="Layout"]
 
