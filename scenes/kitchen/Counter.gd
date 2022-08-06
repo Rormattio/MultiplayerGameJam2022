@@ -18,13 +18,13 @@ func _ready():
 	
 	Global.connect("waiter_dish_taken", self, "_on_waiter_dish_taken")
 
-func add_dish_wherever(dish):
+func add_dish_wherever_if_possible(dish):
 	for i in range(counter_dishes.size()):
 		if counter_dishes[i] == null:
 			add_dish_at(dish, i)
 			return i
 
-	assert(false)
+	return -1
 
 func add_dish_at(dish, idx: int):
 	assert(idx < MAX_DISH_ON_COUNTER)
@@ -61,6 +61,7 @@ func get_free_slots_count() -> int:
 	return c
 
 func _on_Dish_pressed(idx: int):
+	return # We decided that we do not want to let Cheffe remove dishes from the Counter
 	remove_dish_at(idx)
 	Global.cheffe_trashed_dish(idx)
 
