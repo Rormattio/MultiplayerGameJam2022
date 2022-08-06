@@ -103,7 +103,7 @@ func _is_possible_next_ingredient_1(ingredient_desc):
 	elif is_soup:
 		return ingredient_desc.has_tag("soup_top")
 	else:
-		return not ingredient_desc.has_any_tag(["bottom", "bottom_burger", "mid_burger", "top_burger", "flag"])
+		return not ingredient_desc.has_any_tag(["soup_base", "soup_top", "bottom", "bottom_burger", "mid_burger", "top_burger", "flag"])
 
 func _is_possible_next_ingredient_2(ingredient_desc):
 	assert(ingredient_desc != null);
