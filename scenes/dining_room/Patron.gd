@@ -5,6 +5,8 @@ const DishRenderer = preload("res://DishRenderer.gd")
 const ReceivedDish = preload("ReceivedDish.gd")
 
 signal patron_leaves(patron)
+signal patron_enters_room()
+signal patron_exits_room()
 
 onready var dish_wish = $CommandAvatar/DishWish
 onready var dish_score = $CommandAvatar/DishScore
@@ -175,6 +177,7 @@ func set_state(a_state):
 			level_avatar.modulate = BEHIND_WINDOW_TINT
 
 		State.ENTERING:
+			emit_signal("patron_enters_room")
 			level_avatar.z_index = 0
 			level_avatar.modulate = IN_ROOM_TINT
 			pass
@@ -201,6 +204,7 @@ func set_state(a_state):
 			emit_signal("patron_leaves", self)
 
 		State.LEAVING_BEHIND_WINDOW:
+			emit_signal("patron_exits_room")
 			level_avatar.position.y = 100
 			level_avatar.z_index = -1
 			level_avatar.modulate = BEHIND_WINDOW_TINT
@@ -292,7 +296,7 @@ func generate_dish() -> Dish:
 	# TODO remove childs if necessary
 	assert(dish_wish.get_node("Sprite").get_child_count() == 0)
 	dish_wish.get_node("Sprite").add_child(random_dish_node)
-	
+
 	var ingredients_node = DishRenderer.render_ingredients(random_dish, 72)
 	#ingredients_node.scale = Vector2(2, 2)
 	assert(dish_wish.get_node("Ingredients").get_child_count() == 0)
