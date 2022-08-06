@@ -1,7 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/kitchen/Command.gd" type="Script" id=2]
+[ext_resource path="res://assets/misc/command_bg.png" type="Texture" id=3]
+
+[sub_resource type="Theme" id=3]
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 64, 64 )
+margin_left = 9.0
+margin_right = 7.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.513726, 0.192157, 0.192157, 1 )
@@ -19,9 +30,12 @@ corner_radius_bottom_left = 2
 script = ExtResource( 2 )
 
 [node name="Words" type="ItemList" parent="."]
-margin_right = 97.0
+margin_right = 158.0
 margin_bottom = 119.0
+theme = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
+custom_styles/bg = SubResource( 4 )
 
 [node name="Close" type="Control" parent="."]
 margin_left = 76.0
@@ -29,25 +43,26 @@ margin_right = 116.0
 margin_bottom = 40.0
 
 [node name="Button" type="Button" parent="Close"]
-margin_top = 1.0
-margin_right = 20.0
-margin_bottom = 19.0
+margin_left = 69.0
+margin_top = 3.0
+margin_right = 89.0
+margin_bottom = 21.0
 custom_styles/normal = SubResource( 2 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Close"]
-margin_left = 5.0
-margin_top = -1.0
-margin_right = 28.0
-margin_bottom = 29.0
+margin_left = 73.0
+margin_top = 3.0
+margin_right = 96.0
+margin_bottom = 33.0
 mouse_filter = 2
 custom_fonts/normal_font = ExtResource( 1 )
 text = "X"
 
 [node name="SendDish" type="Button" parent="."]
-margin_left = 5.0
-margin_top = 89.0
-margin_right = 92.0
-margin_bottom = 116.0
+margin_left = 9.0
+margin_top = 103.0
+margin_right = 136.0
+margin_bottom = 133.0
 custom_fonts/font = ExtResource( 1 )
 text = "Send dish"
 
