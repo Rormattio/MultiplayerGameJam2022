@@ -237,9 +237,12 @@ func deserialize(stream : Array):
 
 static func _compute_ingredient_difference(ing0, ing1):
 	printraw("_compute_ingredient_difference(", ing0, ing1, ") -> ")
-	if (ing0 == ing1):
+	if (ing0 == ing1 and ing0 != ""):
 		print("same (2)")
 		return 2
+	if (ing0 == ing1 and ing0 == ""):
+		print("same (-1)")
+		return -1
 	if (ing0 == "") or (ing1 == ""):
 		print("different (0)")
 		return 0
@@ -259,7 +262,7 @@ static func _compute_ingredient_difference(ing0, ing1):
 	if not common_plain_keywords.empty():
 		print("same keyword (1)")
 		return 1
-
+	print("different (0)")
 	return 0
 
 # return a [ing0, ing1, ing2, ing3] array
