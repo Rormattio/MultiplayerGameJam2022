@@ -134,7 +134,7 @@ func build_word_list():
 	for kw in keyword_list:
 		wordlist.add_item(kw)
 
-	for idx in wordlist.get_item_count():
+	for idx in range(wordlist.get_item_count()):
 		wordlist.set_item_tooltip_enabled(idx, false)
 
 

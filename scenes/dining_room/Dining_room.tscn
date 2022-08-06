@@ -81,17 +81,17 @@ text = "order"
 autowrap = true
 
 [node name="ClearOrder" type="Button" parent="Command_GUI"]
-margin_left = 576.0
-margin_top = 512.0
-margin_right = 602.0
-margin_bottom = 547.0
-custom_fonts/font = ExtResource( 4 )
+margin_left = 578.0
+margin_top = 507.0
+margin_right = 598.0
+margin_bottom = 536.0
 text = "X"
+align = 2
 
 [node name="SendOrder" type="Button" parent="Command_GUI"]
 margin_left = 336.0
 margin_top = 600.0
-margin_right = 482.0
+margin_right = 496.0
 margin_bottom = 648.0
 custom_fonts/font = ExtResource( 4 )
 text = "Send order"
