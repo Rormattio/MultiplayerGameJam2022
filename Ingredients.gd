@@ -8,8 +8,7 @@ enum Sfx {
 	SHHOO,
 	CLICK,
 	SCHBOING,
-	WHOOO,
-	TRASH
+	WHOOO
 }
 
 class IngredientDesc:
