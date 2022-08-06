@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var patrons_around = []
-var taking_commands = false
+var is_popped_up = false
 var path_from_entrance
 
 # Called when the node enters the scene tree for the first time.
