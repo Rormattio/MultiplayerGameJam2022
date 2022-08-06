@@ -11,6 +11,8 @@ enum Sfx {
 	WHOOO
 }
 
+var tag_set = [ "main", "bottom_burger", "mid_burger", "top_burger", "top", "flag", "bottom", "soup_base", "soup_top" ]
+
 class IngredientDesc:
 	var name
 	var tags
@@ -400,7 +402,10 @@ func _check_ingredient_metadata():
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
 		
-	
+	for desc in ingredient_descs:
+		for tag in desc.tags:
+			assert(tag_set.has(tag))
+			
 	for kw in plain_keywords:
 		if not plain_keywords_synonyms.has(kw):
 			print("WARNING: Synonyms were not declared for ", kw)
@@ -408,7 +413,9 @@ func _check_ingredient_metadata():
 		if not plain_keywords.has(kw):
 			print("WARNING: Synonyms are declared for ", kw, " though the ingredient is not declared")
 
+
 	for desc in ingredient_descs:
+		
 		var count = desc.plain_keywords_fr.size()
 		assert(count >= 2)
 		
