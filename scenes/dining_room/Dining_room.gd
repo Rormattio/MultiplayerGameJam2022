@@ -13,9 +13,7 @@ onready var clear_order = $Command_GUI/ClearOrder
 onready var send_order = $Command_GUI/SendOrder
 onready var order_preview = $Command_GUI/OrderPreview
 
-var patrons = [] # actual Patron instances
-var patron_avatars = [] # clickable bigger patron sprites
-
+var table = null
 var current_order = []
 
 enum State {
@@ -43,17 +41,22 @@ func _set_visible(_visible):
 		state = State.VISIBLE
 	else:
 		state = State.NOT_VISIBLE
-	# TODO: we may also need to enable/disable controls eg pickable_inputs
 
-func pop_up(_patrons):
+func pop_up(o_table):
 	_set_visible(true)
 	current_order.clear()
 	order_preview.text = ""
-	patrons = _patrons
+	table = o_table
 
 func pop_down():
+	### this function should be called by outer class DiningRoomLevel
+	### if you need to "pop_down" from the context of DiningRoom, call emit_signal("close_command_popup") instead
 	_set_visible(false)
-	patrons.clear()
+	order_preview.text = ""
+	current_order.clear()
+	for patron in table.patrons_around:
+		patron.command_avatar.visible = false
+	table = null
 
 func _process(_delta):
 	pass
@@ -146,6 +149,8 @@ func send_order(order: Order):
 	Global.waiter_send_command(order)
 
 func _on_WordList_item_selected(index: int):
+	if send_order.disabled:
+		return
 	wordlist.unselect_all()
 
 	if get_current_order_word_count() == MAX_WORDS_IN_ORDER:
@@ -160,9 +165,10 @@ func _on_SendOrder_pressed():
 	var order = Order.new()
 	order.init(get_current_order_text())
 	send_order(order)
-	send_order.disabled = true
-	order_preview.text = ""
-	current_order.clear()
+	assert(len(table.patrons_around) == 1)
+	var patron = table.patrons_around[0]
+	patron.set_state(patron.State.WAITING_TO_EAT)
+	emit_signal("close_command_popup")
 
 func _on_ClearOrder_pressed():
 	order_preview.text = ""
@@ -173,3 +179,12 @@ func _on_Background_gui_input(event: InputEvent):
 	var mouse_pos = event.position
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		emit_signal("close_command_popup")
+
+func update_can_send_command():
+	var can_send_command = false
+	for patron in table.patrons_around:
+		if (patron.state == patron.State.WAITING_TO_ORDER) or (patron.state == patron.State.ORDERING):
+			can_send_command = true
+#	$Command_GUI/WordList.disabled = not can_send_command # NOTE: item_list has no disabled, so we interrupt their event instead 
+	$Command_GUI/ClearOrder.disabled = not can_send_command
+	$Command_GUI/SendOrder.disabled = not can_send_command

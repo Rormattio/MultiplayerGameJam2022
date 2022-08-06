@@ -402,11 +402,11 @@ func _check_ingredient_metadata():
 		
 	
 	for kw in plain_keywords:
-		assert(plain_keywords_synonyms.has(kw))
+		if not plain_keywords_synonyms.has(kw):
+			print("WARNING: Synonyms were not declared for ", kw)
 	for kw in plain_keywords_synonyms:
 		if not plain_keywords.has(kw):
 			print("WARNING: Synonyms are declared for ", kw, " though the ingredient is not declared")
-		
 
 	for desc in ingredient_descs:
 		var count = desc.plain_keywords_fr.size()

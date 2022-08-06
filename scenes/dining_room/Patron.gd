@@ -18,10 +18,10 @@ enum State {
 	ENTERING_BEHIND_WINDOW,
 	ENTERING,
 	WAITING_TO_ORDER,
-	ORDERING, # state in zoomed-in view
+	ORDERING,
 	WAITING_TO_EAT,
 	EATING,
-	SHOW_DISH_SCORE, # state in zoomed-in view
+	SHOW_DISH_SCORE,
 	LEAVING,
 	LEAVING_BEHIND_WINDOW,
 	DELETE,
@@ -122,8 +122,6 @@ func _physics_process(delta):
 			var new_position = path_to_follow.get_position()
 			if level_avatar.position == new_position:
 				set_state(State.WAITING_TO_ORDER)
-				set_state(State.ORDERING) # we directly switch to ORDERING so that the wished dish is already visible
-				set_state(State.WAITING_TO_EAT)
 				path_offset -= speed*delta
 			level_avatar.position = new_position
 
@@ -150,7 +148,7 @@ func set_avatars_visible(_level_avatar_is_visible):
 	level_avatar.visible = _level_avatar_is_visible
 	level_avatar.input_pickable = _level_avatar_is_visible
 
-	var _command_avatar_is_visible = sitting_at_table.taking_commands
+	var _command_avatar_is_visible = sitting_at_table.is_popped_up
 	assert(not (_level_avatar_is_visible and _command_avatar_is_visible))
 	command_avatar_is_visible = _command_avatar_is_visible and (state > State.ENTERING) and (state < State.LEAVING)
 	command_avatar.visible = command_avatar_is_visible
@@ -184,13 +182,14 @@ func set_state(a_state):
 
 		State.WAITING_TO_ORDER:
 			level_avatar.animated_sprite.play("idle")
-
-		State.ORDERING:
 			wanted_dish = generate_dish()
 			show_wanted_dish()
 
-		State.WAITING_TO_EAT:
+		State.ORDERING:
 			pass
+
+		State.WAITING_TO_EAT:
+			hide_wanted_dish()
 
 		State.EATING:
 			hide_wanted_dish()

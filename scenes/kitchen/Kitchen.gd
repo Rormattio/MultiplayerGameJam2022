@@ -152,11 +152,12 @@ func _refresh_stock():
 		var node = $IngredientStockContainer.get_child(0)
 		$IngredientStockContainer.remove_child(node)
 
+	var ITEMS_PER_LINE = 5
 	var start_x = 900
 	var x = start_x
 	var y = 50
 	var dx = 64
-	var w = dx*4
+	var w = dx*ITEMS_PER_LINE
 	var dy = 64
 	for ingredient_desc in Ingredients.ingredient_descs:
 		var ingredient_name = ingredient_desc.name
@@ -166,7 +167,7 @@ func _refresh_stock():
 		ingredient_stock.position.y = y
 		$IngredientStockContainer.add_child(ingredient_stock)
 		x += dx
-		if x > w + start_x:
+		if x >= w + start_x:
 			x = start_x
 			y += dy
 
