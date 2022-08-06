@@ -36,13 +36,16 @@ func _ready() -> void:
 	$Lobby/Cancel.connect("pressed", self, "_on_LobbyCancel_pressed")
 	$Lobby/GameStartTimer.connect("timeout", self, "_on_GameStartTimer_timeout")
 
-	connection_status.hide()
+	$DisconnectedPopup.hide()
+	$DisconnectedPopup/RestartButton.connect("pressed", self, "_on_Restart_pressed")
 
 	Upnp.connect("upnp_completed", self, "_upnp_completed")
 	external_ip_address_label.hide()
 	device_external_ip_address.hide()
 
 	device_local_ip_address.text = Network.ip_address
+
+	enter_title_screen()
 
 func _upnp_completed(error):
 	print("upnp done ", Upnp.external_ip_address)
@@ -153,11 +156,11 @@ func exit_lobby():
 	lobby_state = LobbyState.TITLE_SCREEN
 	lobby.hide()
 
-	connection_status.hide()
-	multiplayer_config_ui.show()
+	enter_title_screen()
 
 func _exit_tree():
-	Global.player_send_quit(Network.get_id())
+	if get_tree().network_peer != null:
+		Global.player_send_quit(Network.get_id())
 	Network.stop()
 
 func _player_connected(id) -> void:
@@ -179,6 +182,8 @@ func _player_disconnected(id) -> void:
 	connection_status.text = "Disconnected"
 	connection_status.add_color_override("font_color", "#ff0000")
 	connection_status.show()
+
+	$DisconnectedPopup.show()
 
 func _on_ChooseCheffe_pressed():
 	chosen_role = PlayerRole.CHEFFE
@@ -281,3 +286,21 @@ func start_game():
 	lobby.hide()
 
 	lobby_state = LobbyState.GAME_STARTED
+
+func enter_title_screen():
+	lobby_state = LobbyState.TITLE_SCREEN
+	lobby.hide()
+
+	title_image.show()
+
+	connection_status.hide()
+	multiplayer_config_ui.show()
+
+func _on_Restart_pressed():
+	for n in $RoleScene.get_children():
+		n.queue_free()
+
+	Network.stop()
+	$DisconnectedPopup.hide()
+
+	enter_title_screen()
