@@ -4,6 +4,7 @@ signal patron_avatar_command_clicked()
 
 var patron
 var sway_t = 0
+var animated_sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

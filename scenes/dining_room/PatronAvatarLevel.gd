@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal patron_avatar_level_clicked()
 
 var patron
+var animated_sprite
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
