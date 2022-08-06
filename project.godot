@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "Order",
 "language": "GDScript",
 "path": "res://scenes/shared/Order.gd"
+}, {
+"base": "Node",
+"class": "Patron",
+"language": "GDScript",
+"path": "res://scenes/dining_room/Patron.gd"
 } ]
 _global_script_class_icons={
 "Command": "",
 "Dish": "",
 "HistoryItem": "",
-"Order": ""
+"Order": "",
+"Patron": ""
 }
 
 [application]

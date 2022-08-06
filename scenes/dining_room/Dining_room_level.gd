@@ -173,3 +173,15 @@ func close_door():
 func _on_patron_state_changed(patron):
 	if dining_room.state == dining_room.State.VISIBLE:
 		dining_room.update_waiter_actions()
+	
+	match patron.state:
+		patron.State.ENTERING:
+			if patron.sprite_name == "bertmo":
+				$AudioSfx.play_voice(patron.Sound.HELLO_ELMO) # HELLO_ELMO loops for some reason
+			else:
+				$AudioSfx.play_voice(patron.Sound.HELLO_ELMO) # OHAYO
+		patron.State.LEAVING_BEHIND_WINDOW:
+			if patron.sprite_name == "bertmo":
+				$AudioSfx.play_voice(patron.Sound.TCHAO) # BYE_ELMO loops for some reason
+			else:
+				$AudioSfx.play_voice(patron.Sound.TCHAO) # TCHAO
