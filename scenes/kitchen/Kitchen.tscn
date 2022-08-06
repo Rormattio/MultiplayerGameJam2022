@@ -112,9 +112,9 @@ color = Color( 0.803922, 0.662745, 0.568627, 0.976471 )
 z_index = 3
 
 [node name="Counter" type="Line2D" parent="."]
-position = Vector2( -64.4478, -14.0842 )
+position = Vector2( -80, -24 )
 scale = Vector2( 0.776119, 0.863158 )
-points = PoolVector2Array( 562.347, 127.537, 165.5, 449.61 )
+points = PoolVector2Array( 577.231, 129.756, 144.308, 444.878 )
 width = 0.0
 script = ExtResource( 7 )
 

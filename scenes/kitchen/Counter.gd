@@ -15,7 +15,7 @@ func _ready():
 	counter_dishes = []
 	for i in range(MAX_DISH_ON_COUNTER):
 		counter_dishes.append(null)
-	
+
 	Global.connect("waiter_dish_taken", self, "_on_waiter_dish_taken")
 
 func add_dish_wherever_if_possible(dish):
@@ -43,7 +43,7 @@ func add_dish_at(dish, idx: int):
 	dish_node.add_child(button)
 
 	dish_node.position = node_pos
-	#dish_node.global_scale = Vector2(1, 1)
+	dish_node.global_scale = Vector2(2, 2)
 	add_child(dish_node)
 
 func remove_dish_at(idx: int):
