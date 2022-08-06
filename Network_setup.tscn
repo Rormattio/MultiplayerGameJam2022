@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/misc/game_title.png" type="Texture" id=4]
-[ext_resource path="res://assets/misc/peep.png" type="Texture" id=5]
 [ext_resource path="res://red_button.tres" type="Theme" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -31,9 +30,9 @@ anchor_bottom = 1.0
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -576.0
-margin_top = 382.0
+margin_top = 310.0
 margin_right = -176.0
-margin_bottom = 472.0
+margin_bottom = 400.0
 rect_pivot_offset = Vector2( 46, 213 )
 custom_fonts/font = ExtResource( 2 )
 text = "Create game"
@@ -55,9 +54,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 176.0
-margin_top = 22.0
+margin_top = -50.0
 margin_right = 536.0
-margin_bottom = 112.0
+margin_bottom = 40.0
 custom_fonts/font = ExtResource( 2 )
 text = "Join game"
 
@@ -67,9 +66,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 200.0
-margin_top = 131.0
+margin_top = 59.0
 margin_right = 520.0
-margin_bottom = 183.0
+margin_bottom = 111.0
 align = 1
 placeholder_text = "server address"
 
@@ -78,9 +77,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1016.0
-margin_top = -144.0
+margin_top = -197.0
 margin_right = -43.0
-margin_bottom = -102.0
+margin_bottom = -155.0
 custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/read_only = SubResource( 1 )
@@ -91,9 +90,9 @@ editable = false
 
 [node name="local_ip_address_label" type="Label" parent="Network_setup/Multiplayer_configure"]
 margin_left = 848.0
-margin_top = 576.0
+margin_top = 523.0
 margin_right = 1010.0
-margin_bottom = 618.0
+margin_bottom = 565.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 3 )
 text = "Your local ip:"
@@ -101,9 +100,9 @@ valign = 1
 
 [node name="external_ip_address_label" type="Label" parent="Network_setup/Multiplayer_configure"]
 margin_left = 800.0
-margin_top = 608.0
+margin_top = 555.0
 margin_right = 1010.0
-margin_bottom = 650.0
+margin_bottom = 597.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 3 )
 text = "Your external ip:"
@@ -114,9 +113,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1016.0
-margin_top = -112.0
+margin_top = -165.0
 margin_right = -34.0
-margin_bottom = -70.0
+margin_bottom = -123.0
 custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/read_only = SubResource( 1 )
@@ -138,33 +137,102 @@ visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
+[node name="ChooseTitle" type="Label" parent="Network_setup/Lobby"]
+margin_left = 24.0
+margin_top = 32.0
+margin_right = 440.0
+margin_bottom = 68.0
+custom_colors/font_color = Color( 0.890196, 0.823529, 0.129412, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Choose your role"
+
+[node name="CheffeDescBgBorder" type="ColorRect" parent="Network_setup/Lobby"]
+margin_left = 24.0
+margin_top = 96.0
+margin_right = 456.0
+margin_bottom = 536.0
+color = Color( 0.223529, 0.223529, 0.207843, 1 )
+
+[node name="CheffeDescBg" type="ColorRect" parent="Network_setup/Lobby"]
+margin_left = 28.0
+margin_top = 100.0
+margin_right = 452.0
+margin_bottom = 532.0
+color = Color( 0.223529, 0.223529, 0.207843, 1 )
+
+[node name="CheffeDescription" type="Label" parent="Network_setup/Lobby"]
+margin_left = 40.0
+margin_top = 128.0
+margin_right = 432.0
+margin_bottom = 335.0
+text = "The Cook waits for orders from the Waiter, then assembles ingredients from the dubious instructions.
+
+Try to guess what the original order looked like.
+
+Use your recipe book to check how you scored on past orders."
+autowrap = true
+
+[node name="WaiterDescBgBorder" type="ColorRect" parent="Network_setup/Lobby"]
+margin_left = 856.0
+margin_top = 96.0
+margin_right = 1272.0
+margin_bottom = 536.0
+color = Color( 0.223529, 0.223529, 0.207843, 1 )
+
+[node name="WaiterDescBg" type="ColorRect" parent="Network_setup/Lobby"]
+margin_left = 860.0
+margin_top = 100.0
+margin_right = 1268.0
+margin_bottom = 532.0
+color = Color( 0.223529, 0.223529, 0.207843, 1 )
+
+[node name="WaiterDescription" type="Label" parent="Network_setup/Lobby"]
+margin_left = 872.0
+margin_top = 128.0
+margin_right = 1248.0
+margin_bottom = 377.0
+text = "The Waiter goes to patrons to take their orders, and sends them to the Cook.
+
+The Cook only gets to see your orders, not what they look like.  Try to be descriptive. 
+
+Grab cooked dishes from the counter and serve them to score points for both players."
+autowrap = true
+
 [node name="ChooseCheffe" type="Button" parent="Network_setup/Lobby"]
-margin_left = 168.0
-margin_top = 200.0
-margin_right = 272.0
-margin_bottom = 240.0
-text = "Cheffe"
+margin_left = 128.0
+margin_top = 384.0
+margin_right = 336.0
+margin_bottom = 447.0
+text = "Play the Cook"
 
 [node name="ChooseWaiter" type="Button" parent="Network_setup/Lobby"]
-margin_left = 995.0
-margin_top = 217.0
-margin_right = 1099.0
-margin_bottom = 257.0
-text = "Waiter"
+margin_left = 960.0
+margin_top = 384.0
+margin_right = 1168.0
+margin_bottom = 448.0
+text = "Play the Waiter"
 
-[node name="MyRole" type="Sprite" parent="Network_setup/Lobby"]
-position = Vector2( 192, 288 )
-texture = ExtResource( 5 )
+[node name="MyRole" type="Label" parent="Network_setup/Lobby"]
+margin_left = 308.0
+margin_top = 496.0
+margin_right = 434.0
+margin_bottom = 514.0
+text = "Your role"
+align = 2
 
-[node name="TheirRole" type="Sprite" parent="Network_setup/Lobby"]
-position = Vector2( 231, 288 )
-texture = ExtResource( 5 )
+[node name="TheirRole" type="Label" parent="Network_setup/Lobby"]
+margin_left = 308.0
+margin_top = 471.0
+margin_right = 434.0
+margin_bottom = 489.0
+text = "Their role"
+align = 2
 
 [node name="Cancel" type="Button" parent="Network_setup/Lobby"]
-margin_left = 96.0
-margin_top = 570.0
-margin_right = 309.0
-margin_bottom = 606.0
+margin_left = 1032.0
+margin_top = 19.0
+margin_right = 1245.0
+margin_bottom = 55.0
 theme = ExtResource( 6 )
 text = "Go back to title"
 
@@ -172,18 +240,20 @@ text = "Go back to title"
 one_shot = true
 
 [node name="StartGame" type="Button" parent="Network_setup/Lobby"]
-margin_left = 930.0
-margin_top = 548.0
-margin_right = 1110.0
-margin_bottom = 609.0
+margin_left = 976.0
+margin_top = 576.0
+margin_right = 1156.0
+margin_bottom = 637.0
 text = "Start game"
 
 [node name="FadeToBlack" type="ColorRect" parent="Network_setup/Lobby"]
+visible = false
 margin_right = 1280.0
 margin_bottom = 720.0
 color = Color( 0.12549, 0.113725, 0.113725, 0.72549 )
 
 [node name="CountdownLabel" type="Label" parent="Network_setup/Lobby"]
+visible = false
 margin_left = 344.0
 margin_top = 352.0
 margin_right = 944.0
