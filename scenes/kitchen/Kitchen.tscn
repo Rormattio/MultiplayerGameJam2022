@@ -67,6 +67,7 @@ scale = Vector2( 0.267578, 0.267578 )
 texture = ExtResource( 24 )
 
 [node name="History" type="Node2D" parent="."]
+visible = false
 z_index = 10
 
 [node name="Background" type="Sprite" parent="History"]
