@@ -83,7 +83,6 @@ func init():
 	var sprite_idx = patron_index % len(PATRON_SPRITE_NAMES)
 	var patron_sprite_name = PATRON_SPRITE_NAMES[sprite_idx]
 	var animated_sprite
-	var animation_name = "walk"
 	var avatars = [level_avatar, command_avatar]
 	for avatar_idx in range(len(avatars)):
 		var avatar = avatars[avatar_idx]
@@ -92,9 +91,11 @@ func init():
 			animated_sprite.scale.x = 3
 			animated_sprite.scale.y = 3
 		avatar.add_child(animated_sprite)
+		avatar.animated_sprite = animated_sprite
 		animated_sprite.frames = SpriteFrames.new()
 		animated_sprite.frames.clear_all()
-		animated_sprite.frames.add_animation(animation_name)
+		animated_sprite.frames.add_animation("idle")
+		animated_sprite.frames.add_animation("walk")
 		var animation_size
 		if PATRON_HAS_ANIM[patron_sprite_name]:
 			animation_size = 4
@@ -103,8 +104,11 @@ func init():
 		for frame_idx in range(animation_size):
 			var sprite = load("res://assets/misc/" + patron_sprite_name + str(frame_idx) + ".png")
 			assert(sprite != null)
-			animated_sprite.frames.add_frame(animation_name, sprite)
-		animated_sprite.play("walk")
+			animated_sprite.frames.add_frame("walk", sprite)
+			if frame_idx == 0:
+				animated_sprite.frames.add_frame("idle", sprite)
+	level_avatar.animated_sprite.play("walk")
+	command_avatar.animated_sprite.play("idle")
 
 func _physics_process(delta):
 	match state:
@@ -179,7 +183,7 @@ func set_state(a_state):
 			pass
 
 		State.WAITING_TO_ORDER:
-			pass
+			level_avatar.animated_sprite.play("idle")
 
 		State.ORDERING:
 			wanted_dish = generate_dish()
@@ -196,6 +200,7 @@ func set_state(a_state):
 			show_dish_score()
 
 		State.LEAVING:
+			level_avatar.animated_sprite.play("walk")
 			emit_signal("patron_leaves", self)
 
 		State.LEAVING_BEHIND_WINDOW:
