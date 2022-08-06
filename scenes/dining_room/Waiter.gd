@@ -22,15 +22,16 @@ func _process(_delta: float) -> void:
 		velocity = Vector2(x_input, y_input).normalized()	
 		move_and_slide(velocity * speed)
 		
-		if abs(velocity.x) >= abs(velocity.y):
-			if velocity.x < 0:
-				sprite.play("walk_left")
+		if velocity.length() > 0:
+			if abs(velocity.x) >= abs(velocity.y):
+				if velocity.x < 0:
+					sprite.play("walk_left")
+				else:
+					sprite.play("walk_right")
 			else:
-				sprite.play("walk_right")
+				if velocity.y < 0:
+					sprite.play("walk_up")
+				else:
+					sprite.play("walk_down")
 		else:
-			if velocity.y < 0:
-				sprite.play("walk_up")
-			else:
-				sprite.play("walk_down")
-		if velocity.x == 0 and velocity.y == 0:
 			sprite.stop()
