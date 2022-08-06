@@ -320,6 +320,26 @@ func is_soup_top_ingredient(name):
 	assert(is_ingredient(name))
 	return soup_top_ingredients.has(name)
 
+func _check_unused_food_sprites():
+	var dir = Directory.new()
+	dir.open("res://assets/food/")
+	dir.list_dir_begin()
+
+	while true:
+		var file = dir.get_next()
+		if (file == ""):
+			break
+		if ((file == ".") or (file == "..")):
+			continue
+		if file.get_extension() != "png":
+			continue
+		var ingredient_name = file.get_basename()
+		if (ingredient_name != "bowl") and (ingredient_name != "bowl_back") and (ingredient_name != "bowl_front") and (ingredient_name != "plate"):
+			if not is_ingredient(ingredient_name):
+				print("INFO: ", file, " doesn't have a matching ingredient")
+
+	dir.list_dir_end()
+	
 func _check_ingredient_metadata():
 	var ingredient_count = get_ingredient_count()
 	for i in range(ingredient_count):
@@ -331,6 +351,10 @@ func _check_ingredient_metadata():
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
 		
+	
+		
 	for desc in ingredient_descs:
 		var count = desc.plain_keywords_fr.size()
 		assert(count >= 2)
+		
+	_check_unused_food_sprites()
