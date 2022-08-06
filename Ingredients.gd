@@ -205,20 +205,54 @@ var ingredient_descs = [
 ]
 
 const plain_keywords_synonyms = {
-	"burger"   : ["sandwich"],
-	"space"    : ["cosmic"],
+	"black" : [],
+	"blue" : [],
+	"bottom" : ["low"],
+	"bread" : ["bun"],
+	"burger" : ["sandwich"],
+	"claws" : [],
 	"creature" : ["meat"],
-	"ghost"    : ["ectoplasm"],
-	"squid"    : ["tentacle"],
-	"bottom"   : ["low"],
-	"top"      : ["high"],
-	"bread"    : ["bun"],
-	"puree"    : ["mash"],
-	"spaghetti": ["pasta", "noodles"],
-	"fried"    : ["fat"],
-	"eight"    : ["number"],
-	"soup"     : ["broth", "chowder"],
-	"parasol"  : ["umbrella"],
+	"eight" : ["number"],
+	"eyeballs" : [],
+	"flag" : [],
+	"french" : [],
+	"fried" : ["fat"],
+	"fruit" : [],
+	"gas" : [],
+	"ghost" : ["ectoplasm"],
+	"giant" : [],
+	"green" : [],
+	"grey" : [],
+	"grumpy" : [],
+	"happy" : [],
+	"kaki" : [],
+	"mechanical" : [],
+	"mighty" : [],
+	"orange" : [],
+	"parasol" : ["umbrella"],
+	"pink" : [],
+	"plain" : [],
+	"planet" : [],
+	"puree" : ["mash"],
+	"purple" : [],
+	"red" : [],
+	"rings" : [],
+	"round" : [],
+	"skewer" : [],
+	"smirky" : [],
+	"smoke" : [],
+	"soup" : ["broth", "chowder"],
+	"space" : ["cosmic"],
+	"spaghetti" : ["pasta", "noodles"],
+	"spiral" : [],
+	"squid" : ["tentacle"],
+	"stars" : [],
+	"top" : ["high"],
+	"vegetal" : [],
+	"water" : [],
+	"white" : [],
+	"worried" : [],
+	"yellow" : [],
 }
 
 const obscure_keywords_synonyms = {
@@ -228,6 +262,7 @@ const obscure_keywords_synonyms = {
 	"ghost"   : ["blinky", "pinky", "inky", "clyde"]
 }
 var ingredient_names = []
+var plain_keywords = []
 
 var bottom_ingredients = []
 var main_ingredients = []
@@ -242,7 +277,13 @@ func _ready():
 	# Build ingredient_names for bw-compat
 	for desc in ingredient_descs:
 		ingredient_names.append(desc.name)
-
+		for kw in desc.plain_keywords_fr:
+			if not plain_keywords.has(kw):
+				plain_keywords.append(kw)
+	ingredient_names.sort()
+	plain_keywords.sort()
+	print("Keywords: ", plain_keywords)
+	
 	# Build ingredient lists for bw-compat
 	bottom_ingredients = get_ingredient_names_with_tag("bottom")
 	main_ingredients = get_ingredient_names_with_tag("main")
@@ -352,7 +393,13 @@ func _check_ingredient_metadata():
 		assert(load(png_name) != null)
 		
 	
+	for kw in plain_keywords:
+		assert(plain_keywords_synonyms.has(kw))
+	for kw in plain_keywords_synonyms:
+		if not plain_keywords.has(kw):
+			print("WARNING: Synonyms are declared for ", kw, " though the ingredient is not declared")
 		
+
 	for desc in ingredient_descs:
 		var count = desc.plain_keywords_fr.size()
 		assert(count >= 2)
