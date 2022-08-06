@@ -3,13 +3,7 @@
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/misc/green_hint.png" type="Texture" id=2]
 [ext_resource path="res://scenes/shared/DishScore.gd" type="Script" id=3]
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.780392, 0.784314, 0.415686, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 10
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 5
+[ext_resource path="res://scenes/shared/DishScore.tres" type="StyleBox" id=4]
 
 [node name="DishScore" type="Node2D"]
 position = Vector2( 0, -8 )
@@ -20,7 +14,7 @@ margin_left = 78.0
 margin_top = -142.0
 margin_right = 153.0
 margin_bottom = -112.0
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = ExtResource( 4 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = 84.0
