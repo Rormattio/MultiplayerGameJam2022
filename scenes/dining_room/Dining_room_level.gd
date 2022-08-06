@@ -2,7 +2,7 @@ extends Node
 
 const Patron = preload("res://scenes/dining_room/Patron.tscn")
 
-onready var tray = $Layout/Tray
+onready var tray = $Tray
 onready var layout = $Layout
 onready var dining_room = $DiningRoom
 onready var waiter = $Layout/Waiter
