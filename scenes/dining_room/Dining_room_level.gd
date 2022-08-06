@@ -111,7 +111,7 @@ func set_carrying_received_dish(received_dish):
 		received_dish.set_state(received_dish.State.CARRIED)
 
 func _refresh_layout_visible():
-	_set_layout_visible(layout.visible)
+	_set_layout_visible(dining_room.state == dining_room.State.NOT_VISIBLE)
 
 func _set_layout_visible(set_visible):
 	layout.visible = set_visible
@@ -119,19 +119,18 @@ func _set_layout_visible(set_visible):
 	var patron_level_visible = set_visible
 	var patron_command_visible
 	for table in tables:
-		patron_command_visible = false
-		if (not set_visible):
-			assert(dining_room.patrons.size() > 0)
-			if dining_room.patrons[0] in table.patrons_around:
-				patron_command_visible = true
-		table.taking_commands = patron_command_visible
+		table.is_popped_up = table == dining_room.table
+	if not set_visible:
+		assert(dining_room.table.patrons_around.size() > 0) # how did we get here if there was no patron to click on ?!
+	if not set_visible:
+		dining_room.update_can_send_command()
 	for patron in patrons.get_children():
 		patron.set_avatars_visible(patron_level_visible)
 
 func _on_patron_avatar_level_clicked(patron):
 	assert(dining_room.state == dining_room.State.NOT_VISIBLE)
 	if (patron.sitting_at_table.position.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE):
-		dining_room.pop_up([patron])
+		dining_room.pop_up(patron.sitting_at_table)
 		_set_layout_visible(false)
 
 func _on_patron_avatar_command_clicked(patron):
@@ -139,7 +138,6 @@ func _on_patron_avatar_command_clicked(patron):
 	match patron.state:
 		patron.State.WAITING_TO_ORDER:
 			patron.set_state(patron.State.ORDERING)
-			patron.set_state(patron.State.WAITING_TO_EAT)
 		patron.State.WAITING_TO_EAT:
 			if carrying_dish_node.get_child_count() > 0:
 				assert(carrying_dish_node.get_child_count() == 1)
