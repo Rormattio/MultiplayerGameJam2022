@@ -71,8 +71,8 @@ z_index = 2
 texture = ExtResource( 3 )
 
 [node name="ChangeDish" type="Button" parent="."]
-margin_left = 300.0
-margin_top = 400.0
+margin_left = 308.0
+margin_top = 402.0
 margin_right = 376.0
 margin_bottom = 470.0
 icon = ExtResource( 2 )
@@ -98,8 +98,9 @@ text = "TRASH"
 [node name="Randomize" type="Button" parent="."]
 margin_left = 683.0
 margin_top = 596.0
-margin_right = 777.0
+margin_right = 818.0
 margin_bottom = 623.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 4 )
 custom_styles/normal = SubResource( 1 )
 text = "RANDOMIZE"
@@ -159,6 +160,7 @@ position = Vector2( 1221, 681 )
 texture = ExtResource( 24 )
 
 [node name="History" type="Node2D" parent="."]
+visible = false
 z_index = 10
 
 [node name="Background" type="Sprite" parent="History"]
