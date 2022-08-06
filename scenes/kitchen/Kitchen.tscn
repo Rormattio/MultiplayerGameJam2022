@@ -83,7 +83,11 @@ margin_left = 886.0
 margin_right = 1280.0
 margin_bottom = 650.0
 
-[node name="ItemsPos" type="Node2D" parent="History"]
+[node name="ItemsPosColumn0" type="Node2D" parent="History"]
+position = Vector2( 114, 70 )
+
+[node name="ItemsPosColumn1" type="Node2D" parent="History/ItemsPosColumn0"]
+position = Vector2( 609, 0 )
 
 [node name="CommandsContainer" type="Sprite" parent="."]
 z_index = 10

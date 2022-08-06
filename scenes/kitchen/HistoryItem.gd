@@ -2,6 +2,8 @@ extends Node2D
 
 class_name HistoryItem
 
+const Y_DELTA = 160
+
 const DishRenderer = preload("res://DishRenderer.gd")
 
 static func instance_history_item_scene(order : Order, dish_serialized : Array, hints : Array, score : int):
