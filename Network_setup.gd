@@ -64,8 +64,8 @@ func _player_disconnected(id) -> void:
 func _on_Create_server_pressed():
 	AudioSfx.play(Ingredients.Sfx.CLICK)
 	multiplayer_config_ui.hide()
-	Network.create_server()
 	image.hide()
+	Network.create_server()
 	instanciate_object_at_root(dining_room_level_scene, get_tree().get_network_unique_id())
 
 func _on_Join_server_pressed():
