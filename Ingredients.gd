@@ -196,6 +196,12 @@ var ingredient_descs = [
 	IngredientDesc.new("soup_lava", ["soup_base"],
 		["red", "soup"], [],
 		null),
+	IngredientDesc.new("parasol_yellow", ["soup_top"],
+		["parasol", "yellow"], [],
+		null),
+	IngredientDesc.new("parasol_pink", ["soup_top"],
+		["parasol", "pink"], [],
+		null),
 ]
 
 const plain_keywords_synonyms = {
@@ -212,6 +218,7 @@ const plain_keywords_synonyms = {
 	"fried"    : ["fat"],
 	"eight"    : ["number"],
 	"soup"     : ["broth", "chowder"],
+	"parasol"  : ["umbrella"],
 }
 
 const obscure_keywords_synonyms = {
