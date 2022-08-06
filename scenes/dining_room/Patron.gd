@@ -38,6 +38,7 @@ var PATRON_SPRITE_NAMES = [
 	"fmdkdd",
 	"fromage_chaud",
 ]
+
 var PATRON_HAS_ANIM = {
 	"frog": true,
 	"duck": true,
@@ -45,14 +46,7 @@ var PATRON_HAS_ANIM = {
 	"bertmo": false,
 	"fmdkdd": false,
 	"fromage_chaud": false,
-}
-
-enum Sound {
-	OHAYO,
-	TCHAO,
-	HELLO_ELMO,
-	BYE_ELMO,
-}
+}	
 
 const BEHIND_WINDOW_TINT = Color("#1a2b3b")
 const IN_ROOM_TINT = Color("#ffffff")
@@ -321,3 +315,26 @@ func generate_dish() -> Dish:
 	dish_wish.get_node("Ingredients").add_child(ingredients_node)
 
 	return random_dish
+
+var PLAY_VOICE_PROBABILITY = 1.0
+
+func play_hello_sometimes():
+	if randf() <= PLAY_VOICE_PROBABILITY:
+		var stream = AudioSfx.get_hello_stream_for_patron(sprite_name)
+		if stream != null:
+			$AudioStreamPlayer.stream = stream
+			$AudioStreamPlayer.play()
+
+func play_nomnom_sometimes():
+	if randf() <= PLAY_VOICE_PROBABILITY:
+		var stream = AudioSfx.get_nomnom_stream_for_patron(sprite_name)
+		if stream != null:
+			$AudioStreamPlayer.stream = stream
+			$AudioStreamPlayer.play()
+
+func play_bye_sometimes():
+	if randf() <= PLAY_VOICE_PROBABILITY:
+		var stream = AudioSfx.get_bye_stream_for_patron(sprite_name)
+		if stream != null:
+			$AudioStreamPlayer.stream = stream
+			$AudioStreamPlayer.play()
