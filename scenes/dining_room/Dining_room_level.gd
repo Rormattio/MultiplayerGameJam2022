@@ -12,6 +12,8 @@ onready var patrons = $Patrons
 onready var spawn_timer = $SpawnTimer
 onready var carrying_dish_node = $CarryingDish
 onready var audio_sfx = $AudioSfx
+onready var door = $door
+onready var door_close_timer = $door/CloseTimer
 
 var TRIGGER_COMMAND_AT_X_FROM_TABLE
 
@@ -22,6 +24,8 @@ var patron_random_pool = []
 func _ready():
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
 	dining_room.tray = tray
+
+	door_close_timer.connect("timeout", self, "close_door")
 
 	if Global.DEBUG:
 		TRIGGER_COMMAND_AT_X_FROM_TABLE = 2000
@@ -89,6 +93,8 @@ func spawn_patron():
 	patron_dummy.command_avatar.position.x = 780
 	patron_dummy.command_avatar.position.y = 300
 	patron_dummy.path_to_follow = table.path_from_entrance
+	patron_dummy.connect("patron_enters_room", self, "open_door")
+	patron_dummy.connect("patron_exits_room", self, "open_door")
 
 	patron_dummy.init()
 	_refresh_layout_visible()
@@ -160,3 +166,10 @@ func _on_SpawnTimer_timeout():
 
 func _on_Jukebox_button_up():
 	audio_sfx.toggle_music()
+
+func open_door():
+	door.hide()
+	door_close_timer.start()
+
+func close_door():
+	door.show()
