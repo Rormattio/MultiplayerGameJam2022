@@ -15,17 +15,21 @@ onready var carrying_dish_node = $CarryingDish
 onready var audio_sfx = $AudioSfx
 onready var door = $door
 onready var door_close_timer = $door/CloseTimer
+onready var score_box = $Score
 
 var TRIGGER_COMMAND_AT_X_FROM_TABLE
+
+var score_value
 
 var tables = []
 var patron_random_pool = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	score_value = 0
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
 	dining_room.connect("serve_dish_pressed", self, "_on_serve_dish")
-	
+
 	dining_room.tray = tray
 
 	door_close_timer.connect("timeout", self, "close_door")
@@ -61,7 +65,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	score_box.render(Global.get_total_score())
 
 func spawn_patron():
 	var found_table_idx = -1

@@ -16,6 +16,8 @@ onready var current_container_type = Dish.ContainerType.PLATE
 onready var commands_container = $CommandsContainer
 onready var audio_sfx = $AudioSfx
 
+onready var score_box = $Score
+
 var cheffe
 
 var active_commands = []
@@ -39,6 +41,7 @@ var state = State.COOKING
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#score_box.text = str(Global.total_score)+"$"
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
 	$History.visible = false
@@ -77,8 +80,8 @@ func _ready():
 	audio_sfx.play_ambience()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	score_box.render(Global.get_total_score())
 
 func _is_possible_next_ingredient_0(ingredient_desc):
 	assert(ingredient_desc != null);
