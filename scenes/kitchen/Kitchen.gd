@@ -76,12 +76,13 @@ func _ready():
 		ingredient_stock.get_node("Sprite").set_texture(ingredient_sprite)
 
 	_refresh_stock()
-	
+
 	audio_sfx.play_ambience()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	score_box.render(Global.get_total_score())
+	#score_box.render(Global.get_total_score())
+	pass
 
 func _is_possible_next_ingredient_0(ingredient_desc):
 	assert(ingredient_desc != null);
