@@ -285,6 +285,7 @@ var soup_top_ingredients = []
 
 func _ready():
 	# Build ingredient_names for bw-compat
+	ingredient_names = []
 	for desc in ingredient_descs:
 		ingredient_names.append(desc.name)
 		for kw in desc.plain_keywords_fr:
