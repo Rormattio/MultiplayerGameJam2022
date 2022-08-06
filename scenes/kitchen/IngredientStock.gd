@@ -47,6 +47,7 @@ func score_feedback(command_clues : Array, score):
 		clues.append_bbcode("[color=" + color + "]" + clue + "[/color]\n")
 
 func _on_Button_mouse_entered():
+	return # Decided that we do not want clues presented in this way for Cheffe. Instead we made the history.
 	if len(clue_to_score) > 0:
 		clues_overlay.visible = true
 
