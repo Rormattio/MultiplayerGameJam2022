@@ -152,7 +152,7 @@ func _refresh_stock():
 		var node = $IngredientStockContainer.get_child(0)
 		$IngredientStockContainer.remove_child(node)
 
-	var ITEMS_PER_LINE = 5
+	var ITEMS_PER_LINE = 6
 	var start_x = 900
 	var x = start_x
 	var y = 50
