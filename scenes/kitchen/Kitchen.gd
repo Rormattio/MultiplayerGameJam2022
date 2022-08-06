@@ -147,10 +147,34 @@ func _is_possible_next_ingredient(ingredient_desc):
 			assert(false)
 			return false
 
+const TAG_SORT_ORDER = [ "bottom", "bottom_burger", "soup_base", "main", "mid_burger", "top_burger", "top", "soup_top" ]
+
+class StockIngredientSorter:
+	static func sort(a, b):
+		var desc_a = Ingredients.get_ingredient_desc(a)
+		var desc_b = Ingredients.get_ingredient_desc(b)
+		assert(desc_a != null)
+		assert(desc_b != null)
+		
+		var index_a = TAG_SORT_ORDER.find(desc_a.tags[0])
+		var index_b = TAG_SORT_ORDER.find(desc_b.tags[0])
+		assert(index_a != -1)
+		assert(index_b != -1)
+		if index_a < index_b:
+			return true
+		elif index_a > index_b:
+			return false
+		else:
+			return a < b # Alphabetic order
+
 func _refresh_stock():
 	while $IngredientStockContainer.get_child_count() > 0:
 		var node = $IngredientStockContainer.get_child(0)
 		$IngredientStockContainer.remove_child(node)
+
+	var ingredient_names = Ingredients.ingredient_names.duplicate()
+	ingredient_names.sort_custom(StockIngredientSorter, "sort")
+
 
 	var ITEMS_PER_LINE = 6
 	var start_x = 900
@@ -159,8 +183,9 @@ func _refresh_stock():
 	var dx = 64
 	var w = dx*ITEMS_PER_LINE
 	var dy = 64
-	for ingredient_desc in Ingredients.ingredient_descs:
-		var ingredient_name = ingredient_desc.name
+	for ingredient_name in ingredient_names:
+		var ingredient_desc = Ingredients.get_ingredient_desc(ingredient_name)
+		assert(ingredient_desc != null)
 		var ingredient_stock = ingredient_stocks[ingredient_name]
 		ingredient_stock.set_enabled(_is_possible_next_ingredient(ingredient_desc))
 		ingredient_stock.position.x = x

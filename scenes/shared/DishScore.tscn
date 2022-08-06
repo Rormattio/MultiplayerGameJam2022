@@ -18,7 +18,7 @@ script = ExtResource( 3 )
 [node name="Background" type="Panel" parent="."]
 margin_left = 78.0
 margin_top = -142.0
-margin_right = 108.0
+margin_right = 153.0
 margin_bottom = -112.0
 custom_styles/panel = SubResource( 5 )
 
@@ -28,7 +28,7 @@ margin_top = -138.0
 margin_right = 99.0
 margin_bottom = -117.0
 custom_fonts/font = ExtResource( 1 )
-text = "10"
+text = "+10$!"
 align = 1
 valign = 1
 

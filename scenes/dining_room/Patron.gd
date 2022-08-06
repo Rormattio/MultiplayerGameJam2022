@@ -232,7 +232,12 @@ func compute_dish_score(wanted_dish : Dish, dish : Dish):
 	assert(wanted_dish != null)
 	assert(dish != null)
 	var diffs = Dish.compute_difference(wanted_dish, dish)
-	var score = diffs[0] + diffs[1] + diffs[2] + diffs[3]
+	var score = 0
+	for i in range(4):
+		if diffs[i] != -1:
+			score += 2*diffs[i]
+		else:
+			diffs[i] = 2 # sets back to 2 to have the correct smileys
 	return [score, diffs]
 
 func show_dish_score():
