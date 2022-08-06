@@ -188,6 +188,7 @@ func _player_disconnected(id) -> void:
 	$DisconnectedPopup.show()
 
 func _on_ChooseCheffe_pressed():
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	chosen_role = PlayerRole.CHEFFE
 	Global.lobby_send_role(chosen_role)
 
@@ -197,6 +198,7 @@ func _on_ChooseCheffe_pressed():
 	update_role_feedback()
 
 func _on_ChooseWaiter_pressed():
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	chosen_role = PlayerRole.WAITER
 	Global.lobby_send_role(chosen_role)
 
@@ -220,6 +222,7 @@ func _on_LobbyRole_sent(role):
 	update_role_feedback()
 
 func _on_LobbyCancel_pressed():
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	exit_lobby()
 
 const ROLE_MISMATCH_COLOR = Color("#ff0000")
@@ -280,6 +283,8 @@ func check_if_game_can_start():
 
 func _on_StartGame_pressed():
 	assert(chosen_role != null)
+
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 
 	Global.lobby_send_start_game()
 	_on_LobbyStartGame_sent()
@@ -349,6 +354,7 @@ func enter_title_screen():
 	multiplayer_config_ui.show()
 
 func _on_Restart_pressed():
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	for n in $RoleScene.get_children():
 		n.queue_free()
 
@@ -358,4 +364,5 @@ func _on_Restart_pressed():
 	enter_title_screen()
 
 func _on_ExitToDesktop_pressed():
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	get_tree().quit()
