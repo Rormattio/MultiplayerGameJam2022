@@ -96,7 +96,7 @@ func spawn_patron():
 	patron_dummy.command_avatar.position.y = 300
 	patron_dummy.path_to_follow = table.path_from_entrance
 	patron_dummy.connect("patron_enters_room", self, "open_door")
-	patron_dummy.connect("patron_exits_room", self, "close_door")
+	patron_dummy.connect("patron_exits_room", self, "open_door")
 	patron_dummy.connect("patron_state_changed", self, "_on_patron_state_changed")
 
 	patron_dummy.init()
