@@ -62,14 +62,14 @@ func _player_disconnected(id) -> void:
 	connection_status.show()
 
 func _on_Create_server_pressed():
-	AudioSfx.play(Ingredients.Sfx.CLICK)
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	multiplayer_config_ui.hide()
 	image.hide()
 	Network.create_server()
 	instanciate_object_at_root(dining_room_level_scene, get_tree().get_network_unique_id())
 
 func _on_Join_server_pressed():
-	AudioSfx.play(Ingredients.Sfx.CLICK)
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	print("_on_Join_server_pressed")
 	image.hide()
 	var ip_address
@@ -84,7 +84,7 @@ func _on_Join_server_pressed():
 	Network.join_server()
 
 func _on_Create_server_and_client_pressed():
-	AudioSfx.play(Ingredients.Sfx.CLICK)
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	multiplayer_config_ui.hide()
 	image.hide()
 	Network.create_server()
