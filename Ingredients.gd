@@ -191,6 +191,12 @@ var ingredient_descs = [
 	IngredientDesc.new("stars_yellow", ["top"],
 		["stars", "yellow", "space"], [],
 		null),
+	IngredientDesc.new("soup_water", ["soup_base"],
+		["blue", "water", "soup"], [],
+		null),
+	IngredientDesc.new("soup_lava", ["soup_base"],
+		["red", "soup"], [],
+		null),
 ]
 
 const plain_keywords_synonyms = {
@@ -205,7 +211,8 @@ const plain_keywords_synonyms = {
 	"puree"    : ["mash"],
 	"spaghetti": ["pasta", "noodles"],
 	"fried"    : ["fat"],
-	"eight"    : ["number"]
+	"eight"    : ["number"],
+	"soup"     : ["broth", "chowder"],
 }
 
 const obscure_keywords_synonyms = {
@@ -222,8 +229,8 @@ var top_ingredients = []
 var bottom_burger_ingredients = []
 var mid_burger_ingredients = []
 var top_burger_ingredients = []
-var base_soup_ingredients = []
-var top_soup_ingredients = []
+var soup_base_ingredients = []
+var soup_top_ingredients = []
 
 func _ready():
 	# Build ingredient_names for bw-compat
@@ -237,8 +244,8 @@ func _ready():
 	bottom_burger_ingredients = get_ingredient_names_with_tag("bottom_burger")
 	mid_burger_ingredients = get_ingredient_names_with_tag("mid_burger")
 	top_burger_ingredients = get_ingredient_names_with_tag("top_burger")
-	base_soup_ingredients = get_ingredient_names_with_tag("bottom_soup")
-	top_soup_ingredients = get_ingredient_names_with_tag("top_soup")
+	soup_base_ingredients = get_ingredient_names_with_tag("soup_base")
+	soup_top_ingredients = get_ingredient_names_with_tag("soup_top")
 
 	for desc in ingredient_descs:
 		var png_name = "res://assets/food/" + desc.name + ".png"
@@ -293,11 +300,11 @@ func is_top_burger_ingredient(name):
 
 func is_soup_base_ingredient(name):
 	assert(is_ingredient(name))
-	return base_soup_ingredients.has(name)
+	return soup_base_ingredients.has(name)
 
 func is_soup_top_ingredient(name):
 	assert(is_ingredient(name))
-	return top_soup_ingredients.has(name)
+	return soup_top_ingredients.has(name)
 
 func _check_ingredient_metadata():
 	var ingredient_count = get_ingredient_count()
@@ -305,7 +312,8 @@ func _check_ingredient_metadata():
 		var name = ingredient_names[i]
 		assert(is_ingredient(name))
 		assert(is_bottom_ingredient(name) or is_main_ingredient(name) or is_top_ingredient(name) or
-			is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name))
+			is_bottom_burger_ingredient(name) or is_mid_burger_ingredient(name) or is_top_burger_ingredient(name)
+			or is_soup_base_ingredient(name) or is_soup_top_ingredient(name))
 		var png_name = "res://assets/food/" + name + ".png"
 		assert(load(png_name) != null)
 		
