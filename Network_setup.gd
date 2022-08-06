@@ -273,9 +273,9 @@ func start_game():
 	print("start game")
 
 	if chosen_role == PlayerRole.CHEFFE:
-		instanciate_object_at_root(kitchen_scene, Network.get_id())
+		instanciate_object(kitchen_scene, Network.get_id(), $RoleScene)
 	else:
-		instanciate_object_at_root(dining_room_level_scene, Network.get_id())
+		instanciate_object(dining_room_level_scene, Network.get_id(), $RoleScene)
 
 	title_image.hide()
 	lobby.hide()
