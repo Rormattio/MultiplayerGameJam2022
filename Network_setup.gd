@@ -39,6 +39,8 @@ func _ready() -> void:
 	$DisconnectedPopup.hide()
 	$DisconnectedPopup/RestartButton.connect("pressed", self, "_on_Restart_pressed")
 
+	$Multiplayer_configure/QuitToDesktop.connect("pressed", self, "_on_ExitToDesktop_pressed")
+
 	Upnp.connect("upnp_completed", self, "_upnp_completed")
 	external_ip_address_label.hide()
 	device_external_ip_address.hide()
@@ -304,3 +306,6 @@ func _on_Restart_pressed():
 	$DisconnectedPopup.hide()
 
 	enter_title_screen()
+
+func _on_ExitToDesktop_pressed():
+	get_tree().quit()
