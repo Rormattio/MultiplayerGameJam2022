@@ -19,7 +19,7 @@ static func instance_command_scene(_type, _order) -> Command:
 	command.type = _type
 	match _type:
 		Type.ACTIVE_COMMAND:
-			pass
+			command.get_node("Close").visible = false # Actually we decided that we do not want cheffe to be able to discard commands
 		Type.HISTORY_COMMAND:
 			command.get_node("Close").visible = false
 			command.get_node("SendDish").visible = false
