@@ -9,7 +9,7 @@ func _ready():
 	pass # Replace with function body.
 
 func render(ingredient_diffs, dish_score_value):
-	$Label.text = str(dish_score_value)
+	$Label.text = "+"+str(dish_score_value)+"$!"
 	show()
 	for idx in range(4):
 		var sprite = get_node("Feedbacks/feedback_" + str(idx))
