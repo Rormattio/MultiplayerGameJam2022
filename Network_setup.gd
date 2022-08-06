@@ -13,6 +13,8 @@ onready var device_external_ip_address = $Multiplayer_configure/Device_external_
 onready var create_server_and_client = $Multiplayer_configure/create_server_and_client
 onready var connection_status = $connection_status
 
+onready var image = $Sprite
+
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -63,12 +65,13 @@ func _on_Create_server_pressed():
 	AudioSfx.play(Ingredients.Sfx.CLICK)
 	multiplayer_config_ui.hide()
 	Network.create_server()
-
+	image.hide()
 	instanciate_object_at_root(dining_room_level_scene, get_tree().get_network_unique_id())
 
 func _on_Join_server_pressed():
 	AudioSfx.play(Ingredients.Sfx.CLICK)
 	print("_on_Join_server_pressed")
+	image.hide()
 	var ip_address
 	if server_ip_address.text != "":
 		ip_address = server_ip_address.text
@@ -83,6 +86,7 @@ func _on_Join_server_pressed():
 func _on_Create_server_and_client_pressed():
 	AudioSfx.play(Ingredients.Sfx.CLICK)
 	multiplayer_config_ui.hide()
+	image.hide()
 	Network.create_server()
 
 	var dual_scene_handle = dual_scene.instance()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/misc/game_title.png" type="Texture" id=4]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -15,6 +16,11 @@
 [node name="Network_setup" type="Node" parent="."]
 script = ExtResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="Network_setup"]
+position = Vector2( 649, 368 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 4 )
+
 [node name="Multiplayer_configure" type="Control" parent="Network_setup"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,13 +28,13 @@ anchor_bottom = 1.0
 [node name="Create_server" type="Button" parent="Network_setup/Multiplayer_configure"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -224.0
-margin_top = 176.0
-margin_right = 237.0
-margin_bottom = 266.0
+margin_left = -540.0
+margin_top = 382.0
+margin_right = -140.0
+margin_bottom = 472.0
 rect_pivot_offset = Vector2( 46, 213 )
 custom_fonts/font = ExtResource( 2 )
-text = "Create server"
+text = "Create game"
 
 [node name="create_server_and_client" type="Button" parent="Network_setup/Multiplayer_configure"]
 anchor_left = 0.5
@@ -46,22 +52,22 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -192.0
-margin_top = 56.0
-margin_right = 218.0
-margin_bottom = 146.0
+margin_left = 134.0
+margin_top = 22.0
+margin_right = 494.0
+margin_bottom = 112.0
 custom_fonts/font = ExtResource( 2 )
-text = "Join server"
+text = "Join game"
 
 [node name="Server_ip_address" type="LineEdit" parent="Network_setup/Multiplayer_configure"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -152.0
-margin_top = 168.0
-margin_right = 168.0
-margin_bottom = 220.0
+margin_left = 156.0
+margin_top = 131.0
+margin_right = 476.0
+margin_bottom = 183.0
 custom_fonts/font = ExtResource( 3 )
 align = 1
 placeholder_text = "server address"
@@ -83,10 +89,10 @@ text = "192.12.12.12"
 editable = false
 
 [node name="or" type="Label" parent="Network_setup/Multiplayer_configure"]
-margin_left = 616.0
-margin_top = 320.0
-margin_right = 694.0
-margin_bottom = 404.0
+margin_left = 595.0
+margin_top = 411.0
+margin_right = 673.0
+margin_bottom = 495.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 2 )
 text = "Or"
