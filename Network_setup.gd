@@ -24,6 +24,7 @@ func _ready() -> void:
 
 	Global.connect("lobby_role_sent", self, "_on_LobbyRole_sent")
 	Global.connect("lobby_start_game_sent", self, "_on_LobbyStartGame_sent")
+	Global.connect("player_quit_sent", self, "_player_disconnected")
 
 	if not Global.DEBUG:
 		create_server_and_client.queue_free()
@@ -107,6 +108,7 @@ enum PlayerRole {
 }
 
 enum LobbyState {
+	TITLE_SCREEN,
 	WAITING_FOR_PLAYER,
 	CHOOSING_ROLES,
 	CAN_START_GAME,
@@ -144,6 +146,20 @@ func enter_lobby():
 	connection_status.add_color_override("font_color", "#ffff00")
 	connection_status.show()
 
+func exit_lobby():
+	Global.player_send_quit(Network.get_id())
+	Network.stop()
+
+	lobby_state = LobbyState.TITLE_SCREEN
+	lobby.hide()
+
+	connection_status.hide()
+	multiplayer_config_ui.show()
+
+func _exit_tree():
+	Global.player_send_quit(Network.get_id())
+	Network.stop()
+
 func _player_connected(id) -> void:
 	print("Player " + str(id) + " has connected")
 
@@ -154,6 +170,8 @@ func _player_connected(id) -> void:
 	$Lobby/ChooseCheffe.disabled = false
 	$Lobby/ChooseWaiter.disabled = false
 	lobby_state = LobbyState.CHOOSING_ROLES
+
+	Network.stop_listening_for_peers()
 
 func _player_disconnected(id) -> void:
 	print("Player " + str(id) + " has disconnected")
@@ -193,6 +211,9 @@ func _on_LobbyRole_sent(role):
 	$Lobby/TheirRole.show()
 
 	check_if_game_can_start()
+
+func _on_LobbyCancel_pressed():
+	exit_lobby()
 
 func check_if_game_can_start():
 	var can_start = (chosen_role != null and other_role != null and chosen_role != other_role)
@@ -252,9 +273,9 @@ func start_game():
 	print("start game")
 
 	if chosen_role == PlayerRole.CHEFFE:
-		instanciate_object_at_root(kitchen_scene, get_tree().get_network_unique_id())
+		instanciate_object_at_root(kitchen_scene, Network.get_id())
 	else:
-		instanciate_object_at_root(dining_room_level_scene, get_tree().get_network_unique_id())
+		instanciate_object_at_root(dining_room_level_scene, Network.get_id())
 
 	title_image.hide()
 	lobby.hide()

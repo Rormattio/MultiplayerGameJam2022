@@ -8,6 +8,7 @@ signal patron_dish_score_sent(dish_serialized, score, order_serialized, hints)
 signal total_score_sent(total_score)
 signal lobby_role_sent(role)
 signal lobby_start_game_sent()
+signal player_quit_sent(id)
 
 var DEBUG = true
 
@@ -247,6 +248,12 @@ func lobby_send_start_game():
 
 remote func on_lobby_send_start_game():
 	emit_signal("lobby_start_game_sent")
+
+func player_send_quit(id):
+	rpc("on_player_send_quit", id)
+
+remote func on_player_send_quit(id):
+	emit_signal("player_quit_sent", id)
 
 func rand_array(array : Array):
 	return array[randi() % array.size()]

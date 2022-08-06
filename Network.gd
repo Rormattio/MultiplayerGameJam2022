@@ -28,6 +28,7 @@ func create_server() -> void:
 	if error != 0:
 		print("error = ", error)
 	get_tree().set_network_peer(server)
+	start_listening_for_peers()
 
 func join_server() -> void:
 	print("join_server")
@@ -42,3 +43,15 @@ func _connected_to_server() -> void:
 
 func _server_disconnected() -> void:
 	print("Disconnected from the server")
+
+func stop() -> void:
+	get_tree().network_peer = null
+
+func start_listening_for_peers() -> void:
+	get_tree().set_refuse_new_network_connections(false)
+
+func stop_listening_for_peers() -> void:
+	get_tree().set_refuse_new_network_connections(true)
+
+func get_id():
+	return get_tree().get_network_unique_id()
