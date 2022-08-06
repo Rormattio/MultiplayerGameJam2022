@@ -131,7 +131,7 @@ func build_word_list():
 	for kw in keyword_list:
 		wordlist.add_item(kw)
 
-	for idx in wordlist.get_item_count():
+	for idx in range(wordlist.get_item_count()):
 		wordlist.set_item_tooltip_enabled(idx, false)
 
 
@@ -173,4 +173,3 @@ func _on_Background_gui_input(event: InputEvent):
 	var mouse_pos = event.position
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		emit_signal("close_command_popup")
-

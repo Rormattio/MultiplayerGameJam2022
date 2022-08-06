@@ -28,6 +28,9 @@ static func instance_command_scene(_type, _order) -> Command:
 	var words = _order.text.split(" ")
 	for word in words:
 		word_items.add_item(word)
+	for idx in range(word_items.get_item_count()):
+		word_items.set_item_selectable(idx, false)
+		word_items.set_item_tooltip_enabled(idx, false)
 	return command
 
 # Called when the node enters the scene tree for the first time.
