@@ -10,15 +10,14 @@ static func _load_food_texture(ingredient):
 	assert(desc.png)
 	return desc.png
 
-static func _add_sprite(root, ingredient, z_index):
+static func _add_sprite_if_needed(root, ingredient, z_index):
 	assert(root != null)
 	assert(ingredient != null)
-	assert(ingredient != "")
-	
-	var top = Sprite.new()
-	top.z_index = z_index
-	top.texture = _load_food_texture(ingredient)
-	root.add_child(top)
+	if ingredient != "":
+		var top = Sprite.new()
+		top.z_index = z_index
+		top.texture = _load_food_texture(ingredient)
+		root.add_child(top)
 
 static func render_dish(dish : Dish) -> Node2D:
 	assert(dish != null)
@@ -34,26 +33,18 @@ static func render_dish(dish : Dish) -> Node2D:
 	root.add_child(dish_back)
 	
 	if dish.meal_type == Dish.MealType.BURGER:
-		_add_sprite(root, dish.burger_component_bottom_burger, 1)
-		_add_sprite(root, dish.burger_component_mid_burger, 1)
-		_add_sprite(root, dish.burger_component_top_burger, 1)
-		
-		if dish.burger_component_top != "":
-			_add_sprite(root, dish.burger_component_top, 1)
+		_add_sprite_if_needed(root, dish.burger_component_bottom_burger, 1)
+		_add_sprite_if_needed(root, dish.burger_component_mid_burger, 1)
+		_add_sprite_if_needed(root, dish.burger_component_top_burger, 1)
+		_add_sprite_if_needed(root, dish.burger_component_top, 1)
 	elif dish.meal_type == Dish.MealType.SOUP:
-		_add_sprite(root, dish.soup_component_base, 1)
-		if dish.soup_component_top != "":
-			_add_sprite(root, dish.soup_component_top, 1)
+		_add_sprite_if_needed(root, dish.soup_component_base, 1)
+		_add_sprite_if_needed(root, dish.soup_component_top, 1)
 	else:
 		assert(dish.meal_type == Dish.MealType.NON_BURGER)
-		if dish.non_burger_component_bottom != "":
-			_add_sprite(root, dish.non_burger_component_bottom, 1)
-		
-		if dish.non_burger_component_main != "":
-			_add_sprite(root, dish.non_burger_component_main, 1)
-		
-		if dish.non_burger_component_top != "":
-			_add_sprite(root, dish.non_burger_component_top, 1)
+		_add_sprite_if_needed(root, dish.non_burger_component_bottom, 1)
+		_add_sprite_if_needed(root, dish.non_burger_component_main, 1)
+		_add_sprite_if_needed(root, dish.non_burger_component_top, 1)
 	
 	if (dish.container_type == Dish.ContainerType.BOWL):
 		var dish_front = Sprite.new()

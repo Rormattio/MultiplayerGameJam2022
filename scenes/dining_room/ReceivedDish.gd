@@ -19,8 +19,9 @@ enum State {
 
 func _ready():
 	state = State.UNSERVED
-
+	
 	$RootForOffset/Background.connect("gui_input", self, "_on_input_received")
+	$RootForOffset/Background.modulate.a = 0
 
 func build(a_dish : Array):
 	self.dish = Dish.new()
@@ -41,9 +42,9 @@ func _on_input_received(event: InputEvent):
 func set_state(a_state):
 	match a_state:
 		State.UNSERVED:
-			pass
+			$RootForOffset/Background.modulate.a = 0
 		State.CARRIED:
-			pass
+			$RootForOffset/Background.modulate.a = 255
 		State.SERVED:
-			pass
+			$RootForOffset/Background.modulate.a = 255
 	state = a_state
