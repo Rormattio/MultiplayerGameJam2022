@@ -137,8 +137,10 @@ z_index = 11
 
 [node name="ButtonHistory" type="Button" parent="OpenCloseHistory"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_right = 1391.0
-margin_bottom = 720.0
+margin_left = 1202.0
+margin_top = 658.0
+margin_right = 1245.0
+margin_bottom = 711.0
 rect_scale = Vector2( 0.92, 1 )
 
 [node name="Sprite" type="Sprite" parent="OpenCloseHistory"]

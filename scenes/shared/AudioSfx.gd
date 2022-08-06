@@ -63,11 +63,12 @@ func play(sfx):
 			$shhoo.play()
 		Ingredients.Sfx.CLICK:
 			$click.play()
-		Ingredients.Sfx.SCHBOING:
-			$shhoo.pitch_scale = rand_range(0.9, 1.1)
-			$schboing.play()
 		Ingredients.Sfx.WHOOO:
+			$whooo.pitch_scale = rand_range(0.9, 1.1)
 			$whooo.play()
+		Ingredients.Sfx.SCHBOING:
+			$schboing.pitch_scale = rand_range(0.9, 1.1)
+			$schboing.play()
 		_: assert(false)
 
 func play_ambience():
