@@ -1,7 +1,11 @@
 extends Node
 
+# TODO refactor AudioSfx somehow, because right now it is instanciated in several scenes so sound data is being duplicated
+
 var available_host_fs_musics = []
 var ambiance_players = []
+var proba_play_voice_sound = {}
+var proba_play_voice_sound_decrease = 0.9
 
 func play_host_music(path):
 	$bg_music_player.stop()
@@ -70,6 +74,26 @@ func play_ingredient(sfx):
 			$schboing.pitch_scale = rand_range(0.9, 1.1)
 			$schboing.play()
 		_: assert(false)
+
+func play_voice(sfx):
+	if not (sfx in proba_play_voice_sound):
+		proba_play_voice_sound[sfx] = 1
+	if randf() > proba_play_voice_sound[sfx]:
+		return
+	proba_play_voice_sound[sfx] *= proba_play_voice_sound_decrease
+	match sfx:
+		Patron.Sound.OHAYO:
+			$ohayo.pitch_scale = rand_range(0.9, 1.1)
+			$ohayo.play()
+		Patron.Sound.TCHAO:
+			$tchao.pitch_scale = rand_range(0.9, 1.1)
+			$tchao.play()
+		Patron.Sound.HELLO_ELMO:
+			$hello_elmo.pitch_scale = rand_range(0.9, 1.1)
+			$hello_elmo.play()
+		Patron.Sound.BYE_ELMO:
+			$bye_elmo.pitch_scale = rand_range(0.9, 1.1)
+			$bye_elmo.play()
 
 func play_ambience():
 	for player in ambiance_players:

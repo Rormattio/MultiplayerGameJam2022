@@ -15,6 +15,8 @@ onready var dish_position = $CommandAvatar/DishPosition
 onready var command_avatar = $CommandAvatar
 onready var level_avatar = $LevelAvatar
 
+class_name Patron
+
 enum State {
 	ENTERING_BEHIND_WINDOW,
 	ENTERING,
@@ -45,6 +47,13 @@ var PATRON_HAS_ANIM = {
 	"fromage_chaud": false,
 }
 
+enum Sound {
+	OHAYO,
+	TCHAO,
+	HELLO_ELMO,
+	BYE_ELMO,
+}
+
 const BEHIND_WINDOW_TINT = Color("#1a2b3b")
 const IN_ROOM_TINT = Color("#ffffff")
 
@@ -60,6 +69,7 @@ var path_to_follow
 var path_offset = 0.0
 var dish_score_value
 var ingredient_diffs
+var sprite_name
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -81,7 +91,7 @@ func init():
 	refresh_avatars_visible()
 
 	var sprite_idx = patron_index % len(PATRON_SPRITE_NAMES)
-	var patron_sprite_name = PATRON_SPRITE_NAMES[sprite_idx]
+	sprite_name = PATRON_SPRITE_NAMES[sprite_idx]
 	var animated_sprite
 	var avatars = [level_avatar, command_avatar]
 	for avatar_idx in range(len(avatars)):
@@ -97,12 +107,12 @@ func init():
 		animated_sprite.frames.add_animation("idle")
 		animated_sprite.frames.add_animation("walk")
 		var animation_size
-		if PATRON_HAS_ANIM[patron_sprite_name]:
+		if PATRON_HAS_ANIM[sprite_name]:
 			animation_size = 4
 		else:
 			animation_size = 1
 		for frame_idx in range(animation_size):
-			var sprite = load("res://assets/misc/" + patron_sprite_name + str(frame_idx) + ".png")
+			var sprite = load("res://assets/misc/" + sprite_name + str(frame_idx) + ".png")
 			assert(sprite != null)
 			animated_sprite.frames.add_frame("walk", sprite)
 			if frame_idx == 0:
