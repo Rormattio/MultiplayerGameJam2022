@@ -78,7 +78,7 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 545, 130, -3.65254, -21.7013, 3.65254, 21.7013, 547, 172, -18.0203, -22.0249, 18.0203, 22.0249, 566, 204, 0, 0, 0, 0, 585, 212, 0, 0, 0, 0, 601, 224 )
 }
 
-[node name="Node" type="Node2D"]
+[node name="Node2" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="background0" type="Sprite" parent="."]
