@@ -61,6 +61,7 @@ func get_free_slots_count() -> int:
 	return c
 
 func _on_Dish_pressed(idx: int):
+	return # We decided that we do not want to let Cheffe remove dishes from the Counter
 	remove_dish_at(idx)
 	Global.cheffe_trashed_dish(idx)
 
