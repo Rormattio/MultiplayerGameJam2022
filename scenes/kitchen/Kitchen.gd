@@ -79,15 +79,20 @@ func _is_possible_next_ingredient_0(ingredient_desc):
 			return false
 		if ingredient_desc.has_tag("bottom"):
 			return false
-
-	return not ingredient_desc.has_any_tag(["mid_burger", "top_burger", "flag"])
+		return not ingredient_desc.has_any_tag(["soup_top", "mid_burger", "top_burger", "flag"])
+	else:
+		assert(current_container_type == Dish.ContainerType.PLATE)
+		return not ingredient_desc.has_any_tag(["soup_base", "soup_top", "mid_burger", "top_burger", "flag"])
 
 func _is_possible_next_ingredient_1(ingredient_desc):
 	assert(ingredient_desc != null);
 
 	var is_burger = (dish_ingredients[0] != "") and Ingredients.is_bottom_burger_ingredient(dish_ingredients[0])
+	var is_soup = (dish_ingredients[0] != "") and Ingredients.is_soup_base_ingredient(dish_ingredients[0])
 	if is_burger:
 		return ingredient_desc.has_tag("mid_burger")
+	elif is_soup:
+		return ingredient_desc.has_tag("soup_top")
 	else:
 		return not ingredient_desc.has_any_tag(["bottom", "bottom_burger", "mid_burger", "top_burger", "flag"])
 
@@ -95,8 +100,11 @@ func _is_possible_next_ingredient_2(ingredient_desc):
 	assert(ingredient_desc != null);
 
 	var is_burger = (dish_ingredients[0] != "") and Ingredients.is_bottom_burger_ingredient(dish_ingredients[0])
+	var is_soup = (dish_ingredients[0] != "") and Ingredients.is_soup_base_ingredient(dish_ingredients[0])
 	if is_burger:
 		return (ingredient_desc != null) and ingredient_desc.has_tag("top_burger")
+	elif is_soup:
+		return false
 	else:
 		return ingredient_desc.has_tag("top") and not ingredient_desc.has_tag("flag")
 
@@ -104,6 +112,8 @@ func _is_possible_next_ingredient_3(ingredient_desc):
 	assert(ingredient_desc != null);
 
 	var is_burger = (dish_ingredients[0] != "") and Ingredients.is_bottom_burger_ingredient(dish_ingredients[0])
+	var is_soup = (dish_ingredients[0] != "") and Ingredients.is_soup_base_ingredient(dish_ingredients[0])
+	assert(not is_soup)
 	if is_burger:
 		return ingredient_desc.has_tag("top")
 	else:
@@ -315,8 +325,8 @@ func _set_dish(new_dish : Dish):
 		_on_ingredient_dish_set(new_dish.burger_component_top_burger)
 		_on_ingredient_dish_set(new_dish.burger_component_top)
 	elif (new_dish.meal_type == Dish.MealType.SOUP):
-		_on_ingredient_dish_set(new_dish.soup_base)
-		_on_ingredient_dish_set(new_dish.soup_top)
+		_on_ingredient_dish_set(new_dish.soup_component_base)
+		_on_ingredient_dish_set(new_dish.soup_component_top)
 	else:
 		assert(new_dish.meal_type == Dish.MealType.NON_BURGER)
 		_on_ingredient_dish_set(new_dish.non_burger_component_bottom)

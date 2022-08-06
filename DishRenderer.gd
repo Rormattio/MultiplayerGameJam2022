@@ -3,6 +3,7 @@ extends Object
 const Dish = preload("Dish.gd")
 
 static func _load_food_texture(ingredient):
+	assert(ingredient != null)
 	assert(ingredient != "")
 	var desc = Ingredients.get_ingredient_desc(ingredient)
 	assert(desc != null)
@@ -11,6 +12,7 @@ static func _load_food_texture(ingredient):
 
 static func _add_sprite(root, ingredient, z_index):
 	assert(root != null)
+	assert(ingredient != null)
 	assert(ingredient != "")
 	
 	var top = Sprite.new()
@@ -38,7 +40,12 @@ static func render_dish(dish : Dish) -> Node2D:
 		
 		if dish.burger_component_top != "":
 			_add_sprite(root, dish.burger_component_top, 1)
+	elif dish.meal_type == Dish.MealType.SOUP:
+		_add_sprite(root, dish.soup_component_base, 1)
+		if dish.soup_component_top != "":
+			_add_sprite(root, dish.soup_component_top, 1)
 	else:
+		assert(dish.meal_type == Dish.MealType.NON_BURGER)
 		if dish.non_burger_component_bottom != "":
 			_add_sprite(root, dish.non_burger_component_bottom, 1)
 		
