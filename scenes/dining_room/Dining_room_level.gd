@@ -187,12 +187,6 @@ func _on_patron_state_changed(patron):
 	
 	match patron.state:
 		patron.State.ENTERING:
-			if patron.sprite_name == "bertmo":
-				$AudioSfx.play_voice(patron.Sound.HELLO_ELMO)
-			else:
-				$AudioSfx.play_voice(patron.Sound.OHAYO)
+			patron.play_hello_sometimes()
 		patron.State.LEAVING_BEHIND_WINDOW:
-			if patron.sprite_name == "bertmo":
-				$AudioSfx.play_voice(patron.Sound.BYE_ELMO)
-			else:
-				$AudioSfx.play_voice(patron.Sound.TCHAO)
+			patron.play_bye_sometimes()
