@@ -70,9 +70,9 @@ placeholder_text = "server address"
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 200.0
+margin_left = 218.0
 margin_top = -520.0
-margin_right = -969.0
+margin_right = -951.0
 margin_bottom = -478.0
 custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
@@ -92,9 +92,9 @@ custom_fonts/font = ExtResource( 2 )
 text = "Or"
 
 [node name="local_ip_address_label" type="Label" parent="Network_setup/Multiplayer_configure"]
-margin_left = 72.0
+margin_left = 48.0
 margin_top = 200.0
-margin_right = 186.0
+margin_right = 210.0
 margin_bottom = 242.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 3 )
@@ -102,9 +102,8 @@ text = "Your local ip:"
 valign = 1
 
 [node name="external_ip_address_label" type="Label" parent="Network_setup/Multiplayer_configure"]
-margin_left = 48.0
 margin_top = 248.0
-margin_right = 190.0
+margin_right = 210.0
 margin_bottom = 290.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 3 )
@@ -115,9 +114,9 @@ valign = 1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 200.0
+margin_left = 218.0
 margin_top = -472.0
-margin_right = -969.0
+margin_right = -951.0
 margin_bottom = -430.0
 custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
