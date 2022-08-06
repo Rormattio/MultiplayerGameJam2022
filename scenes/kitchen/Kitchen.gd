@@ -147,7 +147,7 @@ func _is_possible_next_ingredient(ingredient_desc):
 			assert(false)
 			return false
 
-#const TAG_SORT_ORDER = [ "main", "bottom_burger", "mid_burger", "top_burger", "top", "flag", "bottom", "soup_base", "soup_top" ]
+const TAG_SORT_ORDER = [ "bottom", "bottom_burger", "soup_base", "main", "mid_burger", "top_burger", "top", "soup_top" ]
 
 class StockIngredientSorter:
 	static func sort(a, b):
@@ -155,8 +155,17 @@ class StockIngredientSorter:
 		var desc_b = Ingredients.get_ingredient_desc(b)
 		assert(desc_a != null)
 		assert(desc_b != null)
-		# TODO
-		return a < b
+		
+		var index_a = TAG_SORT_ORDER.find(desc_a.tags[0])
+		var index_b = TAG_SORT_ORDER.find(desc_b.tags[0])
+		assert(index_a != -1)
+		assert(index_b != -1)
+		if index_a < index_b:
+			return true
+		elif index_a > index_b:
+			return false
+		else:
+			return a < b # Alphabetic order
 
 func _refresh_stock():
 	while $IngredientStockContainer.get_child_count() > 0:
