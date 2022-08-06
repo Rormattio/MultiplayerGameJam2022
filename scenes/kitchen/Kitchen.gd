@@ -209,7 +209,7 @@ func _on_SendDish_Pressed(command):
 	assert(can_make_a_dish)
 	assert(induced_dish.is_valid())
 
-	var dish_idx = $Counter.add_dish_wherever(induced_dish)
+	var dish_idx = $Counter.add_dish_wherever_if_possible(induced_dish)
 
 	if dish_idx > -1:
 		_clear_dish()
