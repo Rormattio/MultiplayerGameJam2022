@@ -24,6 +24,10 @@ static func instance_command_scene(_type, _order) -> Command:
 			command.get_node("Close").visible = false
 			command.get_node("SendDish").visible = false
 	command.order = _order
+	var word_items = command.get_node("Words")
+	var words = _order.text.split(" ")
+	for word in words:
+		word_items.add_item(word)
 	return command
 
 # Called when the node enters the scene tree for the first time.

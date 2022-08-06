@@ -29,7 +29,7 @@ var dish_ingredients
 var dish_ingredients_n = 0
 
 var history_items = []
-const HISTORY_ITEMS_MAX_SIZE = 10
+const HISTORY_ITEMS_MAX_SIZE = 8
 
 enum State {
 	COOKING,
@@ -171,14 +171,11 @@ func _refresh_stock():
 
 func _on_WaiterCommand_Sent(order: Order):
 	print("waiter command ", order)
-	var words = order.text.split(" ")
 	var command = Command.instance_command_scene(Command.Type.ACTIVE_COMMAND, order)
 	commands_container.add_child(command)
 	command.connect("close_command", self, "_on_close_command")
 	command.connect("send_dish_pressed", self, "_on_SendDish_Pressed")
 	var word_items = command.get_node("Words")
-	for word in words:
-		word_items.add_item(word)
 	command.position.x = (word_items.rect_size.x + 10)*len(active_commands)
 	command.name = str(command_counter)
 	active_commands.append(command)
@@ -373,16 +370,27 @@ func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized,
 	# add to history
 	var history_item : HistoryItem = HistoryItem.instance_history_item_scene(order, received_dish_serialized, hints, score)
 	$History.add_child(history_item)
-	var y = 0
-	if len(history_items) > 0:
-		y = history_items[-1].position.y + 80
-	history_item.position.y = y
 	
-	history_items.append(history_item)
-	if len(history_items) > HISTORY_ITEMS_MAX_SIZE:
+	if len(history_items) >= HISTORY_ITEMS_MAX_SIZE:
+		assert(len(history_items) == HISTORY_ITEMS_MAX_SIZE)
 		history_items.pop_front()
-		for _history_item in history_items:
-			_history_item.position.y -= 80
+		for history_idx in range(len(history_items)):
+			var _history_item = history_items[history_idx]
+			_history_item.position = position_for_history_item_index(history_idx)
+
+	history_item.position = position_for_history_item_index(len(history_items))
+	history_items.append(history_item)
+
+func position_for_history_item_index(history_idx):
+	var x
+	var y
+	var n_items_per_col = HISTORY_ITEMS_MAX_SIZE/2
+	if history_idx < n_items_per_col:
+		x = $History/ItemsPosColumn0.position.x
+	else:
+		x = $History/ItemsPosColumn0/ItemsPosColumn1.position.x
+	y = $History/ItemsPosColumn0.position.y + HistoryItem.Y_DELTA * (history_idx % n_items_per_col)
+	return Vector2(x, y)
 
 func toggle_history():
 	match state:
