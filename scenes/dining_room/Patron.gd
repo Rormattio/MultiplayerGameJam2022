@@ -3,9 +3,6 @@ extends Node
 const Dish = preload("res://Dish.gd")
 const DishRenderer = preload("res://DishRenderer.gd")
 const ReceivedDish = preload("ReceivedDish.gd")
-const red_hint_sprite = preload("res://assets/misc/red_hint.png")
-const green_hint_sprite = preload("res://assets/misc/green_hint.png")
-const orange_hint_sprite = preload("res://assets/misc/orange_hint.png")
 
 signal patron_leaves(patron)
 
@@ -222,20 +219,8 @@ func compute_dish_score(wanted_dish : Dish, dish : Dish):
 	return [score, diffs]
 
 func show_dish_score():
-	dish_score.get_node("Label").text = str(dish_score_value)
-	dish_score.show()
 	show_wanted_dish()
-	for idx in range(4):
-		var sprite = dish_score.get_node("Feedbacks/feedback_" + str(idx))
-		match ingredient_diffs[idx]:
-			0:
-				sprite.texture = red_hint_sprite
-			1:
-				sprite.texture = orange_hint_sprite
-			2:
-				sprite.texture = green_hint_sprite
-			_:
-				assert(false)
+	dish_score.render(ingredient_diffs, dish_score_value)
 
 func hide_dish_score():
 	dish_score.hide()
@@ -248,7 +233,7 @@ func _on_EatTimer_timeout():
 	var res = compute_dish_score(wanted_dish, received_dish.dish)
 	dish_score_value = res[0]
 	ingredient_diffs = res[1]
-	Global.patron_send_dish_score(received_dish.dish.serialize(), dish_score_value, received_dish.order.serialize())
+	Global.patron_send_dish_score(received_dish.dish.serialize(), dish_score_value, received_dish.order.serialize(), ingredient_diffs)
 
 	command_avatar.rotation = 0
 	received_dish.queue_free()
