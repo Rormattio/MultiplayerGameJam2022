@@ -23,8 +23,8 @@
 [ext_resource path="res://assets/misc/hand_9.png" type="Texture" id=21]
 [ext_resource path="res://assets/misc/hand_12.png" type="Texture" id=22]
 [ext_resource path="res://scenes/shared/AudioSfx.tscn" type="PackedScene" id=23]
-[ext_resource path="res://assets/misc/pad.png" type="Texture" id=24]
-[ext_resource path="res://assets/misc/words-bg.png" type="Texture" id=25]
+[ext_resource path="res://assets/misc/historique.png" type="Texture" id=24]
+[ext_resource path="res://assets/misc/historique_bg.png" type="Texture" id=25]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.376471, 0.0862745, 0.0862745, 1 )
@@ -63,7 +63,6 @@ rect_scale = Vector2( 0.92, 1 )
 
 [node name="Sprite" type="Sprite" parent="OpenCloseHistory"]
 position = Vector2( 1221, 681 )
-scale = Vector2( 0.267578, 0.267578 )
 texture = ExtResource( 24 )
 
 [node name="History" type="Node2D" parent="."]
@@ -71,8 +70,8 @@ visible = false
 z_index = 10
 
 [node name="Background" type="Sprite" parent="History"]
-position = Vector2( 633, 359.5 )
-scale = Vector2( 2.53516, 1.43555 )
+position = Vector2( 633, 320 )
+scale = Vector2( 10, 10 )
 texture = ExtResource( 25 )
 
 [node name="Control" type="Control" parent="History"]
