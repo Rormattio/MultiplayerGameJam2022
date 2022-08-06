@@ -21,5 +21,6 @@ func _physics_process(_delta):
 		rotation = 0.3*sin(sway_t)
 
 func _on_CommandAvatar_input_event(_viewport, event, _shape_idx):
+	var mouse_pos = event.position
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		emit_signal("patron_avatar_command_clicked", patron)

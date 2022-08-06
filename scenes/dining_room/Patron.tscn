@@ -94,6 +94,7 @@ position = Vector2( 0, 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CommandAvatar"]
 position = Vector2( 0.333332, 0 )
+scale = Vector2( 3.5, 3.5 )
 shape = SubResource( 6 )
 
 [node name="LevelAvatar" type="KinematicBody2D" parent="."]

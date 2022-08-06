@@ -34,7 +34,8 @@ func _ready():
 	wordlist.max_columns = 3
 	build_word_list()
 
-	$Background.connect("gui_input", self, "_on_Background_gui_input")
+	for control_box in $Background.get_children():
+		control_box.connect("gui_input", self, "_on_Background_gui_input")
 
 func _set_visible(_visible):
 	visible = _visible
@@ -169,5 +170,7 @@ func _on_ClearOrder_pressed():
 	send_order.disabled = true
 
 func _on_Background_gui_input(event: InputEvent):
+	var mouse_pos = event.position
 	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 		emit_signal("close_command_popup")
+
