@@ -198,7 +198,7 @@ func _on_close_command(name):
 	command.queue_free() # find and delete by name
 
 func _on_SendDish_Pressed(command):
-	AudioSfx.play(Ingredients.Sfx.CLICK)
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 
 	var container_type
 	if current_container_type == Dish.ContainerType.PLATE:
@@ -270,7 +270,7 @@ func _on_ingredient_dish_set(ingredient_name):
 	if ingredient_name != "":
 		var sfx = Ingredients.get_ingredient_desc(ingredient_name).sfx
 		if sfx != null:
-			AudioSfx.play(sfx)
+			AudioSfx.play_ingredient(sfx)
 
 	_refresh_stock()
 	return true
@@ -288,7 +288,7 @@ func _set_bowl():
 		change_dish.icon = load("res://assets/food/plate.png")
 
 func _on_ChangeDish_pressed():
-	AudioSfx.play(Ingredients.Sfx.CLICK)
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	if (current_container_type == Dish.ContainerType.PLATE):
 		_set_bowl()
 	else:
@@ -312,7 +312,7 @@ func _clear_dish():
 	dish_ingredients_n = 0
 
 func _on_Trash_pressed():
-	AudioSfx.play(Ingredients.Sfx.CLICK)
+	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	_clear_dish()
 	_refresh_stock()
 

@@ -44,7 +44,7 @@ func _ready():
 		add_child(node)
 		ambiance_players.append(node)
 
-func play(sfx):
+func play_ingredient(sfx):
 	match sfx:
 		Ingredients.Sfx.SPLOTCH:
 			$splotch.pitch_scale = rand_range(0.9, 1.1)
