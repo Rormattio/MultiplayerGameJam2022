@@ -266,7 +266,7 @@ static func _compute_ingredient_difference(ing0, ing1):
 	return 0
 
 # return a [ing0, ing1, ing2, ing3] array
-# ing can be 0 (very different), 1 (different but...) or 2 (equal)
+# ing can be -1 (both null), 0 (very different), 1 (different but...) or 2 (equal)
 static func compute_difference(dish0 : Dish, dish1 : Dish):
 	var linear_dish0 = dish0.serialize();
 	var linear_dish1 = dish1.serialize();
