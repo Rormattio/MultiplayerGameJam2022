@@ -6,6 +6,8 @@ signal waiter_command_sent(Order)
 signal waiter_dish_taken(dish_index)
 signal patron_dish_score_sent(dish_serialized, score, order_serialized, hints)
 signal total_score_sent(total_score)
+signal lobby_role_sent(role)
+signal lobby_start_game_sent()
 
 var DEBUG = true
 
@@ -23,21 +25,21 @@ func make_keyword_list(_seed : int):
 	seed(_seed)
 
 	print("make_keyword_list (seed : ", _seed, ")")
-	
+
 	var core_list = []
 	# Initial seeding
 	for desc in Ingredients.ingredient_descs:
 		var ingredient = desc.name
-		
+
 		var reach_path_count = 0
 		for kw in core_list:
 			var reached_ingredients = Global.plain_keywords_reachability[kw]
 			if reached_ingredients.has(ingredient):
 				reach_path_count += 1
-		
+
 		if reach_path_count >= 2:
 			continue
-		
+
 		var new_kw = null;
 		while true:
 			new_kw = desc.plain_keywords_fr[randi() % desc.plain_keywords_fr.size()]
@@ -45,12 +47,12 @@ func make_keyword_list(_seed : int):
 			if not core_list.has(new_kw):
 				break
 		core_list.append(new_kw)
-	
+
 	print("First keyword list seeding has ", core_list.size(), " elements")
 
 	var result = []
 	var smallest_result = null
-	
+
 	for try in range(100):
 		result = core_list.duplicate()
 		# Completing the list to make it sound
@@ -64,7 +66,7 @@ func make_keyword_list(_seed : int):
 					break
 		if (smallest_result == null) or result.size() < smallest_result.size():
 			smallest_result = result.duplicate()
-	
+
 	check_optimal_solutions(result, true)
 	# Use synonyms for variety
 	for i in range(result.size()):
@@ -74,7 +76,7 @@ func make_keyword_list(_seed : int):
 			var choice = randi() % (alternatives.size() + 1)
 			if choice != 0:
 				result[i] = alternatives[choice - 1]
-	
+
 	return result
 
 # What do you mean, "complexity" ? Never heard about this
@@ -92,7 +94,7 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 	var ok = true
 	for desc in Ingredients.ingredient_descs:
 		var plain_keywords = desc.plain_keywords_fr
-		
+
 		var uniquely_reachable_with_a_single_keyword = false
 		for kw in plain_keywords:
 			assert(plain_keywords_reachability[kw] != [])
@@ -100,7 +102,7 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 				if verbose:
 					print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
 				uniquely_reachable_with_a_single_keyword = true
-		
+
 		if not uniquely_reachable_with_a_single_keyword:
 			var uniquely_reachable_with_two_keywords = false
 			for i in range(plain_keywords.size()):
@@ -111,16 +113,16 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 					if not authorized_keywords.has(plain_keywords[j]):
 						continue
 					var reachable_by_second_kw = plain_keywords_reachability[plain_keywords[j]]
-					
-					var reachable_by_pair = intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw)					
+
+					var reachable_by_pair = intersect_2_lists(reachable_by_first_kw, reachable_by_second_kw)
 					if reachable_by_pair.size() == 1:
 						assert(desc.name == reachable_by_pair[0])
 						uniquely_reachable_with_two_keywords = true
 						#TODO break out of this shit
-		
+
 			# Still not caring about this O() bullshit :p
 			if not uniquely_reachable_with_two_keywords:
-				var uniquely_reachable_with_three_keywords = false	
+				var uniquely_reachable_with_three_keywords = false
 				for i in range(plain_keywords.size()):
 					if not authorized_keywords.has(plain_keywords[i]):
 						continue
@@ -133,14 +135,14 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 							if not authorized_keywords.has(plain_keywords[k]):
 								continue
 							var reachable_by_third_kw = plain_keywords_reachability[plain_keywords[k]]
-							
+
 							var reachable_by_triplet = intersect_3_lists(reachable_by_first_kw, reachable_by_second_kw, reachable_by_third_kw)
-							
+
 							if reachable_by_triplet.size() == 1:
 								assert(desc.name == reachable_by_triplet[0])
 								uniquely_reachable_with_three_keywords = true
 								#TODO break out of this shit
-				
+
 				if uniquely_reachable_with_three_keywords:
 					if verbose:
 						print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
@@ -149,19 +151,19 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 						print("ERROR: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword triplet")
 					ok = false
 	return ok
-	
+
 func _ready():
 	Ingredients._ready()
-	
+
 	Ingredients._check_ingredient_metadata()
 
-	# Compute reachability	
+	# Compute reachability
 	plain_keywords_set = []
 	for desc in Ingredients.ingredient_descs:
 		for kw in desc.plain_keywords_fr:
 			if not plain_keywords_set.has(kw):
 				plain_keywords_set.append(kw)
-			
+
 			var count = plain_keywords_occurrences.get(kw, 0)
 			count += 1
 			plain_keywords_occurrences[kw] = count
@@ -169,14 +171,14 @@ func _ready():
 			var reachability = plain_keywords_reachability.get(kw, [])
 			reachability.append(desc.name)
 			plain_keywords_reachability[kw] = reachability
-	
-	plain_keywords_set.sort()		
+
+	plain_keywords_set.sort()
 	#print("plain_keywords_occurrences: ", plain_keywords_occurrences)
 	#print("plain_keywords_reachability: ", plain_keywords_reachability)
 
 	var ok = check_optimal_solutions(plain_keywords_set, true)
 	assert(ok)
-		
+
 	randomize()
 	var _seed = randi()
 	var keyword_list = make_keyword_list(_seed)
@@ -220,19 +222,31 @@ remote func on_waiter_dish(dish_index : int):
 
 func patron_send_dish_score(dish_serialized, score, order_serialized, hints):
 	rpc("on_patron_dish_score_sent", dish_serialized, score, order_serialized, hints)
- 
+
 remote func on_patron_dish_score_sent(dish_serialized, score, order_serialized, hints):
 	emit_signal("patron_dish_score_sent", dish_serialized, score, order_serialized, hints)
-	
+
 remote func send_score(score):
 	rpc("on_score_sent", score)
-	
+
 func on_send_score(score):
 	total_score_count += score
 	emit_signal("total_score_sent", total_score_count)
-	
+
 func get_total_score():
 	return total_score_count
+
+func lobby_send_role(role):
+	rpc("on_lobby_send_role", role)
+
+remote func on_lobby_send_role(role):
+	emit_signal("lobby_role_sent", role)
+
+func lobby_send_start_game():
+	rpc("on_lobby_send_start_game")
+
+remote func on_lobby_send_start_game():
+	emit_signal("lobby_start_game_sent")
 
 func rand_array(array : Array):
 	return array[randi() % array.size()]

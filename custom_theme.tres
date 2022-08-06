@@ -43,7 +43,7 @@ anti_aliasing = false
 [sub_resource type="StyleBoxEmpty" id=16]
 
 [sub_resource type="StyleBoxFlat" id=15]
-bg_color = Color( 0.690196, 0.627451, 0.247059, 1 )
+bg_color = Color( 0.76, 0.70224, 0.3268, 1 )
 corner_detail = 1
 
 [resource]
