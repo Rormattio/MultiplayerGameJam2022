@@ -1,6 +1,7 @@
 extends Node
 
-const Patron = preload("res://scenes/dining_room/Patron.tscn")
+const PatronScene = preload("res://scenes/dining_room/Patron.tscn")
+const DishRenderer = preload("res://DishRenderer.gd")
 
 onready var tray = $Tray
 onready var layout = $Layout
@@ -73,7 +74,7 @@ func spawn_patron():
 	if found_table_idx == -1:
 		return
 
-	var patron_dummy = Patron.instance()
+	var patron_dummy = PatronScene.instance()
 
 	if patron_random_pool.size() == 0:
 		for i in range(patron_dummy.PATRON_SPRITE_NAMES.size()):
@@ -107,11 +108,17 @@ func set_carrying_received_dish(received_dish):
 		assert(carrying_dish_node.get_child_count() == 1)
 		var carried_dish = carrying_dish_node.get_child(0)
 		carrying_dish_node.remove_child(carried_dish)
+		# remove from dining_room
+		var rendered_dish_1 = $DiningRoom/DialogueGiveDish/DishPos.get_child(0)
+		$DiningRoom/DialogueGiveDish/DishPos.remove_child(rendered_dish_1)
 	else:
 		assert(carrying_dish_node.get_child_count() == 0)
 		carrying_dish_node.add_child(received_dish)
 		received_dish.position = Vector2(0, 0)
 		received_dish.set_state(received_dish.State.CARRIED)
+		# create another copy for dining_room
+		var rendered_dish_1 = DishRenderer.render_dish(received_dish.dish)
+		$DiningRoom/DialogueGiveDish/DishPos.add_child(rendered_dish_1)
 
 func _refresh_layout_visible():
 	_set_layout_visible(dining_room.state == dining_room.State.NOT_VISIBLE)
