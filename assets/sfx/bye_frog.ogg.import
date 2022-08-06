@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bye_frog.ogg-b62a7f91184611e621e4b983ab90582c.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/bye_frog.ogg"
+dest_files=[ "res://.import/bye_frog.ogg-b62a7f91184611e621e4b983ab90582c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

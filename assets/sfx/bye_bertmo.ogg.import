@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bye_bertmo.ogg-c4dd692850f750c1908ce26be21b741d.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/bye_bertmo.ogg"
+dest_files=[ "res://.import/bye_bertmo.ogg-c4dd692850f750c1908ce26be21b741d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
