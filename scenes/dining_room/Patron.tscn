@@ -37,22 +37,19 @@ input_pickable = true
 script = ExtResource( 5 )
 
 [node name="DishWish" type="Node2D" parent="CommandAvatar"]
-position = Vector2( 0, -8 )
-scale = Vector2( 3, 3 )
+position = Vector2( 120, -70 )
 
 [node name="Background" type="Sprite" parent="CommandAvatar/DishWish"]
-position = Vector2( 59, -45.8333 )
-scale = Vector2( 1.94792, 1.18229 )
+position = Vector2( 108.496, -69.1807 )
+scale = Vector2( 7.39075, 4.2756 )
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="CommandAvatar/DishWish"]
-position = Vector2( 60.3333, -64.3333 )
-scale = Vector2( 0.25, 0.25 )
+position = Vector2( 112, -136 )
 texture = ExtResource( 3 )
 
 [node name="Ingredients" type="Node2D" parent="CommandAvatar/DishWish"]
-position = Vector2( 32, -40 )
-scale = Vector2( 0.25, 0.25 )
+position = Vector2( 20, -40 )
 
 [node name="DishScore" type="Node2D" parent="CommandAvatar"]
 position = Vector2( 0, -8 )
