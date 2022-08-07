@@ -297,15 +297,16 @@ margin_bottom = 703.0
 text = "Player connected"
 
 [node name="GameTimerUI" type="Node2D" parent="Network_setup"]
-position = Vector2( 192, 632 )
+position = Vector2( 168, 656 )
 
 [node name="Bg" type="Sprite" parent="Network_setup/GameTimerUI"]
-position = Vector2( 16, 4 )
 texture = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="Network_setup/GameTimerUI"]
-margin_right = 48.0
-margin_bottom = 18.0
+margin_left = -21.0
+margin_top = -17.0
+margin_right = 27.0
+margin_bottom = 1.0
 text = "3:00"
 
 [node name="DisconnectedPopup" type="Control" parent="Network_setup"]

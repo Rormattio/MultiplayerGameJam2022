@@ -32,7 +32,10 @@ func _ready():
 	Global.connect("on_score_sent", self, "_on_score_sent")
 	dining_room.connect("close_command_popup", self, "on_close_command_popup")
 	dining_room.connect("serve_dish_pressed", self, "_on_serve_dish")
-	
+
+	total_score = 0
+	score_box.render(total_score, false)
+
 	dining_room.tray = tray
 
 	door_close_timer.connect("timeout", self, "close_door")
@@ -63,7 +66,7 @@ func _ready():
 	tray.dining_room_level = self
 
 	spawn_patron()
-	
+
 	audio_sfx.play_ambience()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -182,7 +185,7 @@ func _on_score_sent(score):
 	print("score sent ", score)
 	total_score += score
 	score_box.render(total_score, score != 0)
-	
+
 func open_door():
 	door.hide()
 	door_close_timer.start()
@@ -196,7 +199,7 @@ func _play_voice_sometimes(patron : Patron, voice):
 
 	var now_ms = OS.get_ticks_msec()
 	if not last_patron_playing_dates[patron.sprite_name].has(voice):
-		
+
 		last_patron_playing_dates[patron.sprite_name][voice] = now_ms
 		patron.play_voice_sometimes(voice, 1.0)
 	else:
@@ -207,17 +210,17 @@ func _play_voice_sometimes(patron : Patron, voice):
 
 func _play_hello_sometimes(patron : Patron):
 	_play_voice_sometimes(patron, Patron.Voice.HELLO)
-	
+
 func _play_nomnom_sometimes(patron : Patron):
 	_play_voice_sometimes(patron, Patron.Voice.NOMNOM)
 
 func _play_bye_sometimes(patron : Patron):
 	_play_voice_sometimes(patron, Patron.Voice.BYE)
-	
+
 func _on_patron_state_changed(patron : Patron):
 	if dining_room.state == dining_room.State.VISIBLE:
 		dining_room.update_waiter_actions()
-	
+
 	match patron.state:
 		patron.State.ENTERING:
 			_play_hello_sometimes(patron)
