@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bye_fromage_chaud.ogg-88e41abbc7239a7c6e0a3f4a0f88893e.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/bye_fromage_chaud.ogg"
+dest_files=[ "res://.import/bye_fromage_chaud.ogg-88e41abbc7239a7c6e0a3f4a0f88893e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
