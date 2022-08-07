@@ -13,8 +13,6 @@ onready var device_external_ip_address = $Multiplayer_configure/Device_external_
 onready var create_server_and_client = $Multiplayer_configure/create_server_and_client
 onready var connection_status = $connection_status
 
-onready var title_image = $TitleSprite
-
 onready var lobby = $Lobby
 
 func _ready() -> void:
@@ -35,6 +33,12 @@ func _ready() -> void:
 	$Lobby/StartGame.connect("pressed", self, "_on_StartGame_pressed")
 	$Lobby/Cancel.connect("pressed", self, "_on_LobbyCancel_pressed")
 	$Lobby/GameStartTimer.connect("timeout", self, "_on_GameStartTimer_timeout")
+
+	$Lobby/GameTimer.connect("timeout", self, "_on_GameTimer_timeout")
+	$ResultsScreen/NewRound.connect("pressed", self, "_on_NewRound_pressed")
+
+	$ResultsScreen.hide()
+	$GameTimerLabel.hide()
 
 	$DisconnectedPopup.hide()
 	$DisconnectedPopup/RestartButton.connect("pressed", self, "_on_Restart_pressed")
@@ -60,7 +64,7 @@ func _on_Create_server_pressed():
 	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	Network.create_server()
 
-	enter_lobby()
+	enter_lobby_from_title_screen()
 
 func _on_Join_server_pressed():
 	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
@@ -75,12 +79,11 @@ func _on_Join_server_pressed():
 	Network.ip_address = ip_address
 	Network.join_server()
 
-	enter_lobby()
+	enter_lobby_from_title_screen()
 
 func _on_Create_server_and_client_pressed():
 	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	multiplayer_config_ui.hide()
-	title_image.hide()
 	Network.create_server()
 
 	var dual_scene_handle = dual_scene.instance()
@@ -119,6 +122,7 @@ enum LobbyState {
 	CAN_START_GAME,
 	START_GAME_COUNTDOWN,
 	GAME_STARTED,
+	RESULT_SCREEN,
 }
 
 var chosen_role
@@ -127,7 +131,7 @@ var start_countdown
 var lobby_state
 var fade_alpha
 
-func enter_lobby():
+func enter_lobby_from_title_screen():
 	multiplayer_config_ui.hide()
 
 	lobby_state = LobbyState.WAITING_FOR_PLAYER
@@ -150,6 +154,29 @@ func enter_lobby():
 	connection_status.text = "Waiting for other player..."
 	connection_status.add_color_override("font_color", "#ffff00")
 	connection_status.show()
+
+func enter_lobby_from_result_screen():
+	multiplayer_config_ui.hide()
+
+	lobby_state = LobbyState.CHOOSING_ROLES
+
+	$Lobby/ChooseCheffe.disabled = false
+	$Lobby/ChooseWaiter.disabled = false
+	$Lobby/StartGame.disabled = true
+	$Lobby/Cancel.disabled = false
+	$Lobby/FadeToBlack.hide()
+	$Lobby/CountdownLabel.hide()
+
+	$Lobby/MyRole.hide()
+	$Lobby/TheirRole.hide()
+
+	chosen_role = null
+	other_role = null
+
+	$Lobby/CheffeDescBgBorder.color = ROLE_UNASSIGNED_COLOR
+	$Lobby/WaiterDescBgBorder.color = ROLE_UNASSIGNED_COLOR
+
+	lobby.show()
 
 func exit_lobby():
 	Global.player_send_quit(Network.get_id())
@@ -307,6 +334,11 @@ func _physics_process(_delta):
 			fade_alpha = 1.0
 		update_fade_color(fade_alpha)
 
+	if lobby_state == LobbyState.GAME_STARTED:
+		var t = $Lobby/GameTimer.time_left
+		#$GameTimerLabel.text = "%d:%d" % [t/60 as int, t % 60]
+		$GameTimerLabel.text = str(t)
+
 func _on_LobbyStartGame_sent():
 	if lobby_state == LobbyState.START_GAME_COUNTDOWN:
 		return
@@ -339,16 +371,20 @@ func start_game():
 	else:
 		instanciate_object(dining_room_level_scene, Network.get_id(), $RoleScene)
 
-	title_image.hide()
 	lobby.hide()
 
 	lobby_state = LobbyState.GAME_STARTED
 
+	rpc("start_game_timer")
+
+remotesync func start_game_timer():
+	$Lobby/GameTimer.wait_time = 5
+	$Lobby/GameTimer.start()
+	$GameTimerLabel.show()
+
 func enter_title_screen():
 	lobby_state = LobbyState.TITLE_SCREEN
 	lobby.hide()
-
-	title_image.show()
 
 	connection_status.hide()
 	multiplayer_config_ui.show()
@@ -370,3 +406,23 @@ func _on_ExitToDesktop_pressed():
 func _unhandled_input(event: InputEvent):
 	if Input.is_action_pressed("ui_toggle_fullscreen"):
 		OS.set_window_fullscreen(!OS.window_fullscreen)
+
+func _on_GameTimer_timeout():
+	rpc("enter_result_screen")
+
+remotesync func enter_result_screen():
+	lobby_state = LobbyState.RESULT_SCREEN
+
+	for n in $RoleScene.get_children():
+		n.queue_free()
+
+	$GameTimerLabel.hide()
+
+	$ResultsScreen.show()
+
+func _on_NewRound_pressed():
+	rpc("do_enter_lobby_from_result_screen")
+
+remotesync func do_enter_lobby_from_result_screen():
+	$ResultsScreen.hide()
+	enter_lobby_from_result_screen()
