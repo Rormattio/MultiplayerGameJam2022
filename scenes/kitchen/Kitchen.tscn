@@ -153,7 +153,7 @@ margin_bottom = 711.0
 rect_scale = Vector2( 0.92, 1 )
 
 [node name="Sprite" type="Sprite" parent="OpenCloseHistory"]
-position = Vector2( 1221, 681 )
+position = Vector2( 528, 456 )
 texture = ExtResource( 24 )
 
 [node name="History" type="Node2D" parent="."]
