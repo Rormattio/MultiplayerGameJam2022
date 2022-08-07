@@ -47,7 +47,9 @@ func _ready():
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
 	Global.connect("on_score_sent", self, "_on_score_sent")
 	$History.visible = false
-	
+
+	score_box.render(total_score, false)
+
 	if not Global.DEBUG:
 		$Randomize.queue_free()
 
@@ -171,7 +173,7 @@ class StockIngredientSorter:
 		var desc_b = Ingredients.get_ingredient_desc(b)
 		assert(desc_a != null)
 		assert(desc_b != null)
-		
+
 		var index_a = TAG_SORT_ORDER.find(desc_a.tags[0])
 		var index_b = TAG_SORT_ORDER.find(desc_b.tags[0])
 		assert(index_a != -1)
@@ -401,7 +403,7 @@ func _on_score_sent(score):
 	total_score += score
 	print("Total score", total_score)
 	score_box.render(total_score, score != 0)
-	
+
 func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized, hints):
 	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
 	var ingredients = []
@@ -410,16 +412,16 @@ func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized,
 	var order = Order.new()
 	order.unserialize(order_serialized)
 	var clues = order.text.split(" ")
-	
+
 	# create feedbacks on IngredientStock
 	for ingredient_name in ingredients:
 		if ingredient_name != "":
 			ingredient_stocks[ingredient_name].score_feedback(clues, score)
-	
+
 	# add to history
 	var history_item : HistoryItem = HistoryItem.instance_history_item_scene(order, received_dish_serialized, hints, score)
 	$History.add_child(history_item)
-	
+
 	if len(history_items) >= HISTORY_ITEMS_MAX_SIZE:
 		assert(len(history_items) == HISTORY_ITEMS_MAX_SIZE)
 		history_items.pop_front()
