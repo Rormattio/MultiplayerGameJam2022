@@ -431,6 +431,9 @@ func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized,
 			var _history_item = history_items[history_idx]
 			_history_item.position = position_for_history_item_index(history_idx)
 
+	history_item.saved_dish_serialized = received_dish_serialized
+	history_item.saved_order_serialized = order_serialized
+
 	history_item.position = position_for_history_item_index(len(history_items))
 	history_items.append(history_item)
 

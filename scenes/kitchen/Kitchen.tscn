@@ -79,10 +79,10 @@ z_index = 2
 texture = ExtResource( 3 )
 
 [node name="ChangeDish" type="Button" parent="."]
-margin_left = 308.0
-margin_top = 402.0
-margin_right = 376.0
-margin_bottom = 470.0
+margin_left = 596.0
+margin_top = 516.0
+margin_right = 664.0
+margin_bottom = 584.0
 mouse_default_cursor_shape = 2
 icon = ExtResource( 2 )
 

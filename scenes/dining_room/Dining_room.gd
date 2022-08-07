@@ -145,14 +145,17 @@ func get_current_order_text() -> String:
 func get_current_order_word_count() -> int:
 	return current_order.size()
 
-func send_order(order: Order):
+func waiter_send_order(order: Order):
 	Global.logger("sent order " + str(order))
 	Global.waiter_send_command(order)
 
+var word_list_disabled = false
+
 func _on_WordList_item_selected(index: int):
-	if send_order.disabled:
-		return
 	wordlist.unselect_all()
+
+	if word_list_disabled:
+		return
 
 	if get_current_order_word_count() == MAX_WORDS_IN_ORDER:
 		return
@@ -165,7 +168,7 @@ func _on_WordList_item_selected(index: int):
 func _on_SendOrder_pressed():
 	var order = Order.new()
 	order.init(get_current_order_text())
-	send_order(order)
+	waiter_send_order(order)
 	assert(len(table.patrons_around) == 1)
 	var patron = table.patrons_around[0]
 	patron.set_state(patron.State.WAITING_TO_EAT)
@@ -182,16 +185,17 @@ func _on_Background_gui_input(event: InputEvent):
 		emit_signal("close_command_popup")
 
 func update_waiter_actions():
-	
+
 	# can waiter take an order ?
 	var can_send_command = false
 	for patron in table.patrons_around:
 		if (patron.state == patron.State.WAITING_TO_ORDER) or (patron.state == patron.State.ORDERING):
 			can_send_command = true
-#	$Command_GUI/WordList.disabled = not can_send_command # NOTE: item_list has no disabled, so we interrupt their event instead 
+#	$Command_GUI/WordList.disabled = not can_send_command # NOTE: item_list has no disabled, so we interrupt their event instead
+	word_list_disabled = not can_send_command
 	$Command_GUI/ClearOrder.disabled = not can_send_command
 	$Command_GUI/SendOrder.disabled = not can_send_command
-	
+
 	# can waiter give a dish
 	var can_give_dish = false
 	for patron in table.patrons_around:
@@ -215,4 +219,3 @@ func _on_GiveDish_button_up():
 	assert(len(table.patrons_around) == 1)
 	var patron = table.patrons_around[0]
 	emit_signal("serve_dish_pressed", patron)
-
