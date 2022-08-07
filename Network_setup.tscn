@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/misc/score-bg.png" type="Texture" id=5]
 [ext_resource path="res://red_button.tres" type="Theme" id=6]
 [ext_resource path="res://assets/misc/title.png" type="Texture" id=7]
+[ext_resource path="res://assets/misc/menu_bg.png" type="Texture" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -23,6 +24,11 @@ script = ExtResource( 1 )
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Sprite" type="Sprite" parent="Network_setup/Multiplayer_configure"]
+position = Vector2( 640, 360 )
+scale = Vector2( 1.8, 1.8 )
+texture = ExtResource( 8 )
 
 [node name="title" type="Sprite" parent="Network_setup/Multiplayer_configure"]
 position = Vector2( 230, 200 )
@@ -143,6 +149,11 @@ text = "Quit to desktop"
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
+
+[node name="Sprite2" type="Sprite" parent="Network_setup/Lobby"]
+position = Vector2( 640, 360 )
+scale = Vector2( 1.8, 1.8 )
+texture = ExtResource( 8 )
 
 [node name="TitleSprite" type="Sprite" parent="Network_setup/Lobby"]
 position = Vector2( 649, 368 )
@@ -281,6 +292,11 @@ one_shot = true
 [node name="ResultsScreen" type="Control" parent="Network_setup"]
 margin_right = 40.0
 margin_bottom = 40.0
+
+[node name="Sprite3" type="Sprite" parent="Network_setup/ResultsScreen"]
+position = Vector2( 640, 360 )
+scale = Vector2( 1.8, 1.8 )
+texture = ExtResource( 8 )
 
 [node name="Title" type="Label" parent="Network_setup/ResultsScreen"]
 margin_left = 24.0
