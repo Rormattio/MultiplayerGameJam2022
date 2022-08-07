@@ -30,16 +30,18 @@ valign = 1
 position = Vector2( 102, -90 )
 
 [node name="feedback_0" type="Sprite" parent="Feedbacks"]
+position = Vector2( 3, 32 )
 texture = ExtResource( 2 )
 
 [node name="feedback_1" type="Sprite" parent="Feedbacks"]
-position = Vector2( 40, 0 )
+position = Vector2( 65, 32 )
 texture = ExtResource( 2 )
 
 [node name="feedback_2" type="Sprite" parent="Feedbacks"]
-position = Vector2( 80, 0 )
+position = Vector2( 124.5, 32 )
+scale = Vector2( 0.96875, 1 )
 texture = ExtResource( 2 )
 
 [node name="feedback_3" type="Sprite" parent="Feedbacks"]
-position = Vector2( 120, 0 )
+position = Vector2( 186, 32 )
 texture = ExtResource( 2 )

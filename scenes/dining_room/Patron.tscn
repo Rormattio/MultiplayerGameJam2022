@@ -41,9 +41,10 @@ position = Vector2( 112, -136 )
 texture = ExtResource( 3 )
 
 [node name="Ingredients" type="Node2D" parent="CommandAvatar/DishWish"]
-position = Vector2( 20, -40 )
+position = Vector2( 5, -40 )
 
 [node name="DishScore" parent="CommandAvatar" instance=ExtResource( 4 )]
+position = Vector2( 15, -15 )
 
 [node name="DishPosition" type="Node2D" parent="CommandAvatar"]
 position = Vector2( 0, 8 )
