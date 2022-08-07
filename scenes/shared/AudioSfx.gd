@@ -34,6 +34,8 @@ func _build_patron_sounds():
 		sounds.hello_sound = hello_sound 
 
 		var nomnom_sound = load("res://assets/sfx/nomnom_" + patron + ".ogg")
+		if nomnom_sound == null:
+			nomnom_sound = load("res://assets/sfx/omnomnom.ogg")
 		if nomnom_sound != null:
 			nomnom_sound.set_loop(false)
 		sounds.nomnom_sound = nomnom_sound 
