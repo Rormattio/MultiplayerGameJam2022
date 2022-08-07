@@ -13,6 +13,8 @@ class PatronSounds:
 	var nomnom_sound
 	var bye_sound
 
+enum PatronVoice { HELLO, NOMNOM, BYE}
+
 var patron_sounds = {}
 
 func _build_patron_sounds():
@@ -52,11 +54,11 @@ func _build_patron_sounds():
 
 func get_voice_stream_for_patron(patron : String, voice):
 	match voice:
-		Patron.Voice.HELLO:
+		PatronVoice.HELLO:
 			return get_hello_stream_for_patron(patron)
-		Patron.Voice.Voice.NOMNOM:
+		PatronVoice.Voice.NOMNOM:
 			return get_nomnom_stream_for_patron(patron)
-		Patron.Voice.Voice.BYE:
+		PatronVoice.Voice.BYE:
 			return get_bye_stream_for_patron(patron)
 		_:
 			assert(false)

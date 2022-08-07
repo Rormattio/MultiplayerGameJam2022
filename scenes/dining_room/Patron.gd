@@ -14,6 +14,7 @@ onready var dish_score = $CommandAvatar/DishScore
 onready var dish_position = $CommandAvatar/DishPosition
 onready var command_avatar = $CommandAvatar
 onready var level_avatar = $LevelAvatar
+onready var dialog_line = $LevelAvatar/DialogLine
 
 class_name Patron
 
@@ -48,8 +49,6 @@ var PATRON_HAS_ANIM = {
 	"fromage_chaud": false,
 }	
 
-enum Voice { HELLO, NOMNOM, BYE}
-
 const BEHIND_WINDOW_TINT = Color("#1a2b3b")
 const IN_ROOM_TINT = Color("#ffffff")
 
@@ -66,6 +65,7 @@ var path_offset = 0.0
 var dish_score_value
 var ingredient_diffs
 var sprite_name
+var remaining_time_for_dialog_line_ms
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -115,6 +115,16 @@ func init():
 				animated_sprite.frames.add_frame("idle", sprite)
 	level_avatar.animated_sprite.play("walk")
 	command_avatar.animated_sprite.play("idle")
+
+	dialog_line.text = ""
+	remaining_time_for_dialog_line_ms = 0
+	
+func _process(delta):
+	if remaining_time_for_dialog_line_ms != 0:
+		remaining_time_for_dialog_line_ms -= delta * 1000
+		if remaining_time_for_dialog_line_ms <= 0:
+			dialog_line.text = ""
+			remaining_time_for_dialog_line_ms = 0
 
 func _physics_process(delta):
 	match state:
@@ -320,13 +330,13 @@ func generate_dish() -> Dish:
 	return random_dish
 
 func play_hello_sometimes(probability) -> bool:
-	return play_voice_sometimes(Voice.HELLO, probability)
+	return play_voice_sometimes(AudioSfx.PatronVoice.HELLO, probability)
 
 func play_nomnom_sometimes(probability) -> bool:
-	return play_voice_sometimes(Voice.NOMNOM, probability)
+	return play_voice_sometimes(AudioSfx.PatronVoice.NOMNOM, probability)
 
 func play_bye_sometimes(probability) -> bool:
-	return play_voice_sometimes(Voice.BYE, probability)
+	return play_voice_sometimes(AudioSfx.PatronVoice.BYE, probability)
 
 func play_voice_sometimes(voice, probability) -> bool:
 	if randf() <= probability:
