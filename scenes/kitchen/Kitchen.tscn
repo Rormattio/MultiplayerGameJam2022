@@ -142,7 +142,6 @@ position = Vector2( 640, 360 )
 scale = Vector2( 2, 2 )
 z_index = -3
 frames = SubResource( 3 )
-frame = 3
 playing = true
 
 [node name="Background_top" type="Sprite" parent="."]
@@ -171,7 +170,6 @@ position = Vector2( 32, 32 )
 texture = ExtResource( 24 )
 
 [node name="History" type="Node2D" parent="."]
-visible = false
 z_index = 10
 
 [node name="Background" type="Sprite" parent="History"]
@@ -180,10 +178,10 @@ scale = Vector2( 10, 10 )
 texture = ExtResource( 25 )
 
 [node name="ItemsPosColumn0" type="Node2D" parent="History"]
-position = Vector2( 114, 70 )
+position = Vector2( 122, 29 )
 
 [node name="ItemsPosColumn1" type="Node2D" parent="History/ItemsPosColumn0"]
-position = Vector2( 609, 0 )
+position = Vector2( 575, 0 )
 
 [node name="CloseHistory" type="Button" parent="History"]
 self_modulate = Color( 1, 1, 1, 0 )

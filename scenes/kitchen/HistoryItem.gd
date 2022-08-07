@@ -2,7 +2,7 @@ extends Node2D
 
 class_name HistoryItem
 
-const Y_DELTA = 160
+const Y_DELTA = 180
 
 const DishRenderer = preload("res://DishRenderer.gd")
 

@@ -32,7 +32,7 @@ var dish_ingredients
 var dish_ingredients_n = 0
 
 var history_items = []
-const HISTORY_ITEMS_MAX_SIZE = 8
+const HISTORY_ITEMS_MAX_SIZE = 6
 
 enum State {
 	COOKING,
