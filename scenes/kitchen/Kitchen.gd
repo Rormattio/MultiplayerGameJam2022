@@ -44,6 +44,7 @@ func _ready():
 	#score_box.text = str(Global.total_score)+"$"
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
+	Global.connect("on_score_sent", self, "_on_Score_Sent")
 	$History.visible = false
 	
 	if not Global.DEBUG:
@@ -81,7 +82,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	score_box.render(Global.get_total_score())
+	#score_box.render(Global.get_total_score())
+	pass
 
 func _is_possible_next_ingredient_0(ingredient_desc):
 	assert(ingredient_desc != null);
@@ -384,6 +386,9 @@ func _on_Randomize_pressed():
 	_set_dish(new_dish)
 	_refresh_stock()
 
+func _on_Score_Sent(score):
+	print("TODO Kitchen._on_Score_Sent ", score)
+	
 func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized, hints):
 	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
 	var ingredients = []

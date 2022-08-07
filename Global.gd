@@ -5,7 +5,7 @@ signal cheffe_dish_trashed(dish_index)
 signal waiter_command_sent(Order)
 signal waiter_dish_taken(dish_index)
 signal patron_dish_score_sent(dish_serialized, score, order_serialized, hints)
-signal total_score_sent(total_score)
+signal on_score_sent(total_score)
 
 var DEBUG = true
 
@@ -224,8 +224,11 @@ func patron_send_dish_score(dish_serialized, score, order_serialized, hints):
 remote func on_patron_dish_score_sent(dish_serialized, score, order_serialized, hints):
 	emit_signal("patron_dish_score_sent", dish_serialized, score, order_serialized, hints)
 	
-remote func send_score(score):
+func send_score(score):
 	rpc("on_score_sent", score)
+
+remote func on_score_sent(score):
+	emit_signal("on_score_sent", score)
 	
 func on_send_score(score):
 	total_score_count += score
