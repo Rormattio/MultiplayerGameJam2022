@@ -14,6 +14,7 @@ onready var dish_score = $CommandAvatar/DishScore
 onready var dish_position = $CommandAvatar/DishPosition
 onready var command_avatar = $CommandAvatar
 onready var level_avatar = $LevelAvatar
+onready var dialog_line = $LevelAvatar/DialogLine
 
 class_name Patron
 
@@ -66,6 +67,7 @@ var path_offset = 0.0
 var dish_score_value
 var ingredient_diffs
 var sprite_name
+var remaining_time_for_dialog_line_ms
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -115,6 +117,16 @@ func init():
 				animated_sprite.frames.add_frame("idle", sprite)
 	level_avatar.animated_sprite.play("walk")
 	command_avatar.animated_sprite.play("idle")
+
+	dialog_line.text = ""
+	remaining_time_for_dialog_line_ms = 0
+	
+func _process(delta):
+	if remaining_time_for_dialog_line_ms != 0:
+		remaining_time_for_dialog_line_ms -= delta * 1000
+		if remaining_time_for_dialog_line_ms <= 0:
+			dialog_line.text = ""
+			remaining_time_for_dialog_line_ms = 0
 
 func _physics_process(delta):
 	match state:

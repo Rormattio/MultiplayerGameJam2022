@@ -60,6 +60,10 @@ script = ExtResource( 6 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelAvatar"]
 shape = SubResource( 3 )
 
+[node name="DialogLine" type="RichTextLabel" parent="LevelAvatar"]
+margin_right = 510.0
+margin_bottom = 40.0
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="input_event" from="CommandAvatar" to="CommandAvatar" method="_on_CommandAvatar_input_event"]
