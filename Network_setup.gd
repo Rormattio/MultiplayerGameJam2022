@@ -474,6 +474,7 @@ remotesync func results_tally_start():
 		# if player clicks on NewRound
 		if lobby_state != LobbyState.RESULT_SCREEN:
 			return
+		AudioSfx.play_ingredient(Ingredients.Sfx.KNOCK)
 		var dish = Dish.new()
 		dish.deserialize(item[0])
 		var sprite = DishRenderer.render_dish(dish)
@@ -488,11 +489,13 @@ remotesync func results_tally_start():
 			break
 
 	yield(get_tree().create_timer(1), "timeout")
+	AudioSfx.play_ingredient(Ingredients.Sfx.KNOCK)
 	$ResultsScreen/FinalScore/Score.hide()
 	$ResultsScreen/FinalScore/Sprite.hide()
 	$ResultsScreen/FinalScore.show()
 
 	yield(get_tree().create_timer(1), "timeout")
+	AudioSfx.play_ingredient(Ingredients.Sfx.KNOCK)
 	$ResultsScreen/FinalScore/Score.text = str(final_score) + "$"
 	$ResultsScreen/FinalScore/Sprite.show()
 	$ResultsScreen/FinalScore/Score.show()
