@@ -11,6 +11,7 @@
 [ext_resource path="res://assets/sfx/whooo.ogg" type="AudioStream" id=9]
 [ext_resource path="res://assets/sfx/trash.ogg" type="AudioStream" id=10]
 [ext_resource path="res://assets/sfx/ding.ogg" type="AudioStream" id=11]
+[ext_resource path="res://assets/sfx/knock.ogg" type="AudioStream" id=11]
 
 [node name="AudioSfx" type="Node"]
 script = ExtResource( 2 )
@@ -50,4 +51,7 @@ stream = ExtResource( 8 )
 [node name="VoicePlaceholder" type="AudioStreamPlayer" parent="."]
 
 [node name="ding" type="AudioStreamPlayer" parent="."]
+
+[node name="knock" type="AudioStreamPlayer" parent="."]
+
 stream = ExtResource( 11 )
