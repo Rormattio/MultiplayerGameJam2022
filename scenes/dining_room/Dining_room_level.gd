@@ -201,8 +201,8 @@ func _play_voice_sometimes(patron : Patron, voice):
 	else:
 		var elapsed_time_msec = now_ms - last_patron_playing_dates[patron.sprite_name][voice]
 		if elapsed_time_msec > 5 * 1000:
-			patron.play_voice_sometimes(voice, 0.3)
-			last_patron_playing_dates[patron.sprite_name][voice] = now_ms
+			if patron.play_voice_sometimes(voice, 0.3):
+				last_patron_playing_dates[patron.sprite_name][voice] = now_ms
 
 func _play_hello_sometimes(patron : Patron):
 	_play_voice_sometimes(patron, Patron.Voice.HELLO)
