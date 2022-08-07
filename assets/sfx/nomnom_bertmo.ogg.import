@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/nomnom_bertmo.ogg-fcb1fdece4a890ab6a8ffa0c74948044.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/nomnom_bertmo.ogg"
+dest_files=[ "res://.import/nomnom_bertmo.ogg-fcb1fdece4a890ab6a8ffa0c74948044.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
