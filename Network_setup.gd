@@ -38,7 +38,7 @@ func _ready() -> void:
 	$ResultsScreen/NewRound.connect("pressed", self, "_on_NewRound_pressed")
 
 	$ResultsScreen.hide()
-	$GameTimerLabel.hide()
+	$GameTimerUI.hide()
 
 	$DisconnectedPopup.hide()
 	$DisconnectedPopup/RestartButton.connect("pressed", self, "_on_Restart_pressed")
@@ -344,7 +344,7 @@ func _physics_process(_delta):
 		var t = $Lobby/GameTimer.time_left
 		var minutes = int(floor(t / 60.0))
 		var seconds = int(t - minutes * 60.0)
-		$GameTimerLabel.text = "%d:%02d" % [minutes, seconds]
+		$GameTimerUI/Label.text = "%d:%02d" % [minutes, seconds]
 
 func _on_LobbyStartGame_sent():
 	if lobby_state == LobbyState.START_GAME_COUNTDOWN:
@@ -397,14 +397,14 @@ remotesync func player_ready():
 remotesync func start_game_timer():
 	$Lobby/GameTimer.wait_time = GAME_ROUND_TIME_SECONDS
 	$Lobby/GameTimer.start()
-	$GameTimerLabel.show()
+	$GameTimerUI.show()
 
 func enter_title_screen():
 	lobby_state = LobbyState.TITLE_SCREEN
 	lobby.hide()
 
 	connection_status.hide()
-	$GameTimerLabel.hide()
+	$GameTimerUI.hide()
 	multiplayer_config_ui.show()
 
 func _on_Restart_pressed():
@@ -435,7 +435,7 @@ remotesync func enter_result_screen():
 	for n in $RoleScene.get_children():
 		n.queue_free()
 
-	$GameTimerLabel.hide()
+	$GameTimerUI.hide()
 
 	$ResultsScreen.show()
 
