@@ -8,7 +8,8 @@ enum Sfx {
 	SHHOO,
 	CLICK,
 	SCHBOING,
-	WHOOO
+	WHOOO,
+	KNOCK,
 }
 
 var tag_set = [ "main", "bottom_burger", "mid_burger", "top_burger", "top", "flag", "bottom", "soup_base", "soup_top" ]

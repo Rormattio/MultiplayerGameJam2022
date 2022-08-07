@@ -32,14 +32,14 @@ func _build_patron_sounds():
 			hello_sound = load("res://assets/sfx/ohayo.ogg")
 		if hello_sound != null:
 			hello_sound.set_loop(false)
-		sounds.hello_sound = hello_sound 
+		sounds.hello_sound = hello_sound
 
 		var nomnom_sound = load("res://assets/sfx/nomnom_" + patron + ".ogg")
 		if nomnom_sound == null:
 			nomnom_sound = load("res://assets/sfx/omnomnom.ogg")
 		if nomnom_sound != null:
 			nomnom_sound.set_loop(false)
-		sounds.nomnom_sound = nomnom_sound 
+		sounds.nomnom_sound = nomnom_sound
 
 		var bye_sound = load("res://assets/sfx/bye_" + patron + ".ogg")
 		if bye_sound == null:
@@ -47,7 +47,7 @@ func _build_patron_sounds():
 		if bye_sound != null:
 			bye_sound.set_loop(false)
 		sounds.bye_sound = bye_sound
-		 
+
 		patron_sounds[patron] = sounds
 
 func get_voice_stream_for_patron(patron : String, voice):
@@ -79,7 +79,7 @@ func get_bye_stream_for_patron(patron : String):
 	if sounds == null:
 		return null
 	return sounds.bye_sound
-	
+
 func play_patron_voice(sprite_name, voice, pitch_scale):
 	rpc("_play_patron_voice", sprite_name, voice, pitch_scale)
 
@@ -88,7 +88,7 @@ remote func _play_patron_voice(sprite_name, voice, pitch_scale):
 	$VoicePlaceholder.stream = stream
 	$VoicePlaceholder.pitch_scale = pitch_scale
 	$VoicePlaceholder.play()
-	
+
 func _ready():
 	##play_host_music("D:/perso/zik/OI! - PUNK - HXC - METAL/BULLDOZER - Bulldozer/06 - Il était une tranche de foie dans l'ouest.ogg")
 	##play_host_music("D:/perso/zik/PSYCHO - ROCKAB - SWING/QUAKES - Psyops/06 beer & cigarettes.mp3")
@@ -97,7 +97,7 @@ func _ready():
 	]
 	for idx in range(4):
 		ambiance_tracks.push_back("res://assets/sfx/ambiance/ambiance" + str(idx) + ".wav")
-		
+
 	for track in ambiance_tracks:
 		var node = AudioStreamPlayer.new()
 		var stream = load(track)
@@ -106,9 +106,9 @@ func _ready():
 		ambiance_players.append(node)
 
 	_build_patron_sounds()
-	
+
 	jukebox = Jukebox.init($RadioPlaceholder, $MusicPlaceholder)
-	
+
 func play_ingredient(sfx):
 	match sfx:
 		Ingredients.Sfx.SPLOTCH:
@@ -126,6 +126,9 @@ func play_ingredient(sfx):
 		Ingredients.Sfx.SHHOO:
 			$shhoo.pitch_scale = rand_range(0.9, 1.1)
 			$shhoo.play()
+		Ingredients.Sfx.KNOCK:
+			$knock.pitch_scale = rand_range(0.9, 1.1)
+			$knock.play()
 		Ingredients.Sfx.CLICK:
 			$click.play()
 		Ingredients.Sfx.WHOOO:
@@ -219,7 +222,7 @@ class Jukebox:
 	var music_sound_index = -1
 	var radio_ph
 	var music_ph
-	
+
 	static func init(o_radio_ph, o_music_ph):
 		var jukebox = Jukebox.new()
 		jukebox._build_radio_sounds()
@@ -228,7 +231,7 @@ class Jukebox:
 		jukebox.radio_ph = o_radio_ph
 		jukebox.radio_ph.volume_db = - 20
 		jukebox.radio_ph.connect("finished", jukebox, "_on_sound_finish")
-		
+
 		jukebox.music_ph = o_music_ph
 		jukebox.music_ph.volume_db = - 20
 		jukebox.music_ph.connect("finished", jukebox, "_on_sound_finish")
@@ -264,7 +267,7 @@ class Jukebox:
 			JukeboxState.MUSICS:
 				state = JukeboxState.OFF
 				music_ph.stop()
-	
+
 	func advance_radio_state():
 		radio_sound_index = (radio_sound_index + 1)%len(RADIO_SOUND_SEQ)
 		radio_ph.stream = radio_sounds[RADIO_SOUND_SEQ[radio_sound_index]]

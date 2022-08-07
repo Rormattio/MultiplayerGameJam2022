@@ -159,6 +159,8 @@ func _on_patron_avatar_command_clicked(patron):
 			patron.toggle_wanted_dish()
 
 func _on_serve_dish(patron):
+	if carrying_dish_node.get_child_count() == 0:
+		return
 	assert(carrying_dish_node.get_child_count() == 1)
 	var dish = carrying_dish_node.get_child(0)
 	set_carrying_received_dish(null)
