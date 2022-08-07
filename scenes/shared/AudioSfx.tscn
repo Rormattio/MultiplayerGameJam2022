@@ -18,10 +18,11 @@ script = ExtResource( 2 )
 
 [node name="splotch" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
+volume_db = -9.0
 
 [node name="pop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -6.0
+volume_db = -9.0
 
 [node name="tentacle" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
@@ -31,18 +32,21 @@ stream = ExtResource( 5 )
 
 [node name="shhoo" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+volume_db = -6.0
 
 [node name="whooo" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 
 [node name="trash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
+volume_db = 9.0
 
 [node name="click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 
 [node name="schboing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+volume_db = -12.281
 
 [node name="MusicPlaceholder" type="AudioStreamPlayer" parent="."]
 
@@ -52,6 +56,8 @@ stream = ExtResource( 8 )
 
 [node name="ding" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
+volume_db = -6.118
 
 [node name="knock" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
+volume_db = -2.622
