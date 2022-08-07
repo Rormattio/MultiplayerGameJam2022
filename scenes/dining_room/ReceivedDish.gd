@@ -20,7 +20,7 @@ enum State {
 func _ready():
 	state = State.UNSERVED
 	
-	$RootForOffset/Background.connect("gui_input", self, "_on_input_received")
+	$RootForOffset/Button.connect("button_up", self, "_on_button_up")
 	$RootForOffset/Background.modulate.a = 0
 
 func build(a_dish : Array):
@@ -34,17 +34,19 @@ func build(a_dish : Array):
 	
 	$RootForOffset.add_child(new_dish_sprite)
 
-func _on_input_received(event: InputEvent):
-	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-		if state == State.UNSERVED:
-			emit_signal("dish_clicked", self)
+func _on_button_up():
+	assert(state == State.UNSERVED)
+	emit_signal("dish_clicked", self)
 
 func set_state(a_state):
 	match a_state:
 		State.UNSERVED:
 			$RootForOffset/Background.modulate.a = 0
+			$RootForOffset/Button.visible = true
 		State.CARRIED:
 			$RootForOffset/Background.modulate.a = 255
+			$RootForOffset/Button.visible = false
 		State.SERVED:
 			$RootForOffset/Background.modulate.a = 255
+			$RootForOffset/Button.visible = false
 	state = a_state
