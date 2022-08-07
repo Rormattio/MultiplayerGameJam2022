@@ -338,3 +338,11 @@ func play_voice_sometimes(voice, probability) -> bool:
 			$AudioStreamPlayer.play()
 		return true
 	return false
+
+func spawn_dialog_line(text : String, duration_ms):
+	dialog_line.text = text
+	remaining_time_for_dialog_line_ms = 3000
+
+func clear_dialog_line():
+	dialog_line.text = ""
+	remaining_time_for_dialog_line_ms = 0
