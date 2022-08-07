@@ -17,8 +17,6 @@ var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
 
-var total_score_count = 0
-
 func make_keyword_list(_seed : int):
 	seed(_seed)
 
@@ -229,13 +227,6 @@ func send_score(score):
 
 remote func on_score_sent(score):
 	emit_signal("on_score_sent", score)
-	
-func on_send_score(score):
-	total_score_count += score
-	emit_signal("total_score_sent", total_score_count)
-	
-func get_total_score():
-	return total_score_count
 
 func rand_array(array : Array):
 	return array[randi() % array.size()]
