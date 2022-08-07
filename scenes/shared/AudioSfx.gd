@@ -50,7 +50,7 @@ func _build_patron_sounds():
 		 
 		patron_sounds[patron] = sounds
 
-func get_voice_stream_for_patron(patron : Patron, voice):
+func get_voice_stream_for_patron(patron : String, voice):
 	match voice:
 		Patron.Voice.HELLO:
 			return get_hello_stream_for_patron(patron)
@@ -62,19 +62,19 @@ func get_voice_stream_for_patron(patron : Patron, voice):
 			assert(false)
 			return null
 
-func get_hello_stream_for_patron(patron : Patron):
+func get_hello_stream_for_patron(patron : String):
 	var sounds = patron_sounds[patron]
 	if sounds == null:
 		return null
 	return sounds.hello_sound
 
-func get_nomnom_stream_for_patron(patron : Patron):
+func get_nomnom_stream_for_patron(patron : String):
 	var sounds = patron_sounds[patron]
 	if sounds == null:
 		return null
 	return sounds.nomnom_sound
 
-func get_bye_stream_for_patron(patron : Patron):
+func get_bye_stream_for_patron(patron : String):
 	var sounds = patron_sounds[patron]
 	if sounds == null:
 		return null
