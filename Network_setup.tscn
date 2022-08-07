@@ -346,7 +346,7 @@ margin_left = -21.0
 margin_top = -17.0
 margin_right = 27.0
 margin_bottom = 1.0
-text = "3:00"
+text = "5:00"
 
 [node name="DisconnectedPopup" type="Control" parent="Network_setup"]
 visible = false
