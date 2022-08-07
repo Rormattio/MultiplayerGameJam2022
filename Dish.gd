@@ -237,15 +237,15 @@ func deserialize(stream : Array):
 	assert(is_valid())
 
 static func _compute_ingredient_difference(ing0, ing1):
-	printraw("_compute_ingredient_difference(", ing0, ing1, ") -> ")
+	Global.logger_raw("_compute_ingredient_difference(" + ing0 + ing1 + ") -> ")
 	if (ing0 == ing1 and ing0 != ""):
-		print("same (2)")
+		Global.logger("same (2)")
 		return 2
 	if (ing0 == ing1 and ing0 == ""):
-		print("same (-1)")
+		Global.logger("same (-1)")
 		return -1
 	if (ing0 == "") or (ing1 == ""):
-		print("different (0)")
+		Global.logger("different (0)")
 		return 0
 
 	var desc0 : Ingredients.IngredientDesc = Ingredients.get_ingredient_desc(ing0)
@@ -256,14 +256,14 @@ static func _compute_ingredient_difference(ing0, ing1):
 
 	var common_tags = Global.intersect_2_lists(desc0.tags, desc1.tags)
 	if not common_tags.empty():
-		print("same tag (1)")
+		Global.logger("same tag (1)")
 		return 1
 
 	var common_plain_keywords = Global.intersect_2_lists(desc0.plain_keywords_fr, desc1.plain_keywords_fr)
 	if not common_plain_keywords.empty():
-		print("same keyword (1)")
+		Global.logger("same keyword (1)")
 		return 1
-	print("different (0)")
+	Global.logger("different (0)")
 	return 0
 
 # return a [ing0, ing1, ing2, ing3] array
@@ -279,18 +279,18 @@ static func compute_difference(dish0 : Dish, dish1 : Dish):
 	return result;
 	
 func debug_print():
-	print("Container: ", ContainerType.keys()[container_type])
-	print("Meal: ", MealType.keys()[meal_type])
+	Global.logger("Container: " + str(ContainerType.keys()[container_type]))
+	Global.logger("Meal: " + str(MealType.keys()[meal_type]))
 	if meal_type == MealType.BURGER:
-		print("Burger bottom: ", burger_component_bottom_burger)
-		print("Burger mid: ", burger_component_mid_burger)
-		print("Burger top: ", burger_component_top_burger)
-		print("Top: ", burger_component_top)
+		Global.logger("Burger bottom: " + burger_component_bottom_burger)
+		Global.logger("Burger mid: " + burger_component_mid_burger)
+		Global.logger("Burger top: " + burger_component_top_burger)
+		Global.logger("Top: " + burger_component_top)
 	elif meal_type == MealType.SOUP:
-		print("Soup base: ", soup_component_base)
-		print("Soup top: ", soup_component_top)
+		Global.logger("Soup base: " + soup_component_base)
+		Global.logger("Soup top: " + soup_component_top)
 	else:
 		assert(meal_type == MealType.NON_BURGER)
-		print("Bottom: ", non_burger_component_bottom)
-		print("Main: ", non_burger_component_main)
-		print("Top: ", non_burger_component_top)
+		Global.logger("Bottom: " + non_burger_component_bottom)
+		Global.logger("Main: " + non_burger_component_main)
+		Global.logger("Top: " + non_burger_component_top)

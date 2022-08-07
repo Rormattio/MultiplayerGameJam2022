@@ -293,7 +293,7 @@ func _ready():
 				plain_keywords.append(kw)
 	ingredient_names.sort()
 	plain_keywords.sort()
-	print("Keywords: ", plain_keywords)
+	Global.logger("Keywords: " + str(plain_keywords))
 	
 	# Build ingredient lists for bw-compat
 	bottom_ingredients = get_ingredient_names_with_tag("bottom")
@@ -388,7 +388,7 @@ func _check_unused_food_sprites():
 		var ingredient_name = file.get_basename()
 		if (ingredient_name != "bowl") and (ingredient_name != "bowl_back") and (ingredient_name != "bowl_front") and (ingredient_name != "plate"):
 			if not is_ingredient(ingredient_name):
-				print("INFO: ", file, " doesn't have a matching ingredient")
+				Global.logger("INFO: " + str(file) + " doesn't have a matching ingredient")
 
 	dir.list_dir_end()
 	
@@ -409,10 +409,10 @@ func _check_ingredient_metadata():
 			
 	for kw in plain_keywords:
 		if not plain_keywords_synonyms.has(kw):
-			print("WARNING: Synonyms were not declared for ", kw)
+			Global.logger("WARNING: Synonyms were not declared for " + kw)
 	for kw in plain_keywords_synonyms:
 		if not plain_keywords.has(kw):
-			print("WARNING: Synonyms are declared for ", kw, " though the ingredient is not declared")
+			Global.logger("WARNING: Synonyms are declared for " + kw + " though the ingredient is not declared")
 
 
 	for desc in ingredient_descs:

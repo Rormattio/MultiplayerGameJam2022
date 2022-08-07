@@ -215,7 +215,7 @@ func _refresh_stock():
 			y += dy
 
 func _on_WaiterCommand_Sent(order: Order):
-	print("waiter command ", order)
+	Global.logger("waiter command " + str(order))
 	var command = Command.instance_command_scene(Command.Type.ACTIVE_COMMAND, order)
 	commands_container.add_child(command)
 	command.connect("close_command", self, "_on_close_command")
@@ -227,7 +227,7 @@ func _on_WaiterCommand_Sent(order: Order):
 	command_counter += 1
 
 func _on_close_command(name):
-	print("delete command " + name)
+	Global.logger("delete command " + name)
 	var command = commands_container.get_node(name)
 	var command_idx = active_commands.find(command)
 	assert(command_idx > -1)
@@ -340,7 +340,7 @@ func _on_ChangeDish_pressed():
 	_refresh_stock()
 
 func _clear_dish():
-	print("Clearing : ", dish_ingredients)
+	Global.logger("Clearing : " + str(dish_ingredients))
 
 	for idx in range(dish_ingredients_n):
 		if 	dish_ingredients[idx] != "":
@@ -401,11 +401,11 @@ func _on_Randomize_pressed():
 
 func _on_score_sent(score):
 	total_score += score
-	print("Total score", total_score)
+	Global.logger("Total score " + str(total_score))
 	score_box.render(total_score, score != 0)
 
 func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized, hints):
-	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
+	Global.logger("dish=" + str(received_dish_serialized) + " score=" + str(score) + " order=" + str(order_serialized))
 	var ingredients = []
 	for idx in range(2, len(received_dish_serialized)):
 		ingredients.push_back(received_dish_serialized[idx])

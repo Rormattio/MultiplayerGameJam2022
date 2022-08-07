@@ -28,7 +28,7 @@ func set_enabled(a_enabled: bool):
 	$Sprite.modulate = Color(1,1,1,1) if a_enabled else Color(0,0,0,0.1)
 
 func score_feedback(command_clues : Array, score):
-	print("In ingredient_stock=", ingredient_name, ", got score =", score, " for clues ", command_clues)
+	Global.logger("In ingredient_stock=" + ingredient_name + ", got score =" + str(score) + " for clues " + str(command_clues))
 	for clue in command_clues:
 		if clue in clue_to_score:
 			clue_to_score[clue] = int(round((clue_to_score[clue] + score)/2))
