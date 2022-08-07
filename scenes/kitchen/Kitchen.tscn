@@ -104,7 +104,7 @@ text = "RANDOMIZE"
 
 [node name="IngredientStockBg" type="ColorRect" parent="."]
 margin_left = 845.0
-margin_top = 8.0
+margin_top = 16.0
 margin_right = 1272.0
 margin_bottom = 644.0
 color = Color( 0.803922, 0.662745, 0.568627, 0.976471 )
@@ -142,18 +142,19 @@ texture = ExtResource( 13 )
 [node name="AudioSfx" parent="." instance=ExtResource( 23 )]
 
 [node name="OpenCloseHistory" type="Node2D" parent="."]
+position = Vector2( 1200, 652 )
 z_index = 11
 
 [node name="ButtonHistory" type="Button" parent="OpenCloseHistory"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_left = 1202.0
-margin_top = 658.0
-margin_right = 1245.0
-margin_bottom = 711.0
+margin_left = 11.0
+margin_top = 3.0
+margin_right = 56.0
+margin_bottom = 62.0
 rect_scale = Vector2( 0.92, 1 )
 
 [node name="Sprite" type="Sprite" parent="OpenCloseHistory"]
-position = Vector2( 528, 456 )
+position = Vector2( 32, 32 )
 texture = ExtResource( 24 )
 
 [node name="History" type="Node2D" parent="."]

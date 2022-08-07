@@ -131,6 +131,8 @@ var start_countdown
 var lobby_state
 var fade_alpha
 
+const GAME_ROUND_TIME_SECONDS = 3 * 60
+
 func enter_lobby_from_title_screen():
 	multiplayer_config_ui.hide()
 
@@ -340,8 +342,9 @@ func _physics_process(_delta):
 
 	if lobby_state == LobbyState.GAME_STARTED:
 		var t = $Lobby/GameTimer.time_left
-		#$GameTimerLabel.text = "%d:%d" % [t/60 as int, t % 60]
-		$GameTimerLabel.text = str(t)
+		var minutes = int(floor(t / 60.0))
+		var seconds = int(t - minutes * 60.0)
+		$GameTimerLabel.text = "%d:%02d" % [minutes, seconds]
 
 func _on_LobbyStartGame_sent():
 	if lobby_state == LobbyState.START_GAME_COUNTDOWN:
@@ -392,7 +395,7 @@ remotesync func player_ready():
 			rpc("start_game_timer")
 
 remotesync func start_game_timer():
-	$Lobby/GameTimer.wait_time = 5
+	$Lobby/GameTimer.wait_time = GAME_ROUND_TIME_SECONDS
 	$Lobby/GameTimer.start()
 	$GameTimerLabel.show()
 
@@ -401,6 +404,7 @@ func enter_title_screen():
 	lobby.hide()
 
 	connection_status.hide()
+	$GameTimerLabel.hide()
 	multiplayer_config_ui.show()
 
 func _on_Restart_pressed():
