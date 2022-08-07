@@ -62,7 +62,13 @@ func _randomize_dish_container():
 	return ContainerType.get(ContainerType.keys()[randi() % ContainerType.size()])
 
 func _randomize_dish_meal_type():
-	return MealType.get(MealType.keys()[randi() % MealType.size()])
+	var meal_type_rnd = randi() % 100
+	if meal_type_rnd < 40:
+		return MealType.BURGER
+	elif meal_type_rnd < 60:
+		return MealType.SOUP
+	else:
+		return MealType.NON_BURGER
 
 func _randomize_burger():
 	assert(meal_type == MealType.BURGER)
