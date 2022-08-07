@@ -1,5 +1,6 @@
 extends Node
 
+const DishRenderer = preload("res://DishRenderer.gd")
 var kitchen_scene = preload("res://scenes/kitchen/Kitchen.tscn")
 var dining_room_level_scene = preload("res://scenes/dining_room/Dining_room_level.tscn")
 var dual_scene = preload("res://scenes/dual_scene.tscn")
@@ -431,10 +432,19 @@ func _on_GameTimer_timeout():
 	if is_network_master():
 		rpc("enter_result_screen")
 
+var results_history_items = []
+var final_score
+
 remotesync func enter_result_screen():
 	lobby_state = LobbyState.RESULT_SCREEN
 
-	var final_score
+	if chosen_role == PlayerRole.CHEFFE:
+		var kitchen = $RoleScene.get_children()[0]
+		results_history_items.clear()
+		for item in kitchen.history_items:
+			results_history_items.append([item.saved_dish_serialized.duplicate(),
+				item.saved_order_serialized.duplicate()])
+		rpc("send_kitchen_history", results_history_items)
 
 	for n in $RoleScene.get_children():
 		final_score = n.total_score
@@ -445,11 +455,52 @@ remotesync func enter_result_screen():
 	$ResultsScreen/FinalScore.hide()
 	$ResultsScreen.show()
 
-	yield(get_tree().create_timer(1), "timeout")
+remotesync func results_tally_start():
+	var x = 0
+	var y = 0
+	var hspace = 80
+	var vspace = 80
+	var maxX = 750
+	var maxY = 450
 
-	$ResultsScreen/FinalScore/Score.text = str(final_score) + "$"
+	# DEBUG
+	for _n in range(30):
+		var new_dish = Dish.new()
+		new_dish.randomize()
+		results_history_items.append([new_dish.serialize()])
+
+	for item in results_history_items:
+		yield(get_tree().create_timer(0.25), "timeout")
+		# if player clicks on NewRound
+		if lobby_state != LobbyState.RESULT_SCREEN:
+			return
+		var dish = Dish.new()
+		dish.deserialize(item[0])
+		var sprite = DishRenderer.render_dish(dish)
+		$ResultsScreen/DishServed/Tally.add_child(sprite)
+		sprite.position.x = x
+		sprite.position.y = y
+		x += hspace
+		if x > maxX:
+			x = 0
+			y += vspace
+		if y >= maxY:
+			break
+
+	yield(get_tree().create_timer(1), "timeout")
+	$ResultsScreen/FinalScore/Score.hide()
+	$ResultsScreen/FinalScore/Sprite.hide()
 	$ResultsScreen/FinalScore.show()
 
+	yield(get_tree().create_timer(1), "timeout")
+	$ResultsScreen/FinalScore/Score.text = str(final_score) + "$"
+	$ResultsScreen/FinalScore/Sprite.show()
+	$ResultsScreen/FinalScore/Score.show()
+
+remote func send_kitchen_history(history_items):
+	results_history_items = history_items
+	print("received kitchen history: ", len(history_items), len(results_history_items))
+	rpc("results_tally_start")
 
 func _on_NewRound_pressed():
 	rpc("do_enter_lobby_from_result_screen")

@@ -6,6 +6,9 @@ const Y_DELTA = 180
 
 const DishRenderer = preload("res://DishRenderer.gd")
 
+var saved_dish_serialized
+var saved_order_serialized
+
 static func instance_history_item_scene(order : Order, dish_serialized : Array, hints : Array, score : int):
 	var history_item_scene = load("res://scenes/kitchen/HistoryItem.tscn")
 	var history_item = history_item_scene.instance()
