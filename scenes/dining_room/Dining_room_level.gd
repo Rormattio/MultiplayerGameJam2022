@@ -178,7 +178,10 @@ func _on_SpawnTimer_timeout():
 	spawn_patron()
 
 func _on_Jukebox_button_up():
-	AudioSfx.advance_jukebox_state()
+	var rect = $Jukebox.get_rect()
+	var center = (rect.position + rect.end)/2
+	if (center.distance_to(waiter.position) < TRIGGER_COMMAND_AT_X_FROM_TABLE):
+		AudioSfx.advance_jukebox_state()
 
 func _on_score_sent(score):
 	print("score sent ", score)
