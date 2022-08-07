@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://red_button.tres" type="Theme" id=6]
 [ext_resource path="res://assets/misc/title.png" type="Texture" id=7]
 [ext_resource path="res://assets/misc/menu_bg.png" type="Texture" id=8]
+[ext_resource path="res://assets/sfx/tick_tock.ogg" type="AudioStream" id=9]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -286,6 +287,9 @@ text = "Game starting in 3..2..1.."
 
 [node name="GameTimer" type="Timer" parent="Network_setup/Lobby"]
 one_shot = true
+
+[node name="TicTockStreamPlayer" type="AudioStreamPlayer" parent="Network_setup/Lobby"]
+stream = ExtResource( 9 )
 
 [node name="RoleScene" type="Node" parent="Network_setup"]
 

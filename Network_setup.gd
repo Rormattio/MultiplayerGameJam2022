@@ -13,6 +13,7 @@ onready var external_ip_address_label = $Multiplayer_configure/external_ip_addre
 onready var device_external_ip_address = $Multiplayer_configure/Device_external_ip_address
 onready var create_server_and_client = $Multiplayer_configure/create_server_and_client
 onready var connection_status = $connection_status
+onready var tic_tock_player = $Lobby/TicTockStreamPlayer
 
 onready var lobby = $Lobby
 
@@ -53,7 +54,7 @@ func _ready() -> void:
 	device_local_ip_address.text = Network.ip_address
 
 	enter_title_screen()
-
+	
 func _upnp_completed(error):
 	Global.logger("upnp done " + Upnp.external_ip_address)
 	if error == UPNP.UPNP_RESULT_SUCCESS:
@@ -351,6 +352,13 @@ func _physics_process(_delta):
 		else:
 			$GameTimerUI/Bg.modulate = Color("#ffffff")
 
+func _process(delta):
+		var t = $Lobby/GameTimer.time_left
+		if not $Lobby/GameTimer.is_stopped():
+			if t <= 10.0:
+				if not tic_tock_player.is_playing():
+					tic_tock_player.play()
+	
 func _on_LobbyStartGame_sent():
 	if lobby_state == LobbyState.START_GAME_COUNTDOWN:
 		return
@@ -431,6 +439,7 @@ func _unhandled_input(event: InputEvent):
 		OS.set_window_fullscreen(!OS.window_fullscreen)
 
 func _on_GameTimer_timeout():
+	tic_tock_player.stop()
 	if is_network_master():
 		rpc("enter_result_screen")
 
