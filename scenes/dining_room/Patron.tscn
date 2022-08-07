@@ -61,8 +61,11 @@ script = ExtResource( 6 )
 shape = SubResource( 3 )
 
 [node name="DialogLine" type="RichTextLabel" parent="LevelAvatar"]
-margin_right = 510.0
-margin_bottom = 40.0
+margin_left = -300.0
+margin_top = -100.0
+margin_right = 300.0
+margin_bottom = -60.0
+bbcode_enabled = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
