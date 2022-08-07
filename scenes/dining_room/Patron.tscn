@@ -64,3 +64,5 @@ shape = SubResource( 3 )
 
 [connection signal="input_event" from="CommandAvatar" to="CommandAvatar" method="_on_CommandAvatar_input_event"]
 [connection signal="input_event" from="LevelAvatar" to="LevelAvatar" method="_on_LevelAvatar_input_event"]
+[connection signal="mouse_entered" from="LevelAvatar" to="LevelAvatar" method="_on_LevelAvatar_mouse_entered"]
+[connection signal="mouse_exited" from="LevelAvatar" to="LevelAvatar" method="_on_LevelAvatar_mouse_exited"]
