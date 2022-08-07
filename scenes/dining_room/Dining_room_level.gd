@@ -186,12 +186,21 @@ func open_door():
 func close_door():
 	door.show()
 
-func _on_patron_state_changed(patron):
+func _play_hello_sometimes(patron : Patron):
+	patron.play_hello_sometimes(1.0)
+
+func _play_nomnom_sometimes(patron : Patron):
+	patron.play_nomnom_sometimes(1.0)
+
+func _play_bye_sometimes(patron : Patron):
+	patron.play_bye_sometimes(1.0)
+	
+func _on_patron_state_changed(patron : Patron):
 	if dining_room.state == dining_room.State.VISIBLE:
 		dining_room.update_waiter_actions()
 	
 	match patron.state:
 		patron.State.ENTERING:
-			patron.play_hello_sometimes()
+			_play_hello_sometimes(patron)
 		patron.State.LEAVING_BEHIND_WINDOW:
-			patron.play_bye_sometimes()
+			_play_bye_sometimes(patron)
