@@ -132,6 +132,8 @@ func build_word_list():
 
 	var	keyword_list = Global.make_keyword_list(_seed)
 
+	keyword_list.sort()
+
 	for kw in keyword_list:
 		wordlist.add_item(kw)
 
