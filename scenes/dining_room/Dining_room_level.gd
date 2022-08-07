@@ -178,7 +178,7 @@ func _on_SpawnTimer_timeout():
 	spawn_patron()
 
 func _on_Jukebox_button_up():
-	AudioSfx.jukebox.advance_state()
+	AudioSfx.advance_jukebox_state()
 
 func _on_score_sent(score):
 	print("score sent ", score)

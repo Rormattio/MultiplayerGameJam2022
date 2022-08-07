@@ -126,6 +126,12 @@ func _on_ambience_sound_finished():
 		if not player.playing:
 			player.play()
 
+func advance_jukebox_state():
+	rpc("_advance_jukebox_state")
+
+remotesync func _advance_jukebox_state():
+	jukebox.advance_state()
+
 class Jukebox:
 	enum JukeboxState {
 		OFF,
