@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/5_crypto-burger.ogg-e61d092c641290dbe45cb6ff08c59441.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/radio/5_crypto-burger.ogg"
+dest_files=[ "res://.import/5_crypto-burger.ogg-e61d092c641290dbe45cb6ff08c59441.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

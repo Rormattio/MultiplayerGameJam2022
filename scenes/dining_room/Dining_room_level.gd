@@ -12,7 +12,6 @@ onready var paths_to_tables = $Layout/Paths
 onready var patrons = $Patrons
 onready var spawn_timer = $SpawnTimer
 onready var carrying_dish_node = $CarryingDish
-onready var audio_sfx = $AudioSfx
 onready var door = $door
 onready var door_close_timer = $door/CloseTimer
 onready var score_box = $Score
@@ -61,7 +60,7 @@ func _ready():
 
 	spawn_patron()
 	
-	audio_sfx.play_ambience()
+	AudioSfx.play_ambience()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -172,7 +171,7 @@ func _on_SpawnTimer_timeout():
 	spawn_patron()
 
 func _on_Jukebox_button_up():
-	audio_sfx.toggle_music()
+	AudioSfx.jukebox.advance_state()
 
 func _on_score_sent(score):
 	print("score sent ", score)

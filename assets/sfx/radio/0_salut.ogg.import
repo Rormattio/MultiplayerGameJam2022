@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/0_salut.ogg-fd0e29c98252606f1d50cc9d64af0d87.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/radio/0_salut.ogg"
+dest_files=[ "res://.import/0_salut.ogg-fd0e29c98252606f1d50cc9d64af0d87.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
