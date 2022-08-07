@@ -282,7 +282,7 @@ func hide_wanted_dish():
 
 func _decide_how_many_ingredients_for_dish():
 	# TODO : We shouldn't use patron_index here but the order processing index
-	var seq_len = 3
+	var seq_len = 2
 	var _min
 	var _max
 	if (patron_index < seq_len):
