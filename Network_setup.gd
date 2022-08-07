@@ -345,6 +345,8 @@ func _physics_process(_delta):
 		var minutes = int(floor(t / 60.0))
 		var seconds = int(t - minutes * 60.0)
 		$GameTimerUI/Label.text = "%d:%02d" % [minutes, seconds]
+		if t <= 10.0:
+			$GameTimerUI/Bg.modulate = Color("#ff0000")
 
 func _on_LobbyStartGame_sent():
 	if lobby_state == LobbyState.START_GAME_COUNTDOWN:
@@ -432,12 +434,22 @@ func _on_GameTimer_timeout():
 remotesync func enter_result_screen():
 	lobby_state = LobbyState.RESULT_SCREEN
 
+	var final_score
+
 	for n in $RoleScene.get_children():
+		final_score = n.total_score
 		n.queue_free()
 
 	$GameTimerUI.hide()
 
+	$ResultsScreen/FinalScore.hide()
 	$ResultsScreen.show()
+
+	yield(get_tree().create_timer(1), "timeout")
+
+	$ResultsScreen/FinalScore/Score.text = str(final_score) + "$"
+	$ResultsScreen/FinalScore.show()
+
 
 func _on_NewRound_pressed():
 	rpc("do_enter_lobby_from_result_screen")
