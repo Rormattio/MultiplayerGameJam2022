@@ -48,6 +48,8 @@ var PATRON_HAS_ANIM = {
 	"fromage_chaud": false,
 }	
 
+enum Voice { HELLO, NOMNOM, BYE}
+
 const BEHIND_WINDOW_TINT = Color("#1a2b3b")
 const IN_ROOM_TINT = Color("#ffffff")
 
@@ -227,13 +229,11 @@ func compute_dish_score(wanted_dish : Dish, dish : Dish):
 	assert(dish != null)
 	var diffs = Dish.compute_difference(wanted_dish, dish)
 	var score = 0
-	print("toto ", diffs[0], diffs[1], diffs[2], diffs[3])
 	for i in range(4):
 		if diffs[i] != -1:
 			score += 2*diffs[i]
 		else:
 			diffs[i] = 2 # sets back to 2 to have the correct smileys
-	print("tata ", score)
 	return [score, diffs]
 
 func show_dish_score():
@@ -319,25 +319,41 @@ func generate_dish() -> Dish:
 
 	return random_dish
 
-var PLAY_VOICE_PROBABILITY = 1.0
-
-func play_hello_sometimes():
-	if randf() <= PLAY_VOICE_PROBABILITY:
+func play_hello_sometimes(probability) -> bool:
+	if randf() <= probability:
 		var stream = AudioSfx.get_hello_stream_for_patron(sprite_name)
 		if stream != null:
 			$AudioStreamPlayer.stream = stream
 			$AudioStreamPlayer.play()
+		return true
+	return false
 
-func play_nomnom_sometimes():
-	if randf() <= PLAY_VOICE_PROBABILITY:
+func play_nomnom_sometimes(probability) -> bool:
+	if randf() <= probability:
 		var stream = AudioSfx.get_nomnom_stream_for_patron(sprite_name)
 		if stream != null:
 			$AudioStreamPlayer.stream = stream
 			$AudioStreamPlayer.play()
+		return true
+	return false
 
-func play_bye_sometimes():
-	if randf() <= PLAY_VOICE_PROBABILITY:
+func play_bye_sometimes(probability) -> bool:
+	if randf() <= probability:
 		var stream = AudioSfx.get_bye_stream_for_patron(sprite_name)
 		if stream != null:
 			$AudioStreamPlayer.stream = stream
 			$AudioStreamPlayer.play()
+		return true
+	return false
+
+func play_voice_sometimes(voice, probability) -> bool:
+	match voice:
+		Voice.HELLO:
+			return play_hello_sometimes(probability)
+		Voice.NOMNOM:
+			return play_nomnom_sometimes(probability)
+		Voice.BYE:
+			return play_bye_sometimes(probability)
+		_:
+			assert(false)
+			return false

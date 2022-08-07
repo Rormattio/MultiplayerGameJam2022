@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bye_auronron.ogg-2011b840ca52847379dc787069777eae.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/bye_auronron.ogg"
+dest_files=[ "res://.import/bye_auronron.ogg-2011b840ca52847379dc787069777eae.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
