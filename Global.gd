@@ -223,7 +223,8 @@ remote func on_patron_dish_score_sent(dish_serialized, score, order_serialized, 
 	emit_signal("patron_dish_score_sent", dish_serialized, score, order_serialized, hints)
 	
 func send_score(score):
-	rpc("on_score_sent", score)
+	emit_signal("on_score_sent", score) # For the Dining Room
+	rpc("on_score_sent", score)         # For the Kitchen
 
 remote func on_score_sent(score):
 	emit_signal("on_score_sent", score)
