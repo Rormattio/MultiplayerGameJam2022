@@ -227,11 +227,13 @@ func compute_dish_score(wanted_dish : Dish, dish : Dish):
 	assert(dish != null)
 	var diffs = Dish.compute_difference(wanted_dish, dish)
 	var score = 0
+	print("toto ", diffs[0], diffs[1], diffs[2], diffs[3])
 	for i in range(4):
 		if diffs[i] != -1:
 			score += 2*diffs[i]
 		else:
 			diffs[i] = 2 # sets back to 2 to have the correct smileys
+	print("tata ", score)
 	return [score, diffs]
 
 func show_dish_score():
@@ -250,7 +252,7 @@ func _on_EatTimer_timeout():
 	dish_score_value = res[0]
 	ingredient_diffs = res[1]
 	Global.patron_send_dish_score(received_dish.dish.serialize(), dish_score_value, received_dish.order.serialize(), ingredient_diffs)
-	Global.send_score(dish_score)
+	Global.send_score(dish_score_value)
 	
 	command_avatar.rotation = 0
 	received_dish.queue_free()

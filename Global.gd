@@ -5,10 +5,10 @@ signal cheffe_dish_trashed(dish_index)
 signal waiter_command_sent(Order)
 signal waiter_dish_taken(dish_index)
 signal patron_dish_score_sent(dish_serialized, score, order_serialized, hints)
-signal total_score_sent(total_score)
 signal lobby_role_sent(role)
 signal lobby_start_game_sent()
 signal player_quit_sent(id)
+signal on_score_sent(total_score)
 
 var DEBUG = true
 
@@ -19,8 +19,6 @@ var id_counter = 0
 var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
-
-var total_score_count = 0
 
 func make_keyword_list(_seed : int):
 	seed(_seed)
@@ -226,16 +224,13 @@ func patron_send_dish_score(dish_serialized, score, order_serialized, hints):
 
 remote func on_patron_dish_score_sent(dish_serialized, score, order_serialized, hints):
 	emit_signal("patron_dish_score_sent", dish_serialized, score, order_serialized, hints)
+	
+func send_score(score):
+	emit_signal("on_score_sent", score) # For the Dining Room
+	rpc("on_score_sent", score)         # For the Kitchen
 
-remote func send_score(score):
-	rpc("on_score_sent", score)
-
-func on_send_score(score):
-	total_score_count += score
-	emit_signal("total_score_sent", total_score_count)
-
-func get_total_score():
-	return total_score_count
+remote func on_score_sent(score):
+	emit_signal("on_score_sent", score)
 
 func lobby_send_role(role):
 	rpc("on_lobby_send_role", role)

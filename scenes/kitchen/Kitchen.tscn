@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scenes/kitchen/Kitchen.gd" type="Script" id=1]
 [ext_resource path="res://assets/food/bowl.png" type="Texture" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://scenes/shared/AudioSfx.tscn" type="PackedScene" id=23]
 [ext_resource path="res://assets/misc/historique.png" type="Texture" id=24]
 [ext_resource path="res://assets/misc/historique_bg.png" type="Texture" id=25]
+[ext_resource path="res://scenes/shared/TotalScore.tscn" type="PackedScene" id=26]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.376471, 0.0862745, 0.0862745, 1 )
@@ -181,6 +182,9 @@ margin_left = 79.0
 margin_top = 22.0
 margin_right = 1084.0
 margin_bottom = 623.0
+
+[node name="Score" parent="." instance=ExtResource( 26 )]
+position = Vector2( 50, 603 )
 
 [connection signal="pressed" from="ChangeDish" to="." method="_on_ChangeDish_pressed"]
 [connection signal="pressed" from="Trash" to="." method="_on_Trash_pressed"]

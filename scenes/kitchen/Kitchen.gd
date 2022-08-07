@@ -17,6 +17,7 @@ onready var commands_container = $CommandsContainer
 onready var audio_sfx = $AudioSfx
 
 onready var score_box = $Score
+var total_score
 
 var cheffe
 
@@ -41,9 +42,10 @@ var state = State.COOKING
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#score_box.text = str(Global.total_score)+"$"
+	total_score = 0
 	Global.connect("waiter_command_sent", self, "_on_WaiterCommand_Sent")
 	Global.connect("patron_dish_score_sent", self, "_on_PatronDishScore_Sent")
+	Global.connect("on_score_sent", self, "_on_score_sent")
 	$History.visible = false
 	
 	if not Global.DEBUG:
@@ -395,6 +397,11 @@ func _on_Randomize_pressed():
 	_set_dish(new_dish)
 	_refresh_stock()
 
+func _on_score_sent(score):
+	total_score += score
+	print("Total score", total_score)
+	score_box.render(total_score)
+	
 func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized, hints):
 	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
 	var ingredients = []
