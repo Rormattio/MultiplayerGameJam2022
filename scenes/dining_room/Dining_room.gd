@@ -36,8 +36,6 @@ func _ready():
 	for control_box in $Background.get_children():
 		control_box.connect("gui_input", self, "_on_Background_gui_input")
 
-	Global.connect("on_score_sent", self, "_on_Score_Sent")
-
 func _set_visible(_visible):
 	visible = _visible
 	if _visible:
@@ -218,5 +216,3 @@ func _on_GiveDish_button_up():
 	var patron = table.patrons_around[0]
 	emit_signal("serve_dish_pressed", patron)
 
-func _on_Score_Sent(score):
-	print("TODO Dining_room._on_Score_Sent ", score)
