@@ -211,13 +211,13 @@ func _play_voice_sometimes(patron : Patron, voice):
 				last_patron_playing_dates[patron.sprite_name][voice] = now_ms
 
 func _play_hello_sometimes(patron : Patron):
-	_play_voice_sometimes(patron, Patron.Voice.HELLO)
+	_play_voice_sometimes(patron, AudioSfx.PatronVoice.HELLO)
 
 func _play_nomnom_sometimes(patron : Patron):
-	_play_voice_sometimes(patron, Patron.Voice.NOMNOM)
+	_play_voice_sometimes(patron, AudioSfx.PatronVoice.NOMNOM)
 
 func _play_bye_sometimes(patron : Patron):
-	_play_voice_sometimes(patron, Patron.Voice.BYE)
+	_play_voice_sometimes(patron, AudioSfx.PatronVoice.BYE)
 
 func _on_patron_state_changed(patron : Patron):
 	if dining_room.state == dining_room.State.VISIBLE:
