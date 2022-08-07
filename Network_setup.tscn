@@ -296,10 +296,10 @@ margin_bottom = 703.0
 text = "Player connected"
 
 [node name="GameTimerLabel" type="Label" parent="Network_setup"]
-margin_left = 1208.0
-margin_top = 682.0
-margin_right = 1256.0
-margin_bottom = 700.0
+margin_left = 1224.0
+margin_top = 8.0
+margin_right = 1272.0
+margin_bottom = 26.0
 text = "3:00"
 
 [node name="DisconnectedPopup" type="Control" parent="Network_setup"]
