@@ -329,15 +329,6 @@ func generate_dish() -> Dish:
 
 	return random_dish
 
-func play_hello_sometimes(probability) -> bool:
-	return play_voice_sometimes(AudioSfx.PatronVoice.HELLO, probability)
-
-func play_nomnom_sometimes(probability) -> bool:
-	return play_voice_sometimes(AudioSfx.PatronVoice.NOMNOM, probability)
-
-func play_bye_sometimes(probability) -> bool:
-	return play_voice_sometimes(AudioSfx.PatronVoice.BYE, probability)
-
 func play_voice_sometimes(voice, probability) -> bool:
 	if randf() <= probability:
 		var stream = AudioSfx.get_voice_stream_for_patron(sprite_name, voice)

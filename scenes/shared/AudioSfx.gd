@@ -4,8 +4,6 @@ extends Node
 
 var available_host_fs_musics = []
 var ambiance_players = []
-var proba_play_voice_sound = {}
-var proba_play_voice_sound_decrease = 0.9
 var jukebox
 
 class PatronSounds:
