@@ -79,13 +79,15 @@ func get_bye_stream_for_patron(patron : String):
 	if sounds == null:
 		return null
 	return sounds.bye_sound
+	
+func play_patron_voice(sprite_name, voice, pitch_scale):
+	rpc("_play_patron_voice", sprite_name, voice, pitch_scale)
 
-#remote func play_patron_voice(sprite_name, voice, pitch_scale):
-#	var stream = AudioSfx.get_voice_stream_for_patron(sprite_name, voice)
-#	if stream != null:
-#		$AudioStreamPlayer.pitch_scale = rand_range(0.9, 1.1)
-#		$AudioStreamPlayer.stream = stream
-#		$AudioStreamPlayer.play()
+remote func _play_patron_voice(sprite_name, voice, pitch_scale):
+	var stream = AudioSfx.get_voice_stream_for_patron(sprite_name, voice)
+	$VoicePlaceholder.stream = stream
+	$VoicePlaceholder.pitch_scale = pitch_scale
+	$VoicePlaceholder.play()
 	
 func _ready():
 	##play_host_music("D:/perso/zik/OI! - PUNK - HXC - METAL/BULLDOZER - Bulldozer/06 - Il était une tranche de foie dans l'ouest.ogg")
