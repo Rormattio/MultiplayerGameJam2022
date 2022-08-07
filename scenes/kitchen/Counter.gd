@@ -35,12 +35,12 @@ func add_dish_at(dish, idx: int):
 
 	counter_dishes[idx] = dish_node
 
-	var button = Button.new()
-	button.rect_position = Vector2(-32, -32)
-	button.rect_size = Vector2(64, 64)
-	button.modulate = Color(1,1,1,0)
-	button.connect("pressed", self, "_on_Dish_pressed", [idx])
-	dish_node.add_child(button)
+	# var button = Button.new()
+	# button.rect_position = Vector2(-32, -32)
+	# button.rect_size = Vector2(64, 64)
+	# button.modulate = Color(1,1,1,0)
+	# button.connect("pressed", self, "_on_Dish_pressed", [idx])
+	# dish_node.add_child(button)
 
 	dish_node.position = node_pos
 	dish_node.global_scale = Vector2(2, 2)
