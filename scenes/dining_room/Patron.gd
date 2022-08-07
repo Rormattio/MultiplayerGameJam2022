@@ -342,8 +342,9 @@ func play_voice_sometimes(voice, probability) -> bool:
 	return false
 
 func spawn_dialog_line(text : String, duration_ms):
-	dialog_line.text = text
-	remaining_time_for_dialog_line_ms = 3000
+	dialog_line.bbcode_enabled = true
+	dialog_line.bbcode_text = "[center]" + text + "[/center]"
+	remaining_time_for_dialog_line_ms = duration_ms
 
 func clear_dialog_line():
 	dialog_line.text = ""
