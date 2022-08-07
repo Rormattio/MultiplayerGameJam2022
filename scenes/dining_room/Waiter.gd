@@ -11,7 +11,7 @@ var state = WaiterState.WALKING
 var speed = 400
 const speed_min = 0
 const speed_increase = 20
-const speed_max = 400
+const speed_max = 500
 var velocity = Vector2(0, 0)
 
 func _ready():
