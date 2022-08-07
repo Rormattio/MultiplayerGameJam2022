@@ -303,6 +303,9 @@ margin_right = 207.0
 margin_bottom = 114.0
 text = "Dish served"
 
+[node name="Tally" type="Node2D" parent="Network_setup/ResultsScreen/DishServed"]
+position = Vector2( 24, 64 )
+
 [node name="FinalScore" type="Label" parent="Network_setup/ResultsScreen"]
 margin_left = 64.0
 margin_top = 512.0
