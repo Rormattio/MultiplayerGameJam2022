@@ -111,7 +111,8 @@ func is_valid():
 		return false # The lower part is not visible
 	if (meal_type == MealType.NON_BURGER) and (non_burger_component_top != "") and Ingredients.ingredient_has_tag(non_burger_component_top, "flag"):
 		return false # The flag doesn't fit in non-burgers :)
-	#TODO Prevent soups in plates
+	if (meal_type == MealType.SOUP) and (container_type == ContainerType.PLATE):
+		return false # a soup in a plate is not valid
 	return true
 
 func randomize_with_n_ingredients(n):
