@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Base_font_small.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/misc/game_title.png" type="Texture" id=4]
+[ext_resource path="res://assets/misc/score-bg.png" type="Texture" id=5]
 [ext_resource path="res://red_button.tres" type="Theme" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -295,11 +296,16 @@ margin_right = 231.0
 margin_bottom = 703.0
 text = "Player connected"
 
-[node name="GameTimerLabel" type="Label" parent="Network_setup"]
-margin_left = 1224.0
-margin_top = 8.0
-margin_right = 1272.0
-margin_bottom = 26.0
+[node name="GameTimerUI" type="Node2D" parent="Network_setup"]
+position = Vector2( 192, 632 )
+
+[node name="Bg" type="Sprite" parent="Network_setup/GameTimerUI"]
+position = Vector2( 16, 4 )
+texture = ExtResource( 5 )
+
+[node name="Label" type="Label" parent="Network_setup/GameTimerUI"]
+margin_right = 48.0
+margin_bottom = 18.0
 text = "3:00"
 
 [node name="DisconnectedPopup" type="Control" parent="Network_setup"]
