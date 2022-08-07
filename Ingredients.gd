@@ -233,7 +233,7 @@ const plain_keywords_synonyms = {
 	"grey" : ["silvery"],
 	"grumpy" : ["grouchy", "peevish"],
 	"happy" : ["joyful", "glad"],
-	"island" : ["isolated", "arhipelago"],
+	"island" : ["isolated", "archipelago"],
 	"khaki" : ["camouflage", "green-ish"],
 	"mechanical" : ["clockwork", "robot"],
 	"mighty" : ["laureate"],
