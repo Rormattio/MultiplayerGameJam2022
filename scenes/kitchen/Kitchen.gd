@@ -337,6 +337,7 @@ func _on_ChangeDish_pressed():
 	else:
 		assert(current_container_type == Dish.ContainerType.BOWL)
 		_set_plate()
+	_clear_dish()
 	_refresh_stock()
 
 func _clear_dish():
