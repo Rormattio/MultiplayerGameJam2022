@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Network_setup.gd" type="Script" id=1]
 [ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/misc/game_title.png" type="Texture" id=4]
 [ext_resource path="res://assets/misc/score-bg.png" type="Texture" id=5]
 [ext_resource path="res://red_button.tres" type="Theme" id=6]
+[ext_resource path="res://assets/misc/title.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -23,8 +24,12 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="title" type="Sprite" parent="Network_setup/Multiplayer_configure"]
+position = Vector2( 230, 200 )
+texture = ExtResource( 7 )
+
 [node name="TitleSprite" type="Sprite" parent="Network_setup/Multiplayer_configure"]
-position = Vector2( 649, 368 )
+position = Vector2( 660, 368 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 4 )
 
@@ -32,9 +37,9 @@ texture = ExtResource( 4 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -576.0
-margin_top = 310.0
+margin_top = 370.0
 margin_right = -176.0
-margin_bottom = 400.0
+margin_bottom = 460.0
 rect_pivot_offset = Vector2( 46, 213 )
 custom_fonts/font = ExtResource( 2 )
 text = "Create game"
@@ -43,9 +48,9 @@ text = "Create game"
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -634.0
-margin_top = 559.0
+margin_top = 570.0
 margin_right = -286.0
-margin_bottom = 628.0
+margin_bottom = 639.0
 rect_pivot_offset = Vector2( 46, 213 )
 custom_fonts/font = ExtResource( 2 )
 text = "LOCAL DEBUG"
@@ -56,9 +61,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 176.0
-margin_top = -50.0
+margin_top = 10.0
 margin_right = 536.0
-margin_bottom = 40.0
+margin_bottom = 100.0
 custom_fonts/font = ExtResource( 2 )
 text = "Join game"
 
@@ -68,9 +73,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 200.0
-margin_top = 59.0
+margin_top = 120.0
 margin_right = 520.0
-margin_bottom = 111.0
+margin_bottom = 172.0
 align = 1
 placeholder_text = "server address"
 
@@ -79,9 +84,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1016.0
-margin_top = -197.0
+margin_top = -187.0
 margin_right = -43.0
-margin_bottom = -155.0
+margin_bottom = -145.0
 custom_colors/font_color_uneditable = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/read_only = SubResource( 1 )
@@ -92,9 +97,9 @@ editable = false
 
 [node name="local_ip_address_label" type="Label" parent="Network_setup/Multiplayer_configure"]
 margin_left = 848.0
-margin_top = 523.0
+margin_top = 533.0
 margin_right = 1010.0
-margin_bottom = 565.0
+margin_bottom = 575.0
 rect_pivot_offset = Vector2( -296, -48 )
 custom_fonts/font = ExtResource( 3 )
 text = "Your local ip:"
