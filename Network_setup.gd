@@ -513,4 +513,8 @@ remotesync func do_enter_lobby_from_result_screen():
 		return
 
 	$ResultsScreen.hide()
+
+	for n in $ResultsScreen/DishServed/Tally.get_children():
+		n.queue_free()
+
 	enter_lobby_from_result_screen()
