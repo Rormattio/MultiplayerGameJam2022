@@ -92,10 +92,18 @@ func _is_possible_next_ingredient_0(ingredient_desc):
 			return false
 		if ingredient_desc.has_tag("bottom"):
 			return false
-		return not ingredient_desc.has_any_tag(["soup_top", "mid_burger", "top_burger", "flag"])
+		if ingredient_desc.has_tag("flag"):
+			return false
+		if ingredient_desc.has_tag("main"):
+			return true
+		return not ingredient_desc.has_any_tag(["soup_top", "mid_burger", "top_burger"])
 	else:
 		assert(current_container_type == Dish.ContainerType.PLATE)
-		return not ingredient_desc.has_any_tag(["soup_base", "soup_top", "mid_burger", "top_burger", "flag"])
+		if ingredient_desc.has_tag("flag"):
+			return false
+		if ingredient_desc.has_tag("main"):
+			return true
+		return not ingredient_desc.has_any_tag(["soup_base", "soup_top", "mid_burger", "top_burger"])
 
 func _is_possible_next_ingredient_1(ingredient_desc):
 	assert(ingredient_desc != null);
@@ -107,6 +115,8 @@ func _is_possible_next_ingredient_1(ingredient_desc):
 	elif is_soup:
 		return ingredient_desc.has_tag("soup_top")
 	else:
+		if ingredient_desc.has_tag("main"):
+			return true
 		return not ingredient_desc.has_any_tag(["soup_base", "soup_top", "bottom", "bottom_burger", "mid_burger", "top_burger", "flag"])
 
 func _is_possible_next_ingredient_2(ingredient_desc):
