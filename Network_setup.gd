@@ -366,3 +366,7 @@ func _on_Restart_pressed():
 func _on_ExitToDesktop_pressed():
 	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
 	get_tree().quit()
+
+func _unhandled_input(event: InputEvent):
+	if Input.is_action_pressed("ui_toggle_fullscreen"):
+		OS.set_window_fullscreen(!OS.window_fullscreen)
