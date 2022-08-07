@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Space_Jazz.ogg-dbcdd803d3bba4ab609b08270d19ff93.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/radio/Space_Jazz.ogg"
+dest_files=[ "res://.import/Space_Jazz.ogg-dbcdd803d3bba4ab609b08270d19ff93.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/radio_georgette.ogg-c440bdf9cafeb517b33ec210bcea2023.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/radio/radio_georgette.ogg"
+dest_files=[ "res://.import/radio_georgette.ogg-c440bdf9cafeb517b33ec210bcea2023.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

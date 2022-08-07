@@ -6,6 +6,7 @@ var available_host_fs_musics = []
 var ambiance_players = []
 var proba_play_voice_sound = {}
 var proba_play_voice_sound_decrease = 0.9
+var jukebox
 
 class PatronSounds:
 	var hello_sound
@@ -65,31 +66,6 @@ func get_bye_stream_for_patron(patron):
 		return null
 	return sounds.bye_sound
 	
-func play_host_music(path):
-	$bg_music_player.stop()
-	var file = File.new()
-	var err = file.open(path, File.READ)
-	if err == OK:
-		var data = file.get_buffer(file.get_len())
-		var extension = path.get_extension().to_lower()
-		if extension == "ogg":
-			var ogg = AudioStreamOGGVorbis.new()
-			ogg.data = data
-			$bg_music_player.stream = ogg
-		elif extension == "mp3":
-			var mp3 = AudioStreamMP3.new()
-			mp3.data = data
-			$bg_music_player.stream = mp3
-		file.close()
-		$bg_music_player.play()
-		$bg_music_player.volume_db = - 20
-	
-func toggle_music():
-	if $bg_music_player.playing:
-		$bg_music_player.stop()
-	else:
-		play_host_music("./assets/musics/Derp_Nugget.mp3")
-	
 func _ready():
 	##play_host_music("D:/perso/zik/OI! - PUNK - HXC - METAL/BULLDOZER - Bulldozer/06 - Il était une tranche de foie dans l'ouest.ogg")
 	##play_host_music("D:/perso/zik/PSYCHO - ROCKAB - SWING/QUAKES - Psyops/06 beer & cigarettes.mp3")
@@ -107,6 +83,8 @@ func _ready():
 		ambiance_players.append(node)
 
 	_build_patron_sounds()
+	
+	jukebox = Jukebox.init($RadioPlaceholder, $MusicPlaceholder)
 	
 func play_ingredient(sfx):
 	match sfx:
@@ -139,9 +117,100 @@ func play_ambience():
 	for player in ambiance_players:
 		player.play()
 		player.volume_db = - 20
-		player.connect("finished", self, "_on_sound_finished")
+		player.connect("finished", self, "_on_ambience_sound_finished")
 
-func _on_sound_finished():
+func _on_ambience_sound_finished():
 	for player in ambiance_players:
 		if not player.playing:
 			player.play()
+
+class Jukebox:
+	enum JukeboxState {
+		OFF,
+		RADIO,
+		MUSICS,
+	}
+
+	var RADIO_SOUND_SEQ = [
+		"0_salut",
+		"1_jam",
+		"radio_georgette",
+		"2_meteo",
+		"radio_georgette",
+		"3_info_trafic",
+		"radio_georgette",
+		"Space_Jazz_radio_georgette",
+		"4_nebulx",
+		"radio_georgette",
+		"5_crypto-burger",
+		"radio_georgette",
+		"Space_Jazz_radio_georgette",
+	]
+	var radio_sounds = {}
+	var state = JukeboxState.OFF
+	var radio_sound_index = -1
+	var radio_ph
+	var music_ph
+	
+	static func init(o_radio_ph, o_music_ph):
+		var jukebox = Jukebox.new()
+		jukebox._build_radio_sounds()
+		
+		jukebox.radio_ph = o_radio_ph
+		jukebox.radio_ph.volume_db = - 20
+		jukebox.radio_ph.connect("finished", jukebox, "_on_sound_finish")
+		
+		jukebox.music_ph = o_music_ph
+		jukebox.music_ph.volume_db = - 20
+		
+		return jukebox
+
+	func _build_radio_sounds():
+		for sound_name in RADIO_SOUND_SEQ:
+			if not (sound_name in radio_sounds):
+				var sound = load("res://assets/sfx/radio/" + sound_name + ".ogg")
+				assert(sound != null)
+				radio_sounds[sound_name] = sound
+				sound.set_loop(false)
+	
+	func advance_state():
+		radio_sound_index = -1
+		match state:
+			JukeboxState.OFF:
+				state = JukeboxState.RADIO
+				advance_radio_state()
+			JukeboxState.RADIO:
+				radio_ph.stop()
+				state = JukeboxState.MUSICS
+				play_host_music("./assets/musics/Derp_Nugget.mp3")
+			JukeboxState.MUSICS:
+				state = JukeboxState.OFF
+				music_ph.stop()
+	
+	func advance_radio_state():
+		radio_sound_index = (radio_sound_index + 1)%len(RADIO_SOUND_SEQ)
+		radio_ph.stream = radio_sounds[RADIO_SOUND_SEQ[radio_sound_index]]
+		radio_ph.play()
+	
+	func _on_sound_finish():
+		match state:
+			JukeboxState.RADIO:
+				advance_radio_state()
+		
+	func play_host_music(path):
+		music_ph.stop()
+		var file = File.new()
+		var err = file.open(path, File.READ)
+		if err == OK:
+			var data = file.get_buffer(file.get_len())
+			var extension = path.get_extension().to_lower()
+			if extension == "ogg":
+				var ogg = AudioStreamOGGVorbis.new()
+				ogg.data = data
+				music_ph.stream = ogg
+			elif extension == "mp3":
+				var mp3 = AudioStreamMP3.new()
+				mp3.data = data
+				music_ph.stream = mp3
+			file.close()
+			music_ph.play()

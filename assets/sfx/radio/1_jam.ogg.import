@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/1_jam.ogg-dc08d18e9259aa5fc0ad14bb579a7dc5.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/radio/1_jam.ogg"
+dest_files=[ "res://.import/1_jam.ogg-dc08d18e9259aa5fc0ad14bb579a7dc5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
