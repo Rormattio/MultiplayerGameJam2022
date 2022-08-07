@@ -20,3 +20,11 @@ margin_top = -32.0
 margin_right = 32.0
 margin_bottom = 32.0
 custom_styles/panel = SubResource( 1 )
+
+[node name="Button" type="Button" parent="RootForOffset"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = 32.0
+mouse_default_cursor_shape = 2
