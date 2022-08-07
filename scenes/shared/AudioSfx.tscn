@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/sfx/splotch.ogg" type="AudioStream" id=1]
 [ext_resource path="res://scenes/shared/AudioSfx.gd" type="Script" id=2]
@@ -10,8 +10,8 @@
 [ext_resource path="res://assets/sfx/schboing.ogg" type="AudioStream" id=8]
 [ext_resource path="res://assets/sfx/whooo.ogg" type="AudioStream" id=9]
 [ext_resource path="res://assets/sfx/trash.ogg" type="AudioStream" id=10]
-[ext_resource path="res://assets/sfx/ding.ogg" type="AudioStream" id=11]
 [ext_resource path="res://assets/sfx/knock.ogg" type="AudioStream" id=11]
+[ext_resource path="res://assets/sfx/ding.ogg" type="AudioStream" id=12]
 
 [node name="AudioSfx" type="Node"]
 script = ExtResource( 2 )
@@ -51,7 +51,7 @@ stream = ExtResource( 8 )
 [node name="VoicePlaceholder" type="AudioStreamPlayer" parent="."]
 
 [node name="ding" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
 
 [node name="knock" type="AudioStreamPlayer" parent="."]
-
 stream = ExtResource( 11 )
