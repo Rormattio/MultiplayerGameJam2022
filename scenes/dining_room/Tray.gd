@@ -52,7 +52,7 @@ func remove_dish(dish : ReceivedDish):
 		dishes[i].position.y -= DISHES_DY
 
 func _on_CheffeDish_Sent(dish, dish_index, order_serialized):
-	print("cheffe sends dish ", dish , " for command ", order_serialized)
+	Global.logger("cheffe sends dish " + str(dish) + " for command " + str(order_serialized))
 	add_dish(dish, dish_index, order_serialized)
 
 func _on_CheffeDish_Trashed(dish_index_in_kitchen_counter):

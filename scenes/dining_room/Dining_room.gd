@@ -146,7 +146,7 @@ func get_current_order_word_count() -> int:
 	return current_order.size()
 
 func send_order(order: Order):
-	print("sent order ", order)
+	Global.logger("sent order " + str(order))
 	Global.waiter_send_command(order)
 
 func _on_WordList_item_selected(index: int):

@@ -20,10 +20,29 @@ var plain_keywords_set = []
 var plain_keywords_occurrences = {}
 var plain_keywords_reachability = {}
 
+enum LogLevel {
+	OFF,
+	ERROR,
+	DEBUG,
+}
+var log_level = 1
+
+func logger(msg):
+	if log_level >= LogLevel.DEBUG:
+		print(msg)
+
+func logger_raw(msg):
+	if log_level >= LogLevel.DEBUG:
+		printraw(msg)
+
+func log_err(msg):
+	if log_level >= LogLevel.ERROR:
+		print(msg)
+
 func make_keyword_list(_seed : int):
 	seed(_seed)
 
-	print("make_keyword_list (seed : ", _seed, ")")
+	Global.logger("make_keyword_list (seed : " + str(_seed) + ")")
 
 	var core_list = []
 	# Initial seeding
@@ -47,7 +66,7 @@ func make_keyword_list(_seed : int):
 				break
 		core_list.append(new_kw)
 
-	print("First keyword list seeding has ", core_list.size(), " elements")
+	Global.logger("First keyword list seeding has " + str(core_list.size()) + " elements")
 
 	var result = []
 	var smallest_result = null
@@ -99,7 +118,7 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 			assert(plain_keywords_reachability[kw] != [])
 			if authorized_keywords.has(kw) and (plain_keywords_reachability[kw].size() == 1):
 				if verbose:
-					print("INFO: ", desc.name, " is uniquely reachable with single keyword ", kw, " (that is ok though, but maybe too easy?)")
+					Global.logger("INFO: " + desc.name + " is uniquely reachable with single keyword " + kw + " (that is ok though, but maybe too easy?)")
 				uniquely_reachable_with_a_single_keyword = true
 
 		if not uniquely_reachable_with_a_single_keyword:
@@ -144,10 +163,10 @@ func check_optimal_solutions(authorized_keywords, verbose = false) -> bool:
 
 				if uniquely_reachable_with_three_keywords:
 					if verbose:
-						print("WARNING: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword pair")
+						Global.logger("WARNING: " + desc.name + "(" + desc.plain_keywords_fr + ") is not uniquely reachable with a keyword pair")
 				else:
 					if verbose:
-						print("ERROR: ", desc.name, "(", desc.plain_keywords_fr, ") is not uniquely reachable with a keyword triplet")
+						Global.logger("ERROR: " + desc.name + "(" + desc.plain_keywords_fr + ") is not uniquely reachable with a keyword triplet")
 					ok = false
 	return ok
 
@@ -172,8 +191,6 @@ func _ready():
 			plain_keywords_reachability[kw] = reachability
 
 	plain_keywords_set.sort()
-	#print("plain_keywords_occurrences: ", plain_keywords_occurrences)
-	#print("plain_keywords_reachability: ", plain_keywords_reachability)
 
 	var ok = check_optimal_solutions(plain_keywords_set, true)
 	assert(ok)
@@ -181,7 +198,7 @@ func _ready():
 	randomize()
 	var _seed = randi()
 	var keyword_list = make_keyword_list(_seed)
-	print("keyword_list: ", keyword_list)
+	Global.logger("keyword_list: " + str(keyword_list))
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
 	var node_instance = instance_node(node, parent)
