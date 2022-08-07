@@ -136,6 +136,22 @@ func play_ingredient(sfx):
 			$schboing.play()
 		_: assert(false)
 
+enum Sfx {
+	DING,
+}
+
+func play_sound(sfx):
+	rpc("_play_sound", sfx)
+	
+remotesync func _play_sound(sfx):
+	var player
+	match sfx:
+		Sfx.DING:
+			player = $ding
+		_: assert(false)
+	player.stream.set_loop(false)
+	player.play()
+
 func play_ambience():
 	for player in ambiance_players:
 		player.play()
