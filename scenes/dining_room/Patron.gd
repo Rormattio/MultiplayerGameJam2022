@@ -333,9 +333,11 @@ func play_voice_sometimes(voice, probability) -> bool:
 	if randf() <= probability:
 		var stream = AudioSfx.get_voice_stream_for_patron(sprite_name, voice)
 		if stream != null:
-			$AudioStreamPlayer.pitch_scale = rand_range(0.9, 1.1)
+			var pitch_scale = rand_range(0.9, 1.1)
+			$AudioStreamPlayer.pitch_scale = pitch_scale
 			$AudioStreamPlayer.stream = stream
 			$AudioStreamPlayer.play()
+			AudioSfx.play_patron_voice(sprite_name, voice, pitch_scale)
 		return true
 	return false
 

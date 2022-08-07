@@ -45,3 +45,5 @@ stream = ExtResource( 8 )
 [node name="MusicPlaceholder" type="AudioStreamPlayer" parent="."]
 
 [node name="RadioPlaceholder" type="AudioStreamPlayer" parent="."]
+
+[node name="VoicePlaceholder" type="AudioStreamPlayer" parent="."]
