@@ -48,6 +48,8 @@ var PATRON_HAS_ANIM = {
 	"fromage_chaud": false,
 }	
 
+enum Voice { HELLO, NOMNOM, BYE}
+
 const BEHIND_WINDOW_TINT = Color("#1a2b3b")
 const IN_ROOM_TINT = Color("#ffffff")
 
@@ -339,3 +341,14 @@ func play_bye_sometimes(probability):
 		if stream != null:
 			$AudioStreamPlayer.stream = stream
 			$AudioStreamPlayer.play()
+
+func play_voice_sometimes(voice, probability):
+	match voice:
+		Voice.HELLO:
+			play_hello_sometimes(probability)
+		Voice.NOMNOM:
+			play_nomnom_sometimes(probability)
+		Voice.BYE:
+			play_bye_sometimes(probability)
+		_:
+			assert(false)
