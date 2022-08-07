@@ -215,3 +215,4 @@ func _on_GiveDish_button_up():
 	assert(len(table.patrons_around) == 1)
 	var patron = table.patrons_around[0]
 	emit_signal("serve_dish_pressed", patron)
+
