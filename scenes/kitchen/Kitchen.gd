@@ -262,6 +262,7 @@ func _on_SendDish_Pressed(command):
 
 		var serialized_dish = induced_dish.serialize()
 		Global.cheffe_send_dish(serialized_dish, dish_idx, command.order.serialize())
+		AudioSfx.play_sound(AudioSfx.Sfx.DING)
 		_on_close_command(command.name)
 
 func _on_ingredient_dish_set(ingredient_name):
