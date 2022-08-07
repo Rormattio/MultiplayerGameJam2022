@@ -400,7 +400,7 @@ func _on_Randomize_pressed():
 func _on_score_sent(score):
 	total_score += score
 	print("Total score", total_score)
-	score_box.render(total_score)
+	score_box.render(total_score, score != 0)
 	
 func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized, hints):
 	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
