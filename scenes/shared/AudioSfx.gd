@@ -169,6 +169,24 @@ func advance_jukebox_state():
 remotesync func _advance_jukebox_state():
 	jukebox.advance_state()
 
+#func play_host_music(path):
+#	$MusicPlaceholder.stop()
+#	var file = File.new()
+#	var err = file.open(path, File.READ)
+#	if err == OK:
+#		var data = file.get_buffer(file.get_len())
+#		var extension = path.get_extension().to_lower()
+#		if extension == "ogg":
+#			var ogg = AudioStreamOGGVorbis.new()
+#			ogg.data = data
+#			$MusicPlaceholder.stream = ogg
+#		elif extension == "mp3":
+#			var mp3 = AudioStreamMP3.new()
+#			mp3.data = data
+#			$MusicPlaceholder.stream = mp3
+#		file.close()
+#		$MusicPlaceholder.play()
+
 class Jukebox:
 	enum JukeboxState {
 		OFF,
@@ -192,14 +210,20 @@ class Jukebox:
 		"Space_Jazz_radio_georgette",
 	]
 	var radio_sounds = {}
+	var MUSICS_SEQ = [
+		"./assets/musics/Derp_Nugget.mp3",
+	]
+	var music_sounds = {}
 	var state = JukeboxState.OFF
 	var radio_sound_index = -1
+	var music_sound_index = -1
 	var radio_ph
 	var music_ph
 	
 	static func init(o_radio_ph, o_music_ph):
 		var jukebox = Jukebox.new()
 		jukebox._build_radio_sounds()
+		jukebox._build_music_sounds()
 		
 		jukebox.radio_ph = o_radio_ph
 		jukebox.radio_ph.volume_db = - 20
@@ -207,6 +231,7 @@ class Jukebox:
 		
 		jukebox.music_ph = o_music_ph
 		jukebox.music_ph.volume_db = - 20
+		jukebox.music_ph.connect("finished", jukebox, "_on_sound_finish")
 		
 		return jukebox
 
@@ -216,6 +241,14 @@ class Jukebox:
 				var sound = load("res://assets/sfx/radio/" + sound_name + ".ogg")
 				assert(sound != null)
 				radio_sounds[sound_name] = sound
+				sound.set_loop(false)
+
+	func _build_music_sounds():
+		for sound_path in MUSICS_SEQ:
+			if not (sound_path in music_sounds):
+				var sound = load(sound_path)
+				assert(sound != null)
+				music_sounds[sound_path] = sound
 				sound.set_loop(false)
 	
 	func advance_state():
@@ -227,7 +260,7 @@ class Jukebox:
 			JukeboxState.RADIO:
 				radio_ph.stop()
 				state = JukeboxState.MUSICS
-				play_host_music("./assets/musics/Derp_Nugget.mp3")
+				advance_music_state()
 			JukeboxState.MUSICS:
 				state = JukeboxState.OFF
 				music_ph.stop()
@@ -237,25 +270,14 @@ class Jukebox:
 		radio_ph.stream = radio_sounds[RADIO_SOUND_SEQ[radio_sound_index]]
 		radio_ph.play()
 	
+	func advance_music_state():
+		music_sound_index = (music_sound_index + 1)%len(MUSICS_SEQ)
+		music_ph.stream = music_sounds[MUSICS_SEQ[music_sound_index]]
+		music_ph.play()
+		
 	func _on_sound_finish():
 		match state:
 			JukeboxState.RADIO:
 				advance_radio_state()
-		
-	func play_host_music(path):
-		music_ph.stop()
-		var file = File.new()
-		var err = file.open(path, File.READ)
-		if err == OK:
-			var data = file.get_buffer(file.get_len())
-			var extension = path.get_extension().to_lower()
-			if extension == "ogg":
-				var ogg = AudioStreamOGGVorbis.new()
-				ogg.data = data
-				music_ph.stream = ogg
-			elif extension == "mp3":
-				var mp3 = AudioStreamMP3.new()
-				mp3.data = data
-				music_ph.stream = mp3
-			file.close()
-			music_ph.play()
+			JukeboxState.MUSICS:
+				advance_music_state()
