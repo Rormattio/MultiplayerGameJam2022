@@ -320,40 +320,20 @@ func generate_dish() -> Dish:
 	return random_dish
 
 func play_hello_sometimes(probability) -> bool:
-	if randf() <= probability:
-		var stream = AudioSfx.get_hello_stream_for_patron(sprite_name)
-		if stream != null:
-			$AudioStreamPlayer.stream = stream
-			$AudioStreamPlayer.play()
-		return true
-	return false
+	return play_voice_sometimes(Voice.HELLO, probability)
 
 func play_nomnom_sometimes(probability) -> bool:
-	if randf() <= probability:
-		var stream = AudioSfx.get_nomnom_stream_for_patron(sprite_name)
-		if stream != null:
-			$AudioStreamPlayer.stream = stream
-			$AudioStreamPlayer.play()
-		return true
-	return false
+	return play_voice_sometimes(Voice.NOMNOM, probability)
 
 func play_bye_sometimes(probability) -> bool:
+	return play_voice_sometimes(Voice.BYE, probability)
+
+func play_voice_sometimes(voice, probability) -> bool:
 	if randf() <= probability:
-		var stream = AudioSfx.get_bye_stream_for_patron(sprite_name)
+		var stream = AudioSfx.get_voice_stream_for_patron(sprite_name, voice)
 		if stream != null:
+			$AudioStreamPlayer.pitch_scale = rand_range(0.9, 1.1)
 			$AudioStreamPlayer.stream = stream
 			$AudioStreamPlayer.play()
 		return true
 	return false
-
-func play_voice_sometimes(voice, probability) -> bool:
-	match voice:
-		Voice.HELLO:
-			return play_hello_sometimes(probability)
-		Voice.NOMNOM:
-			return play_nomnom_sometimes(probability)
-		Voice.BYE:
-			return play_bye_sometimes(probability)
-		_:
-			assert(false)
-			return false
