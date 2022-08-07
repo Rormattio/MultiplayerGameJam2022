@@ -348,6 +348,8 @@ func _physics_process(_delta):
 		$GameTimerUI/Label.text = "%d:%02d" % [minutes, seconds]
 		if t <= 10.0:
 			$GameTimerUI/Bg.modulate = Color("#ff0000")
+		else:
+			$GameTimerUI/Bg.modulate = Color("#ffffff")
 
 func _on_LobbyStartGame_sent():
 	if lobby_state == LobbyState.START_GAME_COUNTDOWN:
