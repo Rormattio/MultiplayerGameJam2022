@@ -32,6 +32,7 @@ var dish_ingredients
 var dish_ingredients_n = 0
 
 var history_items = []
+var all_history_items = []
 const HISTORY_ITEMS_MAX_SIZE = 6
 
 enum State {
@@ -52,6 +53,8 @@ func _ready():
 
 	if not Global.DEBUG:
 		$Randomize.queue_free()
+
+	all_history_items.clear()
 
 	dish_ingredients = []
 	for idx in range(max_ingredients):
@@ -424,15 +427,17 @@ func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized,
 	var history_item : HistoryItem = HistoryItem.instance_history_item_scene(order, received_dish_serialized, hints, score)
 	$History.add_child(history_item)
 
+	history_item.saved_dish_serialized = received_dish_serialized
+	history_item.saved_order_serialized = order_serialized
+
+	all_history_items.append(history_item)
+
 	if len(history_items) >= HISTORY_ITEMS_MAX_SIZE:
 		assert(len(history_items) == HISTORY_ITEMS_MAX_SIZE)
 		history_items.pop_front()
 		for history_idx in range(len(history_items)):
 			var _history_item = history_items[history_idx]
 			_history_item.position = position_for_history_item_index(history_idx)
-
-	history_item.saved_dish_serialized = received_dish_serialized
-	history_item.saved_order_serialized = order_serialized
 
 	history_item.position = position_for_history_item_index(len(history_items))
 	history_items.append(history_item)

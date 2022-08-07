@@ -441,7 +441,7 @@ remotesync func enter_result_screen():
 	if chosen_role == PlayerRole.CHEFFE:
 		var kitchen = $RoleScene.get_children()[0]
 		results_history_items.clear()
-		for item in kitchen.history_items:
+		for item in kitchen.all_history_items:
 			results_history_items.append([item.saved_dish_serialized.duplicate(),
 				item.saved_order_serialized.duplicate()])
 		rpc("send_kitchen_history", results_history_items)
