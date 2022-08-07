@@ -131,7 +131,7 @@ var start_countdown
 var lobby_state
 var fade_alpha
 
-const GAME_ROUND_TIME_SECONDS = 3 * 60
+const GAME_ROUND_TIME_SECONDS = 5 * 60
 
 func enter_lobby_from_title_screen():
 	multiplayer_config_ui.hide()
