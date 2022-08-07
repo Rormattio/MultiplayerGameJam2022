@@ -277,16 +277,50 @@ one_shot = true
 margin_right = 40.0
 margin_bottom = 40.0
 
+[node name="Title" type="Label" parent="Network_setup/ResultsScreen"]
+margin_left = 24.0
+margin_top = 32.0
+margin_right = 208.0
+margin_bottom = 68.0
+custom_colors/font_color = Color( 0.890196, 0.823529, 0.129412, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Results"
+
 [node name="TitleSprite" type="Sprite" parent="Network_setup/ResultsScreen"]
 position = Vector2( 1057, 368 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 4 )
 
+[node name="DishServed" type="Label" parent="Network_setup/ResultsScreen"]
+margin_left = 64.0
+margin_top = 96.0
+margin_right = 207.0
+margin_bottom = 114.0
+text = "Dish served"
+
+[node name="FinalScore" type="Label" parent="Network_setup/ResultsScreen"]
+margin_left = 64.0
+margin_top = 512.0
+margin_right = 201.0
+margin_bottom = 530.0
+text = "Final score"
+
+[node name="Sprite" type="Sprite" parent="Network_setup/ResultsScreen/FinalScore"]
+position = Vector2( 193, 18 )
+texture = ExtResource( 5 )
+
+[node name="Score" type="Label" parent="Network_setup/ResultsScreen/FinalScore"]
+margin_left = 160.0
+margin_right = 230.0
+margin_bottom = 18.0
+text = "1000$"
+align = 1
+
 [node name="NewRound" type="Button" parent="Network_setup/ResultsScreen"]
-margin_left = 336.0
-margin_top = 536.0
-margin_right = 488.0
-margin_bottom = 584.0
+margin_left = 600.0
+margin_top = 496.0
+margin_right = 752.0
+margin_bottom = 544.0
 text = "Play again"
 
 [node name="connection_status" type="Label" parent="Network_setup"]
