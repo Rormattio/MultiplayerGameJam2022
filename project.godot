@@ -44,7 +44,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="MultiplayerGameJam2022"
+config/name="Spaced Bwi Bwi"
 run/main_scene="res://Network_setup.tscn"
 config/icon="res://icon.png"
 
