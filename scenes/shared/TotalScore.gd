@@ -10,6 +10,9 @@ extends Node2D
 #func _ready():
 #	pass # Replace with function body.
 
-func render(score_value):
+func render(score_value, play):
 	$Label.text = str(score_value)+"$"
+	if play:
+		#print("play cashings sound")
+		$cashings.play()
 	show()
