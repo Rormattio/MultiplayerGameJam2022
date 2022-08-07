@@ -199,6 +199,8 @@ func _ready():
 	var _seed = randi()
 	var keyword_list = make_keyword_list(_seed)
 	Global.logger("keyword_list: " + str(keyword_list))
+	
+#	Global.list_all_possible_dishes()
 
 func instance_node_at_location(node: Object, parent: Object, location: Vector2) -> Object:
 	var node_instance = instance_node(node, parent)
@@ -273,3 +275,39 @@ func rand_array(array : Array):
 func gen_id() -> int:
 	id_counter += 1
 	return id_counter
+
+static func list_all_possible_dishes():
+	# tentative function to estimate all possible dishes in a brute force way
+	# actually we may miss some dishes
+	Global.logger("start list_all_possible_dishes")
+	var dishes = {
+		Dish.MealType.BURGER: [],
+		Dish.MealType.SOUP: [],
+		Dish.MealType.NON_BURGER: [],
+	}
+	for meal_type in [Dish.MealType.BURGER, Dish.MealType.SOUP, Dish.MealType.NON_BURGER, ]:
+		Global.logger("meal_type " + str(meal_type) + ":")
+		var stop_at = 1
+		var trials = 0
+		var dish = Dish.new()
+		dish.meal_type = meal_type
+		while trials < stop_at:
+			match meal_type:
+				Dish.MealType.BURGER:
+					dish._randomize_burger()
+				Dish.MealType.SOUP:
+					dish._randomize_soup()
+				Dish.MealType.NON_BURGER:
+					dish._randomize_non_burger()
+			if dish.is_valid():
+				var serial = dish.serialize()
+				var serial_str = ""
+				for el in serial:
+					serial_str += str(el) + " ; "
+				if not (serial_str in dishes[meal_type]):
+					dishes[meal_type].append(serial_str)
+					stop_at *= 4
+					Global.logger(serial_str)
+			trials += 1
+		Global.logger(len(dishes[meal_type]))
+	Global.logger("end list_all_possible_dishes")
