@@ -285,18 +285,22 @@ func update_role_feedback():
 		[PlayerRole.CHEFFE, null]:
 			$Lobby/CheffeDescBgBorder.color = ROLE_OK_COLOR
 			$Lobby/MyRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/WaiterDescBgBorder.color = ROLE_UNASSIGNED_COLOR
 
 		[PlayerRole.WAITER, null]:
 			$Lobby/WaiterDescBgBorder.color = ROLE_OK_COLOR
 			$Lobby/MyRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/CheffeDescBgBorder.color = ROLE_UNASSIGNED_COLOR
 
 		[null, PlayerRole.CHEFFE]:
 			$Lobby/CheffeDescBgBorder.color = ROLE_OK_COLOR
 			$Lobby/TheirRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/WaiterDescBgBorder.color = ROLE_UNASSIGNED_COLOR
 
 		[null, PlayerRole.WAITER]:
 			$Lobby/WaiterDescBgBorder.color = ROLE_OK_COLOR
 			$Lobby/TheirRole.add_color_override("font_color", ROLE_OK_COLOR)
+			$Lobby/CheffeDescBgBorder.color = ROLE_UNASSIGNED_COLOR
 
 		[null, null]: assert(false)
 
@@ -361,6 +365,8 @@ func _on_LobbyStartGame_sent():
 
 	$Lobby/GameStartTimer.start()
 
+var player_ready_count
+
 func start_game():
 	assert(lobby_state == LobbyState.START_GAME_COUNTDOWN)
 
@@ -375,7 +381,15 @@ func start_game():
 
 	lobby_state = LobbyState.GAME_STARTED
 
-	rpc("start_game_timer")
+	# Need to wait to sync players because instanciate above takes different time
+	player_ready_count = 0
+	rpc("player_ready")
+
+remotesync func player_ready():
+	player_ready_count += 1
+	if player_ready_count == 2:
+		if is_network_master():
+			rpc("start_game_timer")
 
 remotesync func start_game_timer():
 	$Lobby/GameTimer.wait_time = 5
@@ -408,7 +422,8 @@ func _unhandled_input(event: InputEvent):
 		OS.set_window_fullscreen(!OS.window_fullscreen)
 
 func _on_GameTimer_timeout():
-	rpc("enter_result_screen")
+	if is_network_master():
+		rpc("enter_result_screen")
 
 remotesync func enter_result_screen():
 	lobby_state = LobbyState.RESULT_SCREEN
@@ -424,5 +439,8 @@ func _on_NewRound_pressed():
 	rpc("do_enter_lobby_from_result_screen")
 
 remotesync func do_enter_lobby_from_result_screen():
+	if lobby_state != LobbyState.RESULT_SCREEN:
+		return
+
 	$ResultsScreen.hide()
 	enter_lobby_from_result_screen()
