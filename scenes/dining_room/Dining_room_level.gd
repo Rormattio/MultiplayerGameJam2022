@@ -161,6 +161,7 @@ func _on_serve_dish(patron):
 	var dish = carrying_dish_node.get_child(0)
 	set_carrying_received_dish(null)
 	patron.serve_dish(dish)
+	_play_nomnom_sometimes(patron)
 
 func _on_patron_leaves(patron):
 	patron.sitting_at_table.patrons_around.erase(patron)
