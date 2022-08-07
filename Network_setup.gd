@@ -464,10 +464,10 @@ remotesync func results_tally_start():
 	var maxY = 450
 
 	# DEBUG
-	for _n in range(30):
-		var new_dish = Dish.new()
-		new_dish.randomize()
-		results_history_items.append([new_dish.serialize()])
+	# for _n in range(30):
+	# 	var new_dish = Dish.new()
+	# 	new_dish.randomize()
+	# 	results_history_items.append([new_dish.serialize()])
 
 	for item in results_history_items:
 		yield(get_tree().create_timer(0.25), "timeout")
