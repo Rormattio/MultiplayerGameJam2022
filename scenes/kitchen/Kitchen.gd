@@ -17,6 +17,7 @@ onready var commands_container = $CommandsContainer
 onready var audio_sfx = $AudioSfx
 
 onready var score_box = $Score
+var total_score = 0
 
 var cheffe
 
@@ -387,7 +388,8 @@ func _on_Randomize_pressed():
 	_refresh_stock()
 
 func _on_Score_Sent(score):
-	print("TODO Kitchen._on_Score_Sent ", score)
+	total_score += score
+	score_box.render(total_score)
 	
 func _on_PatronDishScore_Sent(received_dish_serialized, score, order_serialized, hints):
 	print("dish=", received_dish_serialized, " score=", score, " order=", order_serialized)
