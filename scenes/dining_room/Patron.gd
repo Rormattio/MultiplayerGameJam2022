@@ -183,9 +183,9 @@ func serve_dish(dish):
 
 func set_state(a_state):
 	if state != null:
-		print("Patron.set_state ", State.keys()[state], " -> ", State.keys()[a_state])
+		Global.logger("Patron.set_state " + State.keys()[state] + " -> "+ State.keys()[a_state])
 	else:
-		print("Patron.set_state ", State.keys()[a_state])
+		Global.logger("Patron.set_state " + State.keys()[a_state])
 	assert(state != a_state)
 	match a_state:
 		State.ENTERING_BEHIND_WINDOW:
@@ -307,7 +307,7 @@ func _decide_how_many_ingredients_for_dish():
 		_min = 4
 		_max = 4
 
-	print("_decide_how_many_ingredients_for_dish : ", patron_index, " -> ", _min, ", ", _max)
+	Global.logger("_decide_how_many_ingredients_for_dish : " + str(patron_index) + " -> " + str(_min) + ", " + str(_max))
 	return [_min, _max]
 
 func generate_dish() -> Dish:

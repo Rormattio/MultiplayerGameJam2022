@@ -54,7 +54,7 @@ func _ready() -> void:
 	enter_title_screen()
 
 func _upnp_completed(error):
-	print("upnp done ", Upnp.external_ip_address)
+	Global.logger("upnp done " + Upnp.external_ip_address)
 	if error == UPNP.UPNP_RESULT_SUCCESS:
 		device_external_ip_address.text = Upnp.external_ip_address
 		device_external_ip_address.show()
@@ -68,13 +68,13 @@ func _on_Create_server_pressed():
 
 func _on_Join_server_pressed():
 	AudioSfx.play_ingredient(Ingredients.Sfx.CLICK)
-	print("_on_Join_server_pressed")
+	Global.logger("_on_Join_server_pressed")
 	var ip_address
 	if server_ip_address.text != "":
 		ip_address = server_ip_address.text
 	else:
 		ip_address = "127.0.0.1"
-	print(ip_address)
+	Global.logger(ip_address)
 
 	Network.ip_address = ip_address
 	Network.join_server()
@@ -195,7 +195,7 @@ func _exit_tree():
 	Network.stop()
 
 func _player_connected(id) -> void:
-	print("Player " + str(id) + " has connected")
+	Global.logger("Player " + str(id) + " has connected")
 
 	connection_status.text = "Connected to other player"
 	connection_status.add_color_override("font_color", "#00ff00")
@@ -208,7 +208,7 @@ func _player_connected(id) -> void:
 	Network.stop_listening_for_peers()
 
 func _player_disconnected(id) -> void:
-	print("Player " + str(id) + " has disconnected")
+	Global.logger("Player " + str(id) + " has disconnected")
 
 	connection_status.text = "Disconnected"
 	connection_status.add_color_override("font_color", "#ff0000")
@@ -375,7 +375,7 @@ var player_ready_count
 func start_game():
 	assert(lobby_state == LobbyState.START_GAME_COUNTDOWN)
 
-	print("start game")
+	Global.logger("start game")
 
 	if chosen_role == PlayerRole.CHEFFE:
 		instanciate_object(kitchen_scene, Network.get_id(), $RoleScene)

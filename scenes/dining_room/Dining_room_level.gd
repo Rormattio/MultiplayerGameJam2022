@@ -184,7 +184,7 @@ func _on_Jukebox_button_up():
 		AudioSfx.advance_jukebox_state()
 
 func _on_score_sent(score):
-	print("score sent ", score)
+	Global.logger("score sent " + str(score))
 	total_score += score
 	score_box.render(total_score, score != 0)
 
