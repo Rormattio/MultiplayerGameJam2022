@@ -227,7 +227,8 @@ func _on_patron_state_changed(patron : Patron):
 		patron.State.ENTERING:
 			_play_hello_sometimes(patron)
 			if randf() <= 0.2:
-				var hello_lines = ["HELLO!", "I'M SO HUNGRY", "WHAT AN AWFUL DAY", "FOOOOOD!", "OH NO, NOT THIS WAITER"]
+				var hello_lines = ["HELLO!", "I'M SO HUNGRY", "WHAT AN AWFUL DAY", "FOOOOOD!", "OH NO, NOT THIS WAITER",
+									"MY BELLY ACHES", "SMELLS GOOD!", "MY DIET IS FINISHED!", "LET'S TRY SOMETHING NEW"]
 				patron.spawn_dialog_line(Global.rand_array(hello_lines), 2000)
 		patron.State.LEAVING_BEHIND_WINDOW:
 			_play_bye_sometimes(patron)
