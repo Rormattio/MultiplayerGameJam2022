@@ -130,7 +130,7 @@ func play_ingredient(sfx):
 func play_ambience():
 	for player in ambiance_players:
 		player.play()
-		player.volume_db = - 20
+		player.volume_db = - 30
 		player.connect("finished", self, "_on_ambience_sound_finished")
 
 func _on_ambience_sound_finished():
