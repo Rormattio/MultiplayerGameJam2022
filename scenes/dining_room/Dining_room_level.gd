@@ -24,6 +24,9 @@ var TRIGGER_COMMAND_AT_X_FROM_TABLE
 var tables = []
 var patron_random_pool = []
 
+# ex: ["bertmo"][Patron.Voice.HELLO]
+var last_patron_playing_dates = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.connect("on_score_sent", self, "_on_score_sent")
@@ -158,6 +161,7 @@ func _on_serve_dish(patron):
 	var dish = carrying_dish_node.get_child(0)
 	set_carrying_received_dish(null)
 	patron.serve_dish(dish)
+	_play_nomnom_sometimes(patron)
 
 func _on_patron_leaves(patron):
 	patron.sitting_at_table.patrons_around.erase(patron)
@@ -186,14 +190,29 @@ func open_door():
 func close_door():
 	door.show()
 
-func _play_hello_sometimes(patron : Patron):
-	patron.play_hello_sometimes(1.0)
+func _play_voice_sometimes(patron : Patron, voice):
+	if not last_patron_playing_dates.has(patron.sprite_name):
+		last_patron_playing_dates[patron.sprite_name] = {}
 
+	var now_ms = OS.get_ticks_msec()
+	if not last_patron_playing_dates[patron.sprite_name].has(voice):
+		
+		last_patron_playing_dates[patron.sprite_name][voice] = now_ms
+		patron.play_voice_sometimes(voice, 1.0)
+	else:
+		var elapsed_time_msec = now_ms - last_patron_playing_dates[patron.sprite_name][voice]
+		if elapsed_time_msec > 5 * 1000:
+			if patron.play_voice_sometimes(voice, 0.3):
+				last_patron_playing_dates[patron.sprite_name][voice] = now_ms
+
+func _play_hello_sometimes(patron : Patron):
+	_play_voice_sometimes(patron, Patron.Voice.HELLO)
+	
 func _play_nomnom_sometimes(patron : Patron):
-	patron.play_nomnom_sometimes(1.0)
+	_play_voice_sometimes(patron, Patron.Voice.NOMNOM)
 
 func _play_bye_sometimes(patron : Patron):
-	patron.play_bye_sometimes(1.0)
+	_play_voice_sometimes(patron, Patron.Voice.BYE)
 	
 func _on_patron_state_changed(patron : Patron):
 	if dining_room.state == dining_room.State.VISIBLE:
