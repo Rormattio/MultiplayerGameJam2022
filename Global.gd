@@ -10,7 +10,7 @@ signal lobby_start_game_sent()
 signal player_quit_sent(id)
 signal on_score_sent(total_score)
 
-var DEBUG = true
+var DEBUG = false
 
 const MAX_DISH_ON_COUNTER = 6
 
