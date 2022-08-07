@@ -226,5 +226,7 @@ func _on_patron_state_changed(patron : Patron):
 	match patron.state:
 		patron.State.ENTERING:
 			_play_hello_sometimes(patron)
+			#patron.spawn_dialog_line("HELLO!", 2000)
 		patron.State.LEAVING_BEHIND_WINDOW:
 			_play_bye_sometimes(patron)
+			patron.clear_dialog_line()
